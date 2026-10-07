@@ -394,6 +394,9 @@
       color: var(--accent-ink);
     }
 
+    a.card { display: block; }
+    @media (min-width: 700px) { .services-grid > a.card:last-child { grid-column: 1 / -1; } }
+
     .grid {
       display: grid;
       gap: 1rem;
@@ -730,7 +733,8 @@
         <a href="#realisations" data-i18n="navWork">Réalisations</a>
         <a href="#processus" data-i18n="navProcess">Processus</a>
         <a href="#faq">FAQ</a>
-        <a href="#contact" data-i18n="navContact">Contact</a>
+        <a href="outils/raccourcisseur.html" data-i18n="navTools">Outils</a>
+      <a href="#contact" data-i18n="navContact">Contact</a>
       </nav>
 
       <div class="header-actions">
@@ -750,6 +754,7 @@
       <a href="#realisations" data-i18n="navWork">Réalisations</a>
       <a href="#processus" data-i18n="navProcess">Processus</a>
       <a href="#faq">FAQ</a>
+      <a href="outils/raccourcisseur.html" data-i18n="navTools">Outils</a>
       <a href="#contact" data-i18n="navContact">Contact</a>
     </nav>
   </header>
@@ -795,6 +800,12 @@
             <h3 data-i18n="service4Title">Traduction et relecture</h3>
             <p data-i18n="service4Text">Traduction et relecture de textes français-anglais.</p>
           </article>
+          <a class="card reveal" href="outils/raccourcisseur.html">
+            <span class="card-number">05</span>
+            <h3 data-i18n="service5Title">Raccourcisseur de liens gratuit</h3>
+            <p data-i18n="service5Text">Raccourcissez vos liens en un clic, gratuitement.</p>
+            <span class="link-arrow" data-i18n="openTool">Ouvrir l'outil</span>
+          </a>
         </div>
       </div>
     </section>
@@ -1119,6 +1130,10 @@
           backTop: "Retour en haut",
           privacyLink: "Confidentialité",
           termsLink: "CGU",
+          navTools: "Outils",
+          service5Title: "Raccourcisseur de liens gratuit",
+          service5Text: "Raccourcissez vos liens en un clic, gratuitement.",
+          openTool: "Ouvrir l'outil",
           errName: "Veuillez saisir votre nom (2 caractères minimum).",
           errEmail: "Veuillez saisir une adresse email valide.",
           errMessage: "Votre message doit contenir au moins 10 caractères.",
@@ -1218,6 +1233,10 @@
           backTop: "Back to top",
           privacyLink: "Privacy",
           termsLink: "Terms",
+          navTools: "Tools",
+          service5Title: "Free link shortener",
+          service5Text: "Shorten your links in one click, for free.",
+          openTool: "Open the tool",
           errName: "Please enter your name (2 characters minimum).",
           errEmail: "Please enter a valid email address.",
           errMessage: "Your message must contain at least 10 characters.",
