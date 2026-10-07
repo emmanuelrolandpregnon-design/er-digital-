@@ -1,72 +1,68 @@
 <!doctype html>
-<html lang="fr" data-theme="dark">
+<html lang="fr" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>ER Digital — Votre présence en ligne, clé en main.</title>
-  <meta name="description" content="ER Digital crée des sites professionnels et propose une boutique d'ebooks, des services de CV, traduction et relecture.">
+  <title>ER Digital — Studio web brut.</title>
+  <meta name="description" content="ER Digital conçoit des sites francs pour indépendants, artisans et entreprises. Basé à Yamoussoukro, disponible à distance.">
   <link rel="canonical" href="https://emmanuelrolandpregnon-design.github.io/er-digital-/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://emmanuelrolandpregnon-design.github.io/er-digital-/">
-  <meta property="og:title" content="ER Digital — Votre présence en ligne, clé en main.">
-  <meta property="og:description" content="Création de sites professionnels et boutique d'ebooks pour particuliers et entreprises.">
-  <meta property="og:image" content="https://emmanuelrolandpregnon-design.github.io/er-digital-/og-image.png">
+  <meta property="og:title" content="ER Digital — Studio web brut.">
+  <meta property="og:description" content="Sites francs pour indépendants, artisans et entreprises.">
   <meta property="og:site_name" content="ER Digital">
   <meta property="og:locale" content="fr_CI">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ER Digital — Votre présence en ligne, clé en main.">
-  <meta name="twitter:description" content="Création de sites professionnels et boutique d'ebooks pour particuliers et entreprises.">
-  <meta name="twitter:image" content="https://emmanuelrolandpregnon-design.github.io/er-digital-/og-image.png">
-  <meta name="theme-color" content="#06141B">
+  <meta name="theme-color" content="#EDE7DC">
   <meta name="robots" content="index, follow">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="ER Digital — Votre présence en ligne, clé en main.">
-  <meta name="twitter:image:alt" content="ER Digital — Votre présence en ligne, clé en main.">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="icon" type="image/png" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #06141B;
-      --surface: #11212D;
-      --surface-soft: #0B1A23;
-      --border: #253745;
-      --text: #CCD0CF;
-      --muted: #9BA8AB;
-      --muted-deep: #8497A3;
-      --accent: #3DBDAA;
-      --accent-hover: #63D5C4;
-      --accent-text: #06141B;
-      --shadow: 0 18px 50px rgba(0, 0, 0, .20);
-      --header-bg: rgba(6, 20, 27, .88);
-      --focus: #8DE8DC;
-      --accent-ink: #3DBDAA;
-      --danger: #FF9A90;
+      --bg:           #EDE7DC;
+      --bg-2:         #E3DBCB;
+      --surface:      #FFFFFF;
+      --surface-2:    #F5F0E6;
+      --text:         #1A1614;
+      --text-soft:    #3A332E;
+      --muted:        #6B5F55;
+      --muted-deep:   #9A8E82;
+      --accent-1:     #E8522B;
+      --accent-2:     #F4C430;
+      --accent-3:     #1B5E3F;
+      --border:       #1A1614;
+      --border-soft:  #1A161430;
+      --focus:        #E8522B;
+      --danger:       #B3261E;
+
+      --font-display: 'Archivo Black', ui-sans-serif, system-ui, sans-serif;
+      --font-body:    'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+      --font-mono:    'Space Mono', ui-monospace, SFMono-Regular, monospace;
+
+      --container:    1280px;
+      --gutter:       clamp(1rem, 3vw, 2rem);
     }
 
-    [data-theme="light"] {
-      --bg: #F3F7F6;
-      --surface: #FFFFFF;
-      --surface-soft: #E8F0EE;
-      --border: #B8C9C5;
-      --text: #11212D;
-      --muted: #546A6B;
-      --muted-deep: #566868;
-      --accent: #3DBDAA;
-      --accent-hover: #2DAD9B;
-      --accent-text: #06141B;
-      --shadow: 0 18px 50px rgba(17, 33, 45, .10);
-      --header-bg: rgba(243, 247, 246, .90);
-      --focus: #167C6F;
-      --accent-ink: #0F6F63;
-      --danger: #B3261E;
+    [data-theme="dark"] {
+      --bg:           #1A1614;
+      --bg-2:         #24201D;
+      --surface:      #24201D;
+      --surface-2:    #2E2926;
+      --text:         #EDE7DC;
+      --text-soft:    #C9C0B3;
+      --muted:        #9A8E82;
+      --muted-deep:   #6B5F55;
+      --border:       #EDE7DC;
+      --border-soft:  #EDE7DC30;
+      --focus:        #F4C430;
     }
 
     * { box-sizing: border-box; }
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 6.5rem;
+      scroll-padding-top: 5rem;
       overflow-x: hidden;
     }
 
@@ -76,27 +72,25 @@
       overflow-x: hidden;
       background: var(--bg);
       color: var(--text);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: var(--font-body);
+      font-size: 1rem;
       line-height: 1.55;
-      transition: background-color .25s ease, color .25s ease;
+      font-weight: 500;
+      letter-spacing: -0.005em;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color .3s ease, color .3s ease;
     }
 
     a { color: inherit; text-decoration: none; }
-
-    button,
-    input,
-    textarea {
-      font: inherit;
-    }
-
-    button { cursor: pointer; }
+    button { cursor: pointer; font: inherit; }
+    input, textarea { font: inherit; }
 
     a:focus-visible,
     button:focus-visible,
     input:focus-visible,
     textarea:focus-visible {
       outline: 3px solid var(--focus);
-      outline-offset: 3px;
+      outline-offset: 2px;
     }
 
     .skip-link {
@@ -106,614 +100,1310 @@
       left: 1rem;
       padding: .75rem 1rem;
       transform: translateY(-200%);
-      border-radius: .6rem;
-      background: var(--accent);
-      color: var(--accent-text);
-      font-weight: 800;
+      background: var(--text);
+      color: var(--bg);
+      font-family: var(--font-mono);
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      border: 2px solid var(--border);
+      transition: transform .25s ease;
     }
-
     .skip-link:focus { transform: translateY(0); }
 
     .container {
-      width: min(1120px, calc(100% - 2rem));
+      width: 100%;
+      max-width: var(--container);
       margin-inline: auto;
+      padding-inline: var(--gutter);
     }
 
-    .section {
-      padding: 5.5rem 0;
-      scroll-margin-top: 5rem;
+    h1, h2, h3, h4 {
+      margin: 0 0 1rem;
+      font-family: var(--font-display);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-transform: uppercase;
     }
 
-    .section-alt {
-      background: var(--surface-soft);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
+    h1 { font-size: clamp(2.75rem, 9vw, 7rem); letter-spacing: -0.03em; line-height: .92; }
+    h2 { font-size: clamp(2rem, 5vw, 3.5rem); line-height: .95; }
+    h3 { font-size: clamp(1.2rem, 2vw, 1.6rem); line-height: 1.05; }
+
+    p { margin: 0 0 1rem; }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: .5rem;
-      margin: 0 0 1rem;
-      color: var(--accent-ink);
-      font-size: .76rem;
-      font-weight: 900;
-      letter-spacing: .12em;
+      margin: 0 0 1.5rem;
+      padding: .35rem .75rem;
+      background: var(--text);
+      color: var(--bg);
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
       text-transform: uppercase;
+      border: 2px solid var(--border);
     }
 
-    .eyebrow::before {
-      width: .55rem;
-      height: .55rem;
-      border-radius: 50%;
-      background: currentColor;
-      content: "";
+    .lead {
+      font-size: clamp(1rem, 1.3vw, 1.15rem);
+      line-height: 1.6;
+      color: var(--text-soft);
+      font-weight: 500;
     }
 
-    h1, h2, h3, p { margin-top: 0; }
-
-    h1, h2, h3 {
-      color: var(--text);
-      line-height: 1.06;
-      letter-spacing: -.04em;
+    .section {
+      padding: clamp(3rem, 6vw, 5rem) 0;
+      border-bottom: 2px solid var(--border);
+      scroll-margin-top: 5rem;
+      position: relative;
     }
 
-    h1 {
-      max-width: 11ch;
-      margin-bottom: 1.25rem;
-      font-size: clamp(2.7rem, 11vw, 5.7rem);
+    .section-head {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: clamp(2.5rem, 5vw, 4rem);
     }
+    .section-head h2 { max-width: 22ch; margin: 0; }
+    .section-head .lead { max-width: 55ch; margin: 0; }
 
-    h2 {
-      max-width: 16ch;
-      margin-bottom: 1rem;
-      font-size: clamp(2rem, 6vw, 3.25rem);
-    }
-
-    h3 {
-      margin-bottom: .65rem;
-      font-size: 1.22rem;
-    }
-
-    .section-intro {
-      max-width: 41rem;
-      margin-bottom: 2.25rem;
-      color: var(--muted);
-      font-size: 1.05rem;
-    }
-
-    .muted { color: var(--muted); }
-
-    .button-primary .muted {
-      color: inherit;
-      opacity: .85;
-    }
-
-    .to-complete {
-      color: var(--muted-deep);
-      font-size: .94rem;
-      font-style: italic;
-    }
-
+    /* ============ HEADER ============ */
     .site-header {
       position: sticky;
       z-index: 50;
       top: 0;
-      border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
-      background: var(--header-bg);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: var(--bg);
+      border-bottom: 2px solid var(--border);
     }
 
     .header-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 4.8rem;
-      gap: .75rem;
-      padding-top: env(safe-area-inset-top);
+      min-height: 4.5rem;
+      gap: 1rem;
     }
 
     .brand {
       display: inline-flex;
-      flex-shrink: 0;
       align-items: center;
-      gap: .7rem;
-      color: var(--text);
+      gap: .6rem;
+      font-family: var(--font-display);
       font-weight: 900;
-      letter-spacing: -.03em;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-transform: uppercase;
     }
 
     .brand-mark {
       width: 2.2rem;
       height: 2.2rem;
-      display: block;
-      border-radius: 22%;
+      display: grid;
+      place-items: center;
+      background: var(--accent-1);
+      color: var(--bg);
+      font-family: var(--font-display);
+      font-size: .9rem;
+      font-weight: 900;
+      border: 2px solid var(--border);
     }
+    [data-theme="dark"] .brand-mark { color: var(--text); }
 
     .desktop-nav {
       display: none;
       align-items: center;
-      gap: 1.15rem;
-      color: var(--muted);
-      font-size: .88rem;
-      font-weight: 750;
+      gap: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text);
     }
+    .desktop-nav a {
+      padding: .25rem 0;
+      border-bottom: 2px solid transparent;
+      transition: border-color .2s ease;
+    }
+    .desktop-nav a:hover { border-bottom-color: var(--accent-1); }
 
-    .desktop-nav a:hover,
-    .desktop-nav a:focus-visible,
-    .footer-links a:hover,
-    .footer-links a:focus-visible {
-      color: var(--accent-ink);
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: .45rem;
-    }
+    .header-actions { display: flex; align-items: center; gap: .5rem; }
 
     .control {
-      min-width: 2.7rem;
-      min-height: 2.7rem;
       display: inline-grid;
       place-items: center;
-      padding: .45rem .6rem;
-      border: 1px solid var(--border);
-      border-radius: .65rem;
-      background: transparent;
+      min-width: 2.6rem;
+      min-height: 2.6rem;
+      padding: .35rem .7rem;
+      background: var(--bg);
       color: var(--text);
-      font-size: .78rem;
-      font-weight: 900;
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      border: 2px solid var(--border);
+      transition: all .15s ease;
     }
-
-    .control:hover {
-      border-color: var(--accent-ink);
-      color: var(--accent-ink);
-    }
+    .control:hover { background: var(--accent-1); color: var(--bg); }
+    [data-theme="dark"] .control:hover { color: var(--text); }
 
     .menu-toggle {
-      width: 2.7rem;
-      min-height: 2.7rem;
       display: inline-grid;
       place-items: center;
+      width: 2.6rem;
+      height: 2.6rem;
       padding: 0;
-      border: 1px solid var(--border);
-      border-radius: .65rem;
-      background: transparent;
+      background: var(--bg);
       color: var(--text);
+      border: 2px solid var(--border);
     }
 
     .menu-lines,
     .menu-lines::before,
     .menu-lines::after {
-      width: 1.15rem;
-      height: 2px;
       display: block;
-      border-radius: 2px;
+      width: 1.1rem;
+      height: 2px;
       background: currentColor;
       content: "";
       transition: transform .2s ease, opacity .2s ease;
     }
-
     .menu-lines { position: relative; }
-
-    .menu-lines::before { position: absolute; top: -.38rem; left: 0; }
-    .menu-lines::after { position: absolute; bottom: -.38rem; left: 0; }
-
+    .menu-lines::before { position: absolute; top: -.35rem; left: 0; }
+    .menu-lines::after { position: absolute; bottom: -.35rem; left: 0; }
     .menu-toggle[aria-expanded="true"] .menu-lines { background: transparent; }
-    .menu-toggle[aria-expanded="true"] .menu-lines::before { transform: translateY(.38rem) rotate(45deg); }
-    .menu-toggle[aria-expanded="true"] .menu-lines::after { transform: translateY(-.38rem) rotate(-45deg); }
+    .menu-toggle[aria-expanded="true"] .menu-lines::before { transform: translateY(.35rem) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] .menu-lines::after { transform: translateY(-.35rem) rotate(-45deg); }
 
     .mobile-nav {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: .25rem;
+      gap: 0;
       max-height: 0;
       overflow: hidden;
-      padding: 0;
       opacity: 0;
-      transition: max-height .25s ease, opacity .2s ease, padding .25s ease;
+      transition: max-height .3s ease, opacity .2s ease;
     }
-
     .mobile-nav.is-open {
-      max-height: 22rem;
-      padding: 0 0 1rem;
+      max-height: 30rem;
       opacity: 1;
+      padding: 0 0 1rem;
     }
-
     .mobile-nav a {
-      min-height: 2.8rem;
-      display: flex;
-      align-items: center;
-      padding: .65rem .75rem;
-      border: 1px solid var(--border);
-      border-radius: .55rem;
-      color: var(--muted);
-      font-size: .9rem;
-      font-weight: 750;
+      padding: 1rem .25rem;
+      font-family: var(--font-mono);
+      font-size: .85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text);
+      border-top: 2px solid var(--border);
+      transition: color .15s ease, padding-left .2s ease;
     }
+    .mobile-nav a:hover { color: var(--accent-1); padding-left: .75rem; }
 
-    .mobile-nav a:hover { color: var(--accent-ink); border-color: var(--accent-ink); }
-
+    /* ============ HERO ============ */
     .hero {
-      min-height: min(760px, calc(100svh - 4.8rem));
-      display: grid;
+      padding: clamp(3rem, 7vw, 6rem) 0 clamp(3rem, 6vw, 5rem);
+      border-bottom: 2px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-meta {
+      display: inline-flex;
+      flex-wrap: wrap;
       align-items: center;
-      padding: 5.5rem 0 4.5rem;
-      background:
-        radial-gradient(circle at 82% 24%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 28rem),
-        var(--bg);
-    }
-
-    .hero-content { max-width: 50rem; }
-
-    .hero-copy {
-      max-width: 38rem;
+      gap: .75rem;
       margin-bottom: 2rem;
-      color: var(--muted);
-      font-size: clamp(1.05rem, 3.8vw, 1.32rem);
+      padding: .4rem .8rem;
+      background: var(--accent-2);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border: 2px solid var(--border);
     }
 
-    .button-row {
+    .hero h1 {
+      max-width: 14ch;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      background: var(--accent-1);
+      color: var(--bg);
+      padding: 0 .15em;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+    [data-theme="dark"] .hero h1 em { color: var(--text); }
+
+    .hero-lead {
+      max-width: 46ch;
+      margin-bottom: 2.25rem;
+    }
+
+    .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: .8rem;
-    }
-
-    .button {
-      min-height: 3.15rem;
-      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      padding: .75rem 1rem;
-      border: 1px solid transparent;
-      border-radius: .7rem;
-      font-weight: 900;
-      text-align: center;
-      transition: transform .2s ease, background-color .2s ease, border-color .2s ease;
+      gap: .75rem;
     }
 
-    .button:hover { transform: translateY(-2px); }
-
-    .button-primary {
-      background: var(--accent);
-      color: var(--accent-text);
-    }
-
-    .button-primary:hover { background: var(--accent-hover); }
-
-    .button-secondary {
-      border-color: var(--border);
-      background: var(--surface);
-      color: var(--text);
-    }
-
-    .button-secondary:hover {
-      border-color: var(--accent-ink);
-      color: var(--accent-ink);
-    }
-
-    a.card { display: block; }
-    @media (min-width: 700px) { .services-grid > a.card:last-child { grid-column: 1 / -1; } }
-
-    .grid {
-      display: grid;
-      gap: 1rem;
-    }
-
-    .services-grid { grid-template-columns: 1fr; }
-
-    .card {
-      min-height: 100%;
-      padding: 1.35rem;
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      background: var(--surface);
-      box-shadow: 0 1px 0 rgba(255,255,255,.03) inset;
-      transition: transform .2s ease, border-color .2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
-      border-color: color-mix(in srgb, var(--accent) 70%, var(--border));
-    }
-
-    .card-number {
-      display: block;
-      margin-bottom: 1.45rem;
-      color: var(--accent-ink);
-      font-size: .78rem;
-      font-weight: 900;
-      letter-spacing: .1em;
-    }
-
-    .card p:last-child { margin-bottom: 0; color: var(--muted); }
-
-    .work-grid,
-    .store-grid { grid-template-columns: 1fr; }
-
-    .project-card,
-    .store-card {
-      display: flex;
-      min-height: 13rem;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 2rem;
-    }
-
-    .link-arrow {
+    .btn {
       display: inline-flex;
       align-items: center;
       gap: .5rem;
-      color: var(--accent-ink);
-      font-weight: 900;
+      padding: .9rem 1.4rem;
+      font-family: var(--font-body);
+      font-size: .92rem;
+      font-weight: 700;
+      letter-spacing: -0.005em;
+      text-transform: uppercase;
+      border: 2px solid var(--border);
+      transition: all .15s ease;
+      white-space: nowrap;
     }
-
-    .link-arrow::after {
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+    }
+    .btn-primary:hover {
+      background: var(--accent-1);
+      color: var(--bg);
+    }
+    [data-theme="dark"] .btn-primary:hover { color: var(--text); }
+    .btn-primary::after {
       content: "→";
-      font-size: 1.15em;
+      font-family: var(--font-mono);
       transition: transform .2s ease;
     }
+    .btn-primary:hover::after { transform: translateX(4px); }
 
-    .project-card:hover .link-arrow::after,
-    .store-card:hover .link-arrow::after { transform: translateX(.25rem); }
+    .btn-ghost {
+      background: var(--bg);
+      color: var(--text);
+    }
+    .btn-ghost:hover {
+      background: var(--accent-2);
+    }
 
-    .process-grid {
+    /* ============ MARQUEE ============ */
+    .marquee {
+      padding: 1.25rem 0;
+      background: var(--text);
+      color: var(--bg);
+      border-bottom: 2px solid var(--border);
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-flex;
+      gap: 2rem;
+      animation: marquee 40s linear infinite;
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.5vw, 1.35rem);
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+    }
+    .marquee-track span {
+      display: inline-flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .marquee-track span::after {
+      content: "◆";
+      color: var(--accent-2);
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ============ SERVICES ============ */
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .service-card {
+      padding: 1.75rem;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      position: relative;
+      transition: all .2s ease;
+    }
+    .service-card:nth-child(2n) {
+      background: var(--accent-2);
+    }
+    .service-card:hover {
+      background: var(--accent-1);
+      color: var(--bg);
+      transform: translate(-3px, -3px);
+      box-shadow: 6px 6px 0 var(--border);
+    }
+    [data-theme="dark"] .service-card:hover { color: var(--text); }
+    .service-card:hover p,
+    .service-card:hover .service-price,
+    .service-card:hover .service-num { color: inherit; }
+
+    .service-num {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      padding: .35rem .7rem;
+      border: 2px solid currentColor;
+    }
+    .service-card h3 {
+      margin-bottom: .75rem;
+      font-size: 1.35rem;
+    }
+    .service-card p {
+      font-size: .92rem;
+      line-height: 1.55;
+      color: var(--text-soft);
+      margin: 0 0 1.5rem;
+    }
+    .service-price {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding-top: 1.25rem;
+      border-top: 2px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text);
+      letter-spacing: .05em;
+    }
+    .service-price strong {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    /* ============ PROJETS ============ */
+    .projects {
+      display: grid;
+      gap: clamp(3rem, 6vw, 5rem);
+    }
+    .project {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+    .project-frame {
+      position: relative;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      transition: all .25s ease;
+    }
+    .project-frame:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: 8px 8px 0 var(--accent-1);
+    }
+
+    .frame-bar {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .6rem .8rem;
+      background: var(--text);
+      color: var(--bg);
+      border-bottom: 2px solid var(--border);
+    }
+    .frame-dots { display: inline-flex; gap: .35rem; }
+    .frame-dots span {
+      width: .65rem;
+      height: .65rem;
+      border-radius: 50%;
+      border: 1.5px solid currentColor;
+    }
+    .frame-dots span:nth-child(1) { background: #E8522B; }
+    .frame-dots span:nth-child(2) { background: #F4C430; }
+    .frame-dots span:nth-child(3) { background: #1B5E3F; }
+
+    .frame-url {
+      flex: 1;
+      margin-left: .5rem;
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .02em;
+      color: inherit;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .frame-body {
+      aspect-ratio: 16 / 10;
+      background: var(--surface-2);
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+      background-image:
+        repeating-linear-gradient(45deg, transparent, transparent 20px, var(--border-soft) 20px, var(--border-soft) 21px),
+        repeating-linear-gradient(-45deg, transparent, transparent 20px, var(--border-soft) 20px, var(--border-soft) 21px);
+    }
+
+    .frame-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .75rem;
+      text-align: center;
+      padding: 1.5rem 2rem;
+      background: var(--surface);
+      border: 2px solid var(--border);
+    }
+    .frame-placeholder-num {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent-1);
+    }
+    .frame-placeholder-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--text);
+      margin: 0;
+      text-transform: uppercase;
+    }
+    .frame-placeholder-note {
+      font-family: var(--font-mono);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .project-info { display: flex; flex-direction: column; gap: 1rem; }
+
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .project-meta span {
+      padding: .35rem .7rem;
+      background: var(--accent-2);
+      color: var(--text);
+      border: 2px solid var(--border);
+    }
+    .project-meta span:nth-child(2n) { background: var(--surface); }
+
+    .project-info h3 {
+      margin: 0;
+      font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    }
+    .project-info p {
+      margin: 0;
+      color: var(--text-soft);
+      max-width: 45ch;
+      font-size: .95rem;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      margin-top: .75rem;
+      padding: .85rem 1.25rem;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: .88rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      border: 2px solid var(--border);
+      align-self: flex-start;
+      transition: all .15s ease;
+    }
+    .project-link:hover {
+      background: var(--accent-1);
+      color: var(--bg);
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--border);
+    }
+    [data-theme="dark"] .project-link:hover { color: var(--text); }
+    .project-link::after { content: "→"; font-family: var(--font-mono); }
+
+    /* ============ TÉMOIGNAGES ============ */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .testimonial-card {
+      padding: 1.75rem;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      transition: all .2s ease;
+    }
+    .testimonial-card:nth-child(2n) { background: var(--accent-3); color: var(--bg); }
+    .testimonial-card:nth-child(2n) .testimonial-info span { color: var(--bg); opacity: .8; }
+    .testimonial-card:nth-child(2n) .testimonial-quote { color: var(--bg); }
+
+    .testimonial-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 6px 6px 0 var(--border);
+    }
+
+    .testimonial-stars {
+      color: var(--accent-2);
+      font-size: 1.1rem;
+      letter-spacing: .15em;
+      margin-bottom: 1rem;
+    }
+    .testimonial-quote {
+      font-size: 1rem;
+      line-height: 1.55;
+      color: var(--text);
+      margin: 0 0 1.5rem;
+      font-weight: 500;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding-top: 1.25rem;
+      border-top: 2px solid var(--border);
+    }
+    .testimonial-avatar {
+      width: 2.75rem;
+      height: 2.75rem;
+      display: grid;
+      place-items: center;
+      background: var(--accent-1);
+      color: var(--bg);
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: .85rem;
+      border: 2px solid var(--border);
+    }
+    [data-theme="dark"] .testimonial-avatar { color: var(--text); }
+    .testimonial-info strong {
+      display: block;
+      font-family: var(--font-body);
+      font-size: .92rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: inherit;
+      letter-spacing: -0.01em;
+    }
+    .testimonial-info span {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    /* ============ TARIFS ============ */
+    .pricing-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 0;
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      overflow: hidden;
+    }
+    .pricing-card {
+      padding: 2rem;
       background: var(--surface);
-    }
-
-    .process-step {
+      border: 2px solid var(--border);
+      border-bottom: 0;
       position: relative;
-      padding: 1.4rem;
-      border-bottom: 1px solid var(--border);
+      transition: all .2s ease;
+    }
+    .pricing-card:last-child { border-bottom: 2px solid var(--border); }
+    .pricing-card.featured {
+      background: var(--text);
+      color: var(--bg);
+    }
+    [data-theme="dark"] .pricing-card.featured { color: var(--text); }
+    .pricing-card.featured .pricing-name,
+    .pricing-card.featured .pricing-price strong { color: inherit; }
+    .pricing-card.featured .pricing-desc,
+    .pricing-card.featured .pricing-price span { color: inherit; opacity: .8; }
+    .pricing-card.featured .pricing-features li { color: inherit; }
+    .pricing-card.featured::before {
+      content: "★ Recommandé";
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      padding: .35rem .7rem;
+      background: var(--accent-2);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border: 2px solid var(--border);
     }
 
-    .process-step:last-child { border-bottom: 0; }
-
-    .process-index {
-      display: block;
-      margin-bottom: 1.8rem;
-      color: var(--accent-ink);
-      font-size: .84rem;
+    .pricing-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
       font-weight: 900;
+      text-transform: uppercase;
+      margin: 0 0 .5rem;
+      letter-spacing: -0.02em;
+    }
+    .pricing-desc {
+      font-size: .9rem;
+      color: var(--muted);
+      margin: 0 0 1.5rem;
+      min-height: 2.4em;
+      font-weight: 500;
+    }
+    .pricing-price {
+      display: flex;
+      align-items: baseline;
+      gap: .5rem;
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+    .pricing-price strong {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--text);
+    }
+    .pricing-price span {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: .05em;
     }
 
-    .process-step p { margin-bottom: 0; color: var(--muted); }
-
-    .faq-list {
+    .pricing-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.75rem;
       display: grid;
       gap: .7rem;
     }
-
-    .faq-item {
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-radius: .8rem;
-      background: var(--surface);
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: .6rem;
+      font-size: .9rem;
+      color: var(--text-soft);
+      line-height: 1.5;
+      font-weight: 500;
     }
+    .pricing-features li::before {
+      content: "■";
+      color: var(--accent-1);
+      flex-shrink: 0;
+      font-size: .7rem;
+      margin-top: .35rem;
+    }
+    .pricing-card.featured .pricing-features li::before { color: var(--accent-2); }
+
+    .pricing-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      width: 100%;
+      padding: .95rem 1.25rem;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: .9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      border: 2px solid var(--border);
+      transition: all .15s ease;
+    }
+    .pricing-cta:hover {
+      background: var(--accent-1);
+      color: var(--bg);
+    }
+    [data-theme="dark"] .pricing-cta:hover { color: var(--text); }
+    .pricing-cta.primary {
+      background: var(--accent-1);
+      color: var(--bg);
+    }
+    [data-theme="dark"] .pricing-cta.primary { color: var(--text); }
+    .pricing-cta.primary:hover {
+      background: var(--accent-2);
+      color: var(--text);
+    }
+
+    /* ============ PROCESSUS ============ */
+    .process-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      border-top: 2px solid var(--border);
+    }
+    .process-step {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding: 2rem 0;
+      border-bottom: 2px solid var(--border);
+    }
+    .process-step-num {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent-1);
+    }
+    .process-step h3 {
+      font-size: 1.5rem;
+      font-weight: 900;
+      margin: 0;
+    }
+    .process-step p {
+      font-size: .92rem;
+      line-height: 1.6;
+      color: var(--text-soft);
+      margin: 0;
+      max-width: 55ch;
+      font-weight: 500;
+    }
+
+    /* ============ RESSOURCES ============ */
+    .resources-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .resource-card {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      padding: 1.75rem;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      transition: all .2s ease;
+    }
+    .resource-card:nth-child(3n) { background: var(--accent-2); }
+    .resource-card:hover {
+      background: var(--accent-1);
+      color: var(--bg);
+      transform: translate(-3px, -3px);
+      box-shadow: 6px 6px 0 var(--border);
+    }
+    [data-theme="dark"] .resource-card:hover { color: var(--text); }
+    .resource-card:hover h3,
+    .resource-card:hover p,
+    .resource-card:hover .resource-meta { color: inherit; }
+
+    .resource-meta {
+      display: flex;
+      gap: .75rem;
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent-1);
+    }
+    .resource-card:hover .resource-meta { color: inherit; opacity: .9; }
+    .resource-meta span:not(:last-child)::after {
+      content: "/";
+      margin-left: .75rem;
+      color: currentColor;
+      opacity: .5;
+    }
+    .resource-card h3 {
+      font-size: 1.2rem;
+      font-weight: 900;
+      line-height: 1.15;
+      margin: 0;
+      text-transform: none;
+      letter-spacing: -0.02em;
+    }
+    .resource-card p {
+      font-size: .9rem;
+      line-height: 1.55;
+      color: var(--text-soft);
+      margin: 0;
+      font-weight: 500;
+    }
+    .resource-arrow {
+      margin-top: auto;
+      padding-top: 1rem;
+      font-family: var(--font-mono);
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: inherit;
+    }
+
+    /* ============ RACCOURCISSEUR ============ */
+    .shortener {
+      padding: 2rem;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      max-width: 720px;
+    }
+    .shortener-form {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+    .shortener-form input {
+      flex: 1;
+      padding: .95rem 1.1rem;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: .85rem;
+      border: 2px solid var(--border);
+      transition: border-color .15s ease;
+    }
+    .shortener-form input:focus {
+      outline: none;
+      border-color: var(--accent-1);
+    }
+    .shortener-form button {
+      padding: .95rem 1.5rem;
+      background: var(--text);
+      color: var(--bg);
+      font-family: var(--font-body);
+      font-size: .9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      border: 2px solid var(--border);
+      transition: all .15s ease;
+    }
+    .shortener-form button:hover {
+      background: var(--accent-1);
+      color: var(--bg);
+    }
+    [data-theme="dark"] .shortener-form button:hover { color: var(--text); }
+    .shortener-result {
+      margin-top: 1.25rem;
+      padding: .95rem 1.1rem;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--text);
+      display: none;
+      word-break: break-all;
+    }
+    .shortener-result.visible { display: block; }
+    .shortener-result a {
+      color: var(--accent-1);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .shortener-result.error { color: var(--danger); border-color: var(--danger); }
+
+    /* ============ FAQ ============ */
+    .faq-list {
+      display: grid;
+      gap: 0;
+      border-top: 2px solid var(--border);
+    }
+    .faq-item { border-bottom: 2px solid var(--border); }
 
     .faq-button {
       width: 100%;
-      min-height: 3.65rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding: 1rem 1.1rem;
-      border: 0;
+      padding: 1.5rem 0;
       background: transparent;
+      border: 0;
       color: var(--text);
-      font-weight: 850;
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      font-weight: 700;
       text-align: left;
+      transition: color .15s ease;
+      text-transform: none;
+      letter-spacing: -0.01em;
     }
+    .faq-button:hover { color: var(--accent-1); }
 
     .faq-icon {
-      flex: 0 0 auto;
-      color: var(--accent-ink);
-      font-size: 1.4rem;
-      line-height: 1;
-      transition: transform .2s ease;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--text);
+      color: var(--bg);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1rem;
+      border: 2px solid var(--border);
+      transition: all .2s ease;
     }
-
-    .faq-button[aria-expanded="true"] .faq-icon { transform: rotate(45deg); }
+    [data-theme="dark"] .faq-icon { color: var(--text); }
+    .faq-button[aria-expanded="true"] .faq-icon {
+      background: var(--accent-1);
+      transform: rotate(45deg);
+    }
 
     .faq-panel {
       display: grid;
       grid-template-rows: 0fr;
-      transition: grid-template-rows .22s ease;
+      transition: grid-template-rows .3s cubic-bezier(.4,0,.2,1);
     }
-
     .faq-panel > div { overflow: hidden; }
-
     .faq-panel.is-open { grid-template-rows: 1fr; }
-
     .faq-panel p {
       margin: 0;
-      padding: 0 1.1rem 1.1rem;
-      color: var(--muted);
+      padding: 0 0 1.5rem;
+      color: var(--text-soft);
+      font-size: .92rem;
+      line-height: 1.6;
+      max-width: 65ch;
+      font-weight: 500;
     }
 
-    .pricing-box {
+    /* ============ CONTACT ============ */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .contact-channels {
+      display: grid;
+      gap: 0;
+      border: 2px solid var(--border);
+    }
+    .contact-channel {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1.5rem;
-      padding: 1.5rem;
-      border: 1px solid var(--border);
-      border-radius: 1rem;
+      gap: 1rem;
+      padding: 1.25rem 1.4rem;
       background: var(--surface);
+      border-bottom: 2px solid var(--border);
+      transition: all .15s ease;
     }
-
-    .pricing-box h2 { margin: 0; font-size: clamp(1.7rem, 5vw, 2.4rem); }
-    .pricing-box p { margin: 0; color: var(--accent-ink); font-weight: 850; text-align: right; }
-
-    .contact-layout {
-      display: grid;
-      gap: 2.5rem;
+    .contact-channel:last-child { border-bottom: 0; }
+    .contact-channel:hover {
+      background: var(--accent-1);
+      color: var(--bg);
     }
+    [data-theme="dark"] .contact-channel:hover { color: var(--text); }
+    .contact-channel:hover .contact-channel-label,
+    .contact-channel:hover .contact-channel-value { color: inherit; }
 
-    .contact-actions {
-      display: grid;
-      gap: .75rem;
-      margin-top: 1.5rem;
+    .contact-channel-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .35rem;
     }
-
-    .contact-button {
-      width: 100%;
-      justify-content: flex-start;
-      gap: .75rem;
+    .contact-channel-value {
+      font-family: var(--font-body);
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
     }
-
-    .contact-button strong { font-size: .98rem; }
+    .contact-channel-arrow {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: inherit;
+      transition: transform .2s ease;
+    }
+    .contact-channel:hover .contact-channel-arrow { transform: translateX(4px); }
 
     .contact-form {
-      padding: 1.25rem;
-      border: 1px solid var(--border);
-      border-radius: 1rem;
+      padding: 2rem;
       background: var(--surface);
-    }
-
-    .contact-form h3 { margin-bottom: 1.1rem; }
-
-    .field {
-      display: grid;
-      gap: .45rem;
-      margin-bottom: 1rem;
-    }
-
-    .field span {
-      color: var(--muted);
-      font-size: .9rem;
-      font-weight: 800;
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: .65rem;
-      background: var(--bg);
-      color: var(--text);
-      padding: .85rem .9rem;
-    }
-
-    textarea {
-      min-height: 8rem;
-      resize: vertical;
-    }
-
-    input::placeholder,
-    textarea::placeholder { color: var(--muted-deep); }
-
-    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-    .form-error { margin: 0 0 1rem; color: var(--danger); font-weight: 800; }
-    .form-submit {
-      width: 100%;
-      border: 0;
-    }
-
-    .site-footer {
-      padding: 2.2rem 0 calc(5.75rem + env(safe-area-inset-bottom));
-      border-top: 1px solid var(--border);
-      background: var(--surface-soft);
-    }
-
-    .footer-inner {
+      border: 2px solid var(--border);
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
     }
 
-    .footer-brand {
+    .form-field { display: flex; flex-direction: column; gap: .5rem; }
+    .form-field label {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-field input,
+    .form-field textarea {
+      width: 100%;
+      padding: .95rem 1.1rem;
+      background: var(--bg);
+      border: 2px solid var(--border);
       color: var(--text);
-      font-weight: 900;
+      font-family: var(--font-body);
+      font-size: .95rem;
+      font-weight: 500;
+      transition: border-color .15s ease;
     }
-
-    .footer-meta {
-      margin: .3rem 0 0;
-      color: var(--muted);
-      font-size: .9rem;
+    .form-field input:focus,
+    .form-field textarea:focus {
+      outline: none;
+      border-color: var(--accent-1);
     }
+    .form-field textarea { min-height: 8rem; resize: vertical; font-family: var(--font-body); }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: var(--muted-deep); }
 
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .7rem 1rem;
-      color: var(--muted);
-      font-size: .9rem;
-      font-weight: 750;
-    }
-
-    .floating-contact {
-      position: fixed;
-      z-index: 40;
-      right: max(1rem, env(safe-area-inset-right));
-      bottom: max(1rem, env(safe-area-inset-bottom));
-      min-height: 3.35rem;
+    .form-submit {
       display: inline-flex;
       align-items: center;
-      gap: .55rem;
-      padding: .8rem 1rem;
-      border-radius: 999px;
-      background: var(--accent);
-      color: var(--accent-text);
-      box-shadow: var(--shadow);
+      justify-content: center;
+      gap: .5rem;
+      padding: 1rem 1.5rem;
+      background: var(--text);
+      color: var(--bg);
+      font-family: var(--font-body);
+      font-size: .9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      border: 2px solid var(--border);
+      align-self: flex-start;
+      transition: all .15s ease;
+    }
+    .form-submit:hover {
+      background: var(--accent-1);
+      color: var(--bg);
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--border);
+    }
+    [data-theme="dark"] .form-submit:hover { color: var(--text); }
+    .form-submit::after { content: "→"; font-family: var(--font-mono); }
+
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    .form-error {
+      padding: .95rem 1.1rem;
+      background: var(--bg);
+      border: 2px solid var(--danger);
+      color: var(--danger);
+      font-family: var(--font-mono);
+      font-size: .82rem;
+      font-weight: 700;
+    }
+    .form-error[hidden] { display: none; }
+
+    /* ============ FOOTER ============ */
+    .site-footer {
+      padding: clamp(2.5rem, 5vw, 4rem) 0 2rem;
+      background: var(--text);
+      color: var(--bg);
+      border-top: 2px solid var(--border);
+    }
+    [data-theme="dark"] .site-footer { color: var(--text); }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 2px solid currentColor;
+    }
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
       font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: .9;
+      text-transform: uppercase;
+      margin: 0 0 1rem;
+      color: inherit;
+    }
+    .footer-brand em {
+      font-style: normal;
+      color: var(--accent-2);
+    }
+    .footer-tagline {
+      font-size: .95rem;
+      color: inherit;
+      opacity: .8;
+      max-width: 40ch;
+      line-height: 1.55;
+      margin: 0;
+      font-weight: 500;
     }
 
-    .floating-contact:hover { background: var(--accent-hover); }
+    .footer-nav {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    .footer-col h4 {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: inherit;
+      opacity: .7;
+      margin: 0 0 1rem;
+    }
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: .6rem;
+    }
+    .footer-col a {
+      font-size: .9rem;
+      color: inherit;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.005em;
+      transition: color .15s ease;
+    }
+    .footer-col a:hover { color: var(--accent-2); }
 
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 2rem;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: inherit;
+      opacity: .8;
+    }
+    .footer-trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      align-items: center;
+    }
+    .footer-trust span {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .footer-trust span::before {
+      content: "■";
+      color: var(--accent-2);
+      font-size: .7rem;
+    }
+
+    /* ============ RÉVÉLATION ============ */
     .reveal {
       opacity: 0;
-      transform: translateY(18px);
-      transition: opacity .55s ease, transform .55s ease;
+      transform: translateY(20px);
+      transition: opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1);
     }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (min-width: 700px) {
-      .container { width: min(1120px, calc(100% - 3rem)); }
-      .section { padding: 7rem 0; }
+    /* ============ RESPONSIVE ============ */
+    @media (min-width: 640px) {
       .services-grid { grid-template-columns: repeat(2, 1fr); }
-      .work-grid,
-      .store-grid { grid-template-columns: repeat(2, 1fr); }
-      .process-grid { grid-template-columns: repeat(4, 1fr); }
-      .process-step { border-bottom: 0; border-right: 1px solid var(--border); }
-      .process-step:last-child { border-right: 0; }
-      .contact-layout { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: start; }
-      .site-footer { padding-bottom: 2.2rem; }
-      .footer-inner { flex-direction: row; align-items: center; justify-content: space-between; }
-      .floating-contact { display: none; }
+      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+      .resources-grid { grid-template-columns: repeat(2, 1fr); }
+      .shortener-form { flex-direction: row; }
+      .footer-nav { grid-template-columns: repeat(3, 1fr); }
     }
 
-    @media (min-width: 980px) {
-      .menu-toggle,
-      .mobile-nav { display: none; }
+    @media (min-width: 900px) {
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
+      .testimonials-grid { grid-template-columns: repeat(3, 1fr); }
+      .resources-grid { grid-template-columns: repeat(3, 1fr); }
+
+      .pricing-grid {
+        grid-template-columns: repeat(3, 1fr);
+        border: 2px solid var(--border);
+      }
+      .pricing-card { border: 0; border-right: 2px solid var(--border); }
+      .pricing-card:last-child { border-right: 0; border-bottom: 0; }
+      .pricing-card.featured { border-right: 2px solid var(--border); }
+
+      .project {
+        grid-template-columns: 1.3fr 1fr;
+        gap: 3rem;
+      }
+      .project:nth-child(even) .project-frame { order: 2; }
+
+      .process-step {
+        grid-template-columns: 200px 1fr 2fr;
+        gap: 2rem;
+        align-items: baseline;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr 1.3fr;
+        gap: 2rem;
+        align-items: start;
+      }
+
+      .footer-top {
+        grid-template-columns: 1.2fr 2fr;
+        gap: 4rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .menu-toggle, .mobile-nav { display: none; }
       .desktop-nav { display: flex; }
-      .header-inner { min-height: 5.1rem; }
-      .services-grid { grid-template-columns: repeat(4, 1fr); }
+      .header-inner { min-height: 5rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         transition-duration: .01ms !important;
         animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
       }
       .reveal { opacity: 1; transform: none; }
+      .marquee-track { animation: none; }
     }
   </style>
 </head>
@@ -723,26 +1413,22 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#top" aria-label="ER Digital — Accueil" data-i18n-aria="brandHome">
-        <img class="brand-mark" src="apple-touch-icon.png" width="36" height="36" alt="">
+        <span class="brand-mark" aria-hidden="true">ER</span>
         <span>ER Digital</span>
       </a>
 
       <nav class="desktop-nav" aria-label="Navigation principale" data-i18n-aria="mainNav">
         <a href="#services" data-i18n="navServices">Services</a>
-        <a href="#boutique" data-i18n="navStore">Boutique</a>
         <a href="#realisations" data-i18n="navWork">Réalisations</a>
+        <a href="#tarifs" data-i18n="navPricing">Tarifs</a>
         <a href="#processus" data-i18n="navProcess">Processus</a>
-        <a href="#faq">FAQ</a>
-        <a href="outils/raccourcisseur.html" data-i18n="navTools">Outils</a>
-      <a href="#contact" data-i18n="navContact">Contact</a>
+        <a href="#contact" data-i18n="navContact">Contact</a>
       </nav>
 
       <div class="header-actions">
         <button class="control" id="languageToggle" type="button" aria-label="Switch to English" title="Switch to English">EN</button>
-        <button class="control" id="themeToggle" type="button" aria-label="Activer le thème clair" title="Activer le thème clair">
-          <span aria-hidden="true">◐</span>
-        </button>
-        <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Ouvrir le menu" title="Ouvrir le menu" data-i18n-aria="openMenu" data-i18n-title="openMenu">
+        <button class="control" id="themeToggle" type="button" aria-label="Activer le thème sombre" title="Activer le thème sombre">◐</button>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Ouvrir le menu" data-i18n-aria="openMenu" data-i18n-title="openMenu">
           <span class="menu-lines" aria-hidden="true"></span>
         </button>
       </div>
@@ -750,161 +1436,411 @@
 
     <nav class="container mobile-nav" id="mobileNav" aria-label="Navigation principale" data-i18n-aria="mainNav">
       <a href="#services" data-i18n="navServices">Services</a>
-      <a href="#boutique" data-i18n="navStore">Boutique</a>
       <a href="#realisations" data-i18n="navWork">Réalisations</a>
+      <a href="#tarifs" data-i18n="navPricing">Tarifs</a>
       <a href="#processus" data-i18n="navProcess">Processus</a>
-      <a href="#faq">FAQ</a>
-      <a href="outils/raccourcisseur.html" data-i18n="navTools">Outils</a>
       <a href="#contact" data-i18n="navContact">Contact</a>
     </nav>
   </header>
 
   <main id="main">
+    <!-- HERO -->
     <section class="hero" id="top">
-      <div class="container hero-content reveal">
-        <p class="eyebrow">ER Digital</p>
-        <h1 data-i18n="heroTitle">Votre présence en ligne, clé en main.</h1>
-        <p class="hero-copy" data-i18n="heroText">Création de sites professionnels et boutique d'ebooks pour particuliers et entreprises.</p>
-        <div class="button-row">
-          <a class="button button-primary" href="#contact" data-i18n="heroPrimary">Demander un site</a>
+      <div class="container">
+        <span class="hero-meta reveal" data-i18n="heroMeta">★ Yamoussoukro · Disponible 2026</span>
+        <h1 class="reveal" data-i18n-html="heroTitle">
+          Votre site.<br><em>Fait maison.</em><br>Sans détour.
+        </h1>
+        <p class="lead hero-lead reveal" data-i18n="heroText">
+          ER Digital conçoit des sites francs pour indépendants, artisans et petites entreprises. Design direct, structure claire, livraison sans blabla.
+        </p>
+        <div class="hero-actions reveal">
+          <a class="btn btn-primary" href="#contact" data-i18n="heroPrimary">Parler du projet</a>
+          <a class="btn btn-ghost" href="#tarifs" data-i18n="heroSecondary">Voir les tarifs</a>
         </div>
       </div>
     </section>
 
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Sites web</span>
+        <span>Boutiques ebooks</span>
+        <span>CV pro</span>
+        <span>Traduction</span>
+        <span>Support</span>
+        <span>Sites web</span>
+        <span>Boutiques ebooks</span>
+        <span>CV pro</span>
+        <span>Traduction</span>
+        <span>Support</span>
+      </div>
+    </div>
+
+    <!-- SERVICES -->
     <section class="section" id="services">
       <div class="container">
-        <div class="reveal">
-          <p class="eyebrow" data-i18n="servicesEyebrow">Services</p>
-          <h2 data-i18n="servicesTitle">Des services conçus pour être clairs et utiles.</h2>
-          <p class="section-intro" data-i18n="servicesIntro">Une offre digitale pensée pour présenter votre activité, vos contenus et vos documents avec soin.</p>
+        <div class="section-head">
+          <div>
+            <div class="eyebrow reveal" data-i18n="servicesEyebrow">Services</div>
+            <h2 class="reveal" data-i18n="servicesTitle">Six services. Zéro blabla.</h2>
+            <p class="lead reveal" data-i18n="servicesIntro">Chaque prestation est livrée avec un périmètre clair et un tarif de départ fixe.</p>
+          </div>
         </div>
 
-        <div class="grid services-grid">
-          <article class="card reveal">
-            <span class="card-number">01</span>
+        <div class="services-grid">
+          <article class="service-card reveal">
+            <span class="service-num">01</span>
             <h3 data-i18n="service1Title">Création de sites web</h3>
-            <p data-i18n="service1Text">Portfolios, sites vitrines, boutiques en ligne, pages de présentation.</p>
+            <p data-i18n="service1Text">Portfolios, sites vitrines, boutiques en ligne. Design sur mesure, hébergement inclus 1re année.</p>
+            <div class="service-price">
+              <span data-i18n="priceFrom">Dès</span>
+              <strong>75 000 F</strong>
+            </div>
           </article>
-          <article class="card reveal">
-            <span class="card-number">02</span>
+
+          <article class="service-card reveal">
+            <span class="service-num">02</span>
             <h3 data-i18n="service2Title">Boutique d'ebooks</h3>
-            <p data-i18n="service2Text">Vente d'ebooks via EbookHub sur Chariow.</p>
+            <p data-i18n="service2Text">Vente d'ebooks via EbookHub sur Chariow. Paiements, téléchargements et relation client gérés.</p>
+            <div class="service-price">
+              <span data-i18n="priceFrom">Dès</span>
+              <strong data-i18n="priceQuote">Sur devis</strong>
+            </div>
           </article>
-          <article class="card reveal">
-            <span class="card-number">03</span>
-            <h3 data-i18n="service3Title">CV et lettres de motivation</h3>
-            <p data-i18n="service3Text">Rédaction de CV et de lettres de motivation en français et en anglais.</p>
+
+          <article class="service-card reveal">
+            <span class="service-num">03</span>
+            <h3 data-i18n="service3Title">CV et lettres</h3>
+            <p data-i18n="service3Text">Rédaction en français et anglais. Mise en page typographique, relecture, PDF prêt à envoyer.</p>
+            <div class="service-price">
+              <span data-i18n="priceFrom">Dès</span>
+              <strong>15 000 F</strong>
+            </div>
           </article>
-          <article class="card reveal">
-            <span class="card-number">04</span>
-            <h3 data-i18n="service4Title">Traduction et relecture</h3>
-            <p data-i18n="service4Text">Traduction et relecture de textes français-anglais.</p>
+
+          <article class="service-card reveal">
+            <span class="service-num">04</span>
+            <h3 data-i18n="service4Title">Traduction</h3>
+            <p data-i18n="service4Text">Français ↔ anglais et relecture éditoriale. Articles, sites web, documents pro.</p>
+            <div class="service-price">
+              <span data-i18n="priceFrom">Dès</span>
+              <strong>10 000 F</strong>
+            </div>
           </article>
-          <a class="card reveal" href="outils/raccourcisseur.html">
-            <span class="card-number">05</span>
-            <h3 data-i18n="service5Title">Raccourcisseur de liens gratuit</h3>
-            <p data-i18n="service5Text">Raccourcissez vos liens en un clic, gratuitement.</p>
-            <span class="link-arrow" data-i18n="openTool">Ouvrir l'outil</span>
-          </a>
+
+          <article class="service-card reveal">
+            <span class="service-num">05</span>
+            <h3 data-i18n="service5Title">Raccourcisseur</h3>
+            <p data-i18n="service5Text">Outil gratuit pour transformer vos URLs. Sans inscription, immédiat.</p>
+            <div class="service-price">
+              <span data-i18n="priceLabel">Tarif</span>
+              <strong data-i18n="priceFree">Gratuit</strong>
+            </div>
+          </article>
+
+          <article class="service-card reveal">
+            <span class="service-num">06</span>
+            <h3 data-i18n="service6Title">Maintenance</h3>
+            <p data-i18n="service6Text">Mises à jour, sauvegardes et assistance continue après la mise en ligne.</p>
+            <div class="service-price">
+              <span data-i18n="priceMonthly">Mensuel</span>
+              <strong>10 000 F</strong>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="section section-alt" id="realisations">
+    <!-- RÉALISATIONS -->
+    <section class="section" id="realisations">
       <div class="container">
-        <div class="reveal">
-          <p class="eyebrow" data-i18n="workEyebrow">Réalisations</p>
-          <h2 data-i18n="workTitle">Exemples de notre travail</h2>
-          <p class="section-intro" data-i18n="workIntro">Deux projets à consulter pour découvrir l'approche visuelle et la structure proposée.</p>
+        <div class="section-head">
+          <div>
+            <div class="eyebrow reveal" data-i18n="workEyebrow">Réalisations</div>
+            <h2 class="reveal" data-i18n="workTitle">Deux projets bruts.</h2>
+            <p class="lead reveal" data-i18n="workIntro">Aperçus visuels à venir. En attendant, visitez les sites en direct.</p>
+          </div>
         </div>
 
-        <div class="grid work-grid">
-          <a class="card project-card reveal" href="https://emmanuelrolandpregnon-design.github.io/" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir Portfolio dans un nouvel onglet" data-i18n-aria="openPortfolio">
-            <div>
-              <span class="card-number">01</span>
+        <div class="projects">
+          <article class="project reveal">
+            <a class="project-frame" href="https://emmanuelrolandpregnon-design.github.io/" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir Portfolio dans un nouvel onglet" data-i18n-aria="openPortfolio">
+              <div class="frame-bar">
+                <div class="frame-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+                <div class="frame-url">emmanuelrolandpregnon-design.github.io</div>
+              </div>
+              <div class="frame-body">
+                <div class="frame-placeholder">
+                  <span class="frame-placeholder-num">01 / Aperçu</span>
+                  <p class="frame-placeholder-title">Portfolio</p>
+                  <span class="frame-placeholder-note" data-i18n="placeholderSoon">Aperçu à venir</span>
+                </div>
+              </div>
+            </a>
+            <div class="project-info">
+              <div class="project-meta">
+                <span data-i18n="tagShowcase">Site vitrine</span>
+                <span data-i18n="tagDesign">Design</span>
+                <span>2026</span>
+              </div>
               <h3>Portfolio</h3>
-              <p data-i18n="portfolioText">Présentation de travaux et d'une identité digitale.</p>
+              <p data-i18n="portfolioText">Site vitrine pour un créatif indépendant. Grille typographique franche, navigation par chapitres, contact direct.</p>
+              <a class="project-link" href="https://emmanuelrolandpregnon-design.github.io/" target="_blank" rel="noopener noreferrer" data-i18n="viewProject">Ouvrir le site</a>
             </div>
-            <span class="link-arrow" data-i18n="viewProject">Voir le projet</span>
-          </a>
-          <a class="card project-card reveal" href="https://emmanuelrolandpregnon-design.github.io/trajectory/" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir ER Trajectory dans un nouvel onglet" data-i18n-aria="openTrajectory">
-            <div>
-              <span class="card-number">02</span>
+          </article>
+
+          <article class="project reveal">
+            <a class="project-frame" href="https://emmanuelrolandpregnon-design.github.io/trajectory/" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir ER Trajectory dans un nouvel onglet" data-i18n-aria="openTrajectory">
+              <div class="frame-bar">
+                <div class="frame-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+                <div class="frame-url">emmanuelrolandpregnon-design.github.io/trajectory/</div>
+              </div>
+              <div class="frame-body">
+                <div class="frame-placeholder">
+                  <span class="frame-placeholder-num">02 / Aperçu</span>
+                  <p class="frame-placeholder-title">ER Trajectory</p>
+                  <span class="frame-placeholder-note" data-i18n="placeholderSoon">Aperçu à venir</span>
+                </div>
+              </div>
+            </a>
+            <div class="project-info">
+              <div class="project-meta">
+                <span data-i18n="tagExperience">Expérience web</span>
+                <span>UI / UX</span>
+                <span>2026</span>
+              </div>
               <h3>ER Trajectory</h3>
-              <p data-i18n="trajectoryText">Une expérience web structurée autour d'une direction claire.</p>
+              <p data-i18n="trajectoryText">Expérience web structurée. Interface franche, rythme de lecture tenu, animations au service du contenu.</p>
+              <a class="project-link" href="https://emmanuelrolandpregnon-design.github.io/trajectory/" target="_blank" rel="noopener noreferrer" data-i18n="viewProject">Ouvrir le site</a>
             </div>
-            <span class="link-arrow" data-i18n="viewProject">Voir le projet</span>
-          </a>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="boutique">
+    <!-- TÉMOIGNAGES -->
+    <section class="section" id="temoignages">
       <div class="container">
-        <div class="reveal">
-          <p class="eyebrow" data-i18n="storeEyebrow">Boutique</p>
-          <h2 data-i18n="storeTitle">Des ressources à explorer en ligne.</h2>
-          <p class="section-intro" data-i18n="storeIntro">Boutiques Chariow gérées par ER Digital.</p>
+        <div class="section-head">
+          <div>
+            <div class="eyebrow reveal" data-i18n="testimonialsEyebrow">Témoignages</div>
+            <h2 class="reveal" data-i18n="testimonialsTitle">Paroles brutes.</h2>
+          </div>
         </div>
 
-        <div class="grid store-grid">
-          <a class="card store-card reveal" href="https://bfgwdjfx.mychariow.shop" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir EbookHub dans un nouvel onglet" data-i18n-aria="openEbookHub">
-            <div>
-              <span class="card-number">01</span>
-              <h3>EbookHub</h3>
-              <p data-i18n="ebookHubText">Bibliothèque d'ebooks en ligne.</p>
+        <div class="testimonials-grid">
+          <article class="testimonial-card reveal">
+            <div class="testimonial-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+            <p class="testimonial-quote" data-i18n="testimonial1Quote">Le site a été livré en une semaine, sans compromis. Je n'avais jamais vu mon travail présenté aussi clairement.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar" aria-hidden="true">AK</div>
+              <div class="testimonial-info">
+                <strong data-i18n="testimonial1Author">Aïcha Koné</strong>
+                <span data-i18n="testimonial1Role">Boutique en ligne</span>
+              </div>
             </div>
-            <span class="link-arrow" data-i18n="visitStore">Visiter la boutique</span>
-          </a>
-          <a class="card store-card reveal" href="https://qxziykmr.mychariow.shop" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir Level Up Engl dans un nouvel onglet" data-i18n-aria="openLevelUp">
-            <div>
-              <span class="card-number">02</span>
-              <h3>Level Up Engl</h3>
-              <p data-i18n="levelUpText">Cours et ressources d'anglais.</p>
+          </article>
+
+          <article class="testimonial-card reveal">
+            <div class="testimonial-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+            <p class="testimonial-quote" data-i18n="testimonial2Quote">CV et lettre repensés de A à Z. Structure claire, mise en page typographique. Entretien décroché en une semaine.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar" aria-hidden="true">YM</div>
+              <div class="testimonial-info">
+                <strong data-i18n="testimonial2Author">Yao Marc</strong>
+                <span data-i18n="testimonial2Role">Demandeur d'emploi</span>
+              </div>
             </div>
-            <span class="link-arrow" data-i18n="visitStore">Visiter la boutique</span>
-          </a>
+          </article>
+
+          <article class="testimonial-card reveal">
+            <div class="testimonial-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+            <p class="testimonial-quote" data-i18n="testimonial3Quote">Communication franche, délais tenus, aucune surprise. Le résultat dépasse ce que j'avais imaginé.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar" aria-hidden="true">FB</div>
+              <div class="testimonial-info">
+                <strong data-i18n="testimonial3Author">Fatou Bamba</strong>
+                <span data-i18n="testimonial3Role">Consultante</span>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="section section-alt" id="processus">
+    <!-- TARIFS -->
+    <section class="section" id="tarifs">
       <div class="container">
-        <div class="reveal">
-          <p class="eyebrow" data-i18n="processEyebrow">Processus</p>
-          <h2 data-i18n="processTitle">Un déroulement simple, étape par étape.</h2>
+        <div class="section-head">
+          <div>
+            <div class="eyebrow reveal" data-i18n="pricingEyebrow">Tarifs</div>
+            <h2 class="reveal" data-i18n="pricingTitle">Trois plans. Prix affichés.</h2>
+          </div>
         </div>
 
-        <div class="process-grid reveal">
+        <div class="pricing-grid reveal">
+          <article class="pricing-card">
+            <h3 class="pricing-name" data-i18n="plan1Name">Starter</h3>
+            <p class="pricing-desc" data-i18n="plan1Desc">Pour les indépendants et premiers projets.</p>
+            <div class="pricing-price">
+              <strong>75K</strong>
+              <span>FCFA · dès</span>
+            </div>
+            <ul class="pricing-features">
+              <li data-i18n="plan1F1">1 à 3 pages responsive</li>
+              <li data-i18n="plan1F2">Formulaire de contact</li>
+              <li data-i18n="plan1F3">Hébergement 1re année</li>
+              <li data-i18n="plan1F4">Livraison en 7 jours</li>
+            </ul>
+            <a class="pricing-cta" href="#contact" data-i18n="planCta">Choisir Starter</a>
+          </article>
+
+          <article class="pricing-card featured">
+            <h3 class="pricing-name" data-i18n="plan2Name">Business</h3>
+            <p class="pricing-desc" data-i18n="plan2Desc">Pour les entreprises qui veulent plus.</p>
+            <div class="pricing-price">
+              <strong>150K</strong>
+              <span>FCFA · dès</span>
+            </div>
+            <ul class="pricing-features">
+              <li data-i18n="plan2F1">Pages illimitées, design sur mesure</li>
+              <li data-i18n="plan2F2">Boutique en ligne + paiement</li>
+              <li data-i18n="plan2F3">SEO de base, hébergement</li>
+              <li data-i18n="plan2F4">Support prioritaire 30 jours</li>
+            </ul>
+            <a class="pricing-cta primary" href="#contact" data-i18n="planCta2">Choisir Business</a>
+          </article>
+
+          <article class="pricing-card">
+            <h3 class="pricing-name" data-i18n="plan3Name">Sur mesure</h3>
+            <p class="pricing-desc" data-i18n="plan3Desc">Pour les projets complexes.</p>
+            <div class="pricing-price">
+              <strong data-i18n="plan3Price">Devis</strong>
+            </div>
+            <ul class="pricing-features">
+              <li data-i18n="plan3F1">Fonctionnalités avancées</li>
+              <li data-i18n="plan3F2">Intégrations API</li>
+              <li data-i18n="plan3F3">Design et contenu personnalisés</li>
+              <li data-i18n="plan3F4">Support prioritaire permanent</li>
+            </ul>
+            <a class="pricing-cta" href="#contact" data-i18n="planCta3">Demander un devis</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESSUS -->
+    <section class="section" id="processus">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow reveal" data-i18n="processEyebrow">Processus</div>
+            <h2 class="reveal" data-i18n="processTitle">Quatre étapes. Recta.</h2>
+          </div>
+        </div>
+
+        <div class="process-list reveal">
           <article class="process-step">
-            <span class="process-index">01</span>
+            <span class="process-step-num" data-i18n="step1">01 / Étape</span>
             <h3 data-i18n="process1Title">Échange</h3>
-            <p data-i18n="process1Text">Nous clarifions le besoin, le contenu et les priorités du projet.</p>
+            <p data-i18n="process1Text">On clarifie le besoin, le contenu, les priorités, le budget. Brief écrit à la fin.</p>
           </article>
+
           <article class="process-step">
-            <span class="process-index">02</span>
+            <span class="process-step-num" data-i18n="step2">02 / Étape</span>
             <h3 data-i18n="process2Title">Maquette</h3>
-            <p data-i18n="process2Text">Une direction visuelle est préparée pour organiser l'expérience.</p>
+            <p data-i18n="process2Text">Direction visuelle préparée. Vous validez la structure avant toute ligne de code.</p>
           </article>
+
           <article class="process-step">
-            <span class="process-index">03</span>
+            <span class="process-step-num" data-i18n="step3">03 / Étape</span>
             <h3 data-i18n="process3Title">Mise en ligne</h3>
-            <p data-i18n="process3Text">Le site est préparé pour sa publication après validation.</p>
+            <p data-i18n="process3Text">Développement puis publication sur votre domaine. Hébergement, sécurité, perfs vérifiés.</p>
           </article>
+
           <article class="process-step">
-            <span class="process-index">04</span>
+            <span class="process-step-num" data-i18n="step4">04 / Étape</span>
             <h3 data-i18n="process4Title">Ajustements</h3>
-            <p data-i18n="process4Text">Les points convenus sont revus après la mise en ligne.</p>
+            <p data-i18n="process4Text">Après mise en ligne, revue des derniers détails convenus ensemble.</p>
           </article>
         </div>
       </div>
     </section>
 
+    <!-- RESSOURCES -->
+    <section class="section" id="ressources">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow reveal" data-i18n="blogEyebrow">Ressources</div>
+            <h2 class="reveal" data-i18n="blogTitle">Trois lectures sans blabla.</h2>
+          </div>
+        </div>
+
+        <div class="resources-grid">
+          <a class="resource-card reveal" href="#" aria-label="Lire l'article : 5 erreurs à éviter lors de la création de son premier site web">
+            <div class="resource-meta">
+              <span data-i18n="blog1Meta">Guide</span>
+              <span>5 min</span>
+            </div>
+            <h3 data-i18n="blog1Title">5 erreurs à éviter pour son premier site</h3>
+            <p data-i18n="blog1Text">Les pièges les plus courants et comment les contourner.</p>
+            <span class="resource-arrow" data-i18n="readMore">Lire →</span>
+          </a>
+
+          <a class="resource-card reveal" href="#" aria-label="Lire l'article : Pourquoi votre entreprise a besoin d'un site mobile-friendly en 2026">
+            <div class="resource-meta">
+              <span data-i18n="blog2Meta">Tendances</span>
+              <span>4 min</span>
+            </div>
+            <h3 data-i18n="blog2Title">Pourquoi votre site doit être mobile en 2026</h3>
+            <p data-i18n="blog2Text">Le mobile, c'est plus de 60% du trafic. Voici comment en profiter.</p>
+            <span class="resource-arrow" data-i18n="readMore">Lire →</span>
+          </a>
+
+          <a class="resource-card reveal" href="#" aria-label="Lire l'article : Comment rédiger un CV qui attire l'attention des recruteurs">
+            <div class="resource-meta">
+              <span data-i18n="blog3Meta">Carrière</span>
+              <span>6 min</span>
+            </div>
+            <h3 data-i18n="blog3Title">Un CV qui accroche les recruteurs</h3>
+            <p data-i18n="blog3Text">Les éléments clés à mettre en avant et les erreurs à éviter.</p>
+            <span class="resource-arrow" data-i18n="readMore">Lire →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- RACCOURCISSEUR -->
+    <section class="section" id="raccourcisseur">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow reveal" data-i18n="shortenerEyebrow">Outil gratuit</div>
+            <h2 class="reveal" data-i18n="shortenerTitle">Raccourcisseur de liens.</h2>
+            <p class="lead reveal" data-i18n="shortenerIntro">Gratuit, sans inscription, immédiat.</p>
+          </div>
+        </div>
+
+        <div class="shortener reveal">
+          <div class="shortener-form">
+            <input type="url" id="longUrl" placeholder="https://exemple.com/mon-lien-tres-long" data-i18n-placeholder="shortenerPlaceholder">
+            <button type="button" id="shortenBtn" data-i18n="shortenBtn">Raccourcir</button>
+          </div>
+          <div class="shortener-result" id="shortenerResult"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
     <section class="section" id="faq">
       <div class="container">
-        <div class="reveal">
-          <p class="eyebrow">FAQ</p>
-          <h2 data-i18n="faqTitle">Questions fréquentes.</h2>
+        <div class="section-head">
+          <div>
+            <div class="eyebrow reveal" data-i18n="faqEyebrow">FAQ</div>
+            <h2 class="reveal" data-i18n="faqTitle">Questions franches.</h2>
+          </div>
         </div>
 
         <div class="faq-list reveal">
@@ -914,7 +1850,7 @@
               <span class="faq-icon" aria-hidden="true">+</span>
             </button>
             <div class="faq-panel" id="faq1" role="region">
-              <div><p data-i18n="faq1Answer">Confirmés après un échange sur votre projet.</p></div>
+              <div><p data-i18n="faq1Answer">Confirmés après échange sur votre projet. En général, 7 jours pour un site vitrine et 2 à 3 semaines pour un projet plus complexe.</p></div>
             </div>
           </article>
 
@@ -924,7 +1860,7 @@
               <span class="faq-icon" aria-hidden="true">+</span>
             </button>
             <div class="faq-panel" id="faq2" role="region">
-              <div><p data-i18n="faq2Answer">Les modalités sont confirmées par écrit avant de commencer. Moyens acceptés : mobile money (dont Wave).</p></div>
+              <div><p data-i18n="faq2Answer">Modalités confirmées par écrit avant de commencer. Moyens acceptés : mobile money (dont Wave) et virement bancaire.</p></div>
             </div>
           </article>
 
@@ -934,7 +1870,7 @@
               <span class="faq-icon" aria-hidden="true">+</span>
             </button>
             <div class="faq-panel" id="faq3" role="region">
-              <div><p data-i18n="faq3Answer">Des ajustements sont prévus après la mise en ligne ; leur étendue est précisée avant de commencer.</p></div>
+              <div><p data-i18n="faq3Answer">Des ajustements sont prévus après la mise en ligne ; leur étendue est précisée avant de commencer. Support 30 jours inclus dans Business.</p></div>
             </div>
           </article>
 
@@ -944,7 +1880,7 @@
               <span class="faq-icon" aria-hidden="true">+</span>
             </button>
             <div class="faq-panel" id="faq4" role="region">
-              <div><p class="to-complete" data-i18n="toComplete">À compléter</p></div>
+              <div><p data-i18n="faq4Answer">Hébergement inclus la première année pour Starter et Business. Ensuite, renouvellement annuel à tarif préférentiel.</p></div>
             </div>
           </article>
 
@@ -954,86 +1890,117 @@
               <span class="faq-icon" aria-hidden="true">+</span>
             </button>
             <div class="faq-panel" id="faq5" role="region">
-              <div><p data-i18n="faq5Answer">Basé à Yamoussoukro, je travaille en Côte d'Ivoire et à distance.</p></div>
+              <div><p data-i18n="faq5Answer">Basé à Yamoussoukro, je travaille en Côte d'Ivoire et à distance avec des clients partout.</p></div>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section section-alt" id="tarifs">
-      <div class="container reveal">
-        <div class="pricing-box">
-          <h2 data-i18n="pricingTitle">Tarifs</h2>
-          <p data-i18n="pricingText">Sur devis, selon votre projet.</p>
-        </div>
-      </div>
-    </section>
-
+    <!-- CONTACT -->
     <section class="section" id="contact">
-      <div class="container contact-layout">
-        <div class="reveal">
-          <p class="eyebrow" data-i18n="contactEyebrow">Contact</p>
-          <h2 data-i18n="contactTitle">Parlons de votre projet.</h2>
-          <p class="section-intro" data-i18n="contactIntro">Choisissez le canal qui vous convient ou envoyez votre demande via le formulaire.</p>
-
-          <div class="contact-actions">
-            <a class="button button-primary contact-button" id="whatsappLink" href="https://wa.me/2250575370929?text=Bonjour%2C%20je%20souhaite%20un%20site%20avec%20ER%20Digital." target="_blank" rel="noopener noreferrer" aria-label="Contacter ER Digital sur WhatsApp" data-i18n-aria="whatsappAria">
-              <span aria-hidden="true">◉</span>
-              <span><strong>WhatsApp</strong><br><span class="muted">+225 05 75 37 09 29</span></span>
-            </a>
-            <a class="button button-secondary contact-button" href="mailto:emmanuelrolandpregnon@gmail.com" aria-label="Envoyer un email à ER Digital" data-i18n-aria="emailAria">
-              <span aria-hidden="true">✉</span>
-              <span><strong>Email</strong><br><span class="muted">emmanuelrolandpregnon@gmail.com</span></span>
-            </a>
-            <a class="button button-secondary contact-button" href="https://www.linkedin.com/in/emmanuel-roland-pregnon-a25211440" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir le profil LinkedIn d'ER Digital" data-i18n-aria="linkedinAria">
-              <span aria-hidden="true">in</span>
-              <span><strong>LinkedIn</strong><br><span class="muted" data-i18n="linkedinText">Profil professionnel</span></span>
-            </a>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow reveal" data-i18n="contactEyebrow">Contact</div>
+            <h2 class="reveal" data-i18n="contactTitle">Parlons de votre projet.</h2>
+            <p class="lead reveal" data-i18n="contactIntro">Un canal ou le formulaire. Réponse sous 24h ouvrées.</p>
           </div>
         </div>
 
-        <form class="contact-form reveal" id="contactForm" novalidate>
-          <h3 data-i18n="formTitle">Envoyer une demande</h3>
-          <div class="field">
-            <label for="name"><span data-i18n="labelName">Nom</span></label>
-            <input id="name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="80" placeholder="Votre nom" data-i18n-placeholder="placeholderName">
+        <div class="contact-grid">
+          <div class="contact-channels reveal">
+            <a class="contact-channel" id="whatsappLink" href="https://wa.me/2250575370929" target="_blank" rel="noopener noreferrer" aria-label="Contacter ER Digital sur WhatsApp" data-i18n-aria="whatsappAria">
+              <div>
+                <span class="contact-channel-label">WhatsApp</span>
+                <span class="contact-channel-value">+225 05 75 37 09 29</span>
+              </div>
+              <span class="contact-channel-arrow" aria-hidden="true">↗</span>
+            </a>
+
+            <a class="contact-channel" href="mailto:emmanuelrolandpregnon@gmail.com" aria-label="Envoyer un email à ER Digital" data-i18n-aria="emailAria">
+              <div>
+                <span class="contact-channel-label">Email</span>
+                <span class="contact-channel-value">emmanuelrolandpregnon@gmail.com</span>
+              </div>
+              <span class="contact-channel-arrow" aria-hidden="true">↗</span>
+            </a>
+
+            <a class="contact-channel" href="https://www.linkedin.com/in/emmanuel-roland-pregnon-a25211440" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir le profil LinkedIn d'ER Digital" data-i18n-aria="linkedinAria">
+              <div>
+                <span class="contact-channel-label">LinkedIn</span>
+                <span class="contact-channel-value" data-i18n="linkedinText">Profil pro</span>
+              </div>
+              <span class="contact-channel-arrow" aria-hidden="true">↗</span>
+            </a>
           </div>
-          <div class="field">
-            <label for="email"><span data-i18n="labelEmail">Email</span></label>
-            <input id="email" name="email" type="email" autocomplete="email" required maxlength="120" placeholder="vous@exemple.com" data-i18n-placeholder="placeholderEmail">
-          </div>
-          <div class="field">
-            <label for="message"><span data-i18n="labelMessage">Message</span></label>
-            <textarea id="message" name="message" required minlength="10" maxlength="1500" placeholder="Décrivez brièvement votre projet." data-i18n-placeholder="placeholderMessage"></textarea>
-          </div>
-          <div class="hp" aria-hidden="true"><label>Website <input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></label></div>
-          <p class="form-error" id="formError" role="alert" hidden></p>
-          <button class="button button-secondary form-submit" type="submit" data-i18n="formSubmit">Préparer l'email</button>
-        </form>
+
+          <form class="contact-form reveal" id="contactForm" novalidate>
+            <div class="form-field">
+              <label for="name" data-i18n="labelName">Nom</label>
+              <input id="name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="80" placeholder="Votre nom" data-i18n-placeholder="placeholderName">
+            </div>
+            <div class="form-field">
+              <label for="email" data-i18n="labelEmail">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required maxlength="120" placeholder="vous@exemple.com" data-i18n-placeholder="placeholderEmail">
+            </div>
+            <div class="form-field">
+              <label for="message" data-i18n="labelMessage">Message</label>
+              <textarea id="message" name="message" required minlength="10" maxlength="1500" placeholder="Décrivez votre projet." data-i18n-placeholder="placeholderMessage"></textarea>
+            </div>
+            <div class="hp" aria-hidden="true"><label>Website <input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></label></div>
+            <p class="form-error" id="formError" role="alert" hidden></p>
+            <button class="form-submit" type="submit" data-i18n="formSubmit">Envoyer</button>
+          </form>
+        </div>
       </div>
     </section>
   </main>
 
-  <a class="floating-contact" id="floatingWhatsapp" href="https://wa.me/2250575370929?text=Bonjour%2C%20je%20souhaite%20un%20site%20avec%20ER%20Digital." target="_blank" rel="noopener noreferrer" aria-label="Contacter ER Digital sur WhatsApp" data-i18n-aria="whatsappAria">
-    <span aria-hidden="true">◉</span>
-    <span>WhatsApp</span>
-  </a>
-
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <div>
-        <div class="footer-brand">ER Digital · Yamoussoukro</div>
-        <p class="footer-meta">© <span id="year"></span> ER Digital</p>
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <p class="footer-brand">ER Digital<em>.</em></p>
+          <p class="footer-tagline" data-i18n="footerTagline">Studio web brut. Sites francs, tenus, sans détour.</p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Liens utiles" data-i18n-aria="footerNav">
+          <div class="footer-col">
+            <h4 data-i18n="footerNavCol1">Studio</h4>
+            <ul>
+              <li><a href="#services" data-i18n="navServices">Services</a></li>
+              <li><a href="#realisations" data-i18n="navWork">Réalisations</a></li>
+              <li><a href="#tarifs" data-i18n="navPricing">Tarifs</a></li>
+              <li><a href="#processus" data-i18n="navProcess">Processus</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4 data-i18n="footerNavCol2">Ressources</h4>
+            <ul>
+              <li><a href="#ressources" data-i18n="navBlog">Articles</a></li>
+              <li><a href="#raccourcisseur" data-i18n="navShortener">Raccourcisseur</a></li>
+              <li><a href="#faq">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4 data-i18n="footerNavCol3">Contact</h4>
+            <ul>
+              <li><a href="#contact" data-i18n="navContact">Formulaire</a></li>
+              <li><a href="https://wa.me/2250575370929" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+              <li><a href="mailto:emmanuelrolandpregnon@gmail.com">Email</a></li>
+            </ul>
+          </div>
+        </nav>
       </div>
-      <nav class="footer-links" aria-label="Liens utiles" data-i18n-aria="footerNav">
-        <a href="#services" data-i18n="navServices">Services</a>
-        <a href="#boutique" data-i18n="navStore">Boutique</a>
-        <a href="#contact" data-i18n="navContact">Contact</a>
-        <a href="confidentialite.html" data-i18n="privacyLink">Confidentialité</a>
-        <a href="cgu.html" data-i18n="termsLink">CGU</a>
-        <a href="#top" data-i18n="backTop">Retour en haut</a>
-      </nav>
+
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> ER Digital · Yamoussoukro</span>
+        <div class="footer-trust">
+          <span data-i18n="trustWave">Wave & Mobile Money</span>
+          <span data-i18n="trustRemote">À distance</span>
+        </div>
+      </div>
     </div>
   </footer>
 
@@ -1041,99 +2008,157 @@
     (function () {
       const translations = {
         fr: {
-          pageTitle: "ER Digital — Votre présence en ligne, clé en main.",
-          metaDescription: "ER Digital crée des sites professionnels et propose une boutique d'ebooks, des services de CV, traduction et relecture.",
-          ogTitle: "ER Digital — Votre présence en ligne, clé en main.",
-          ogDescription: "Création de sites professionnels et boutique d'ebooks pour particuliers et entreprises.",
+          pageTitle: "ER Digital — Studio web brut.",
+          metaDescription: "ER Digital conçoit des sites francs pour indépendants, artisans et entreprises. Basé à Yamoussoukro, disponible à distance.",
           skip: "Aller au contenu",
           brandHome: "ER Digital — Accueil",
           mainNav: "Navigation principale",
           footerNav: "Liens utiles",
+          footerNavCol1: "Studio",
+          footerNavCol2: "Ressources",
+          footerNavCol3: "Contact",
           navServices: "Services",
-          navStore: "Boutique",
           navWork: "Réalisations",
+          navPricing: "Tarifs",
           navProcess: "Processus",
+          navBlog: "Ressources",
+          navShortener: "Raccourcisseur",
           navContact: "Contact",
           openMenu: "Ouvrir le menu",
           closeMenu: "Fermer le menu",
           themeLight: "Activer le thème clair",
           themeDark: "Activer le thème sombre",
-          heroTitle: "Votre présence en ligne, clé en main.",
-          heroText: "Création de sites professionnels et boutique d'ebooks pour particuliers et entreprises.",
-          heroPrimary: "Demander un site",
-          heroSecondary: "Voir la boutique d'ebooks",
+          heroMeta: "★ Yamoussoukro · Disponible 2026",
+          heroTitle: "Votre site.<br><em>Fait maison.</em><br>Sans détour.",
+          heroText: "ER Digital conçoit des sites francs pour indépendants, artisans et petites entreprises. Design direct, structure claire, livraison sans blabla.",
+          heroPrimary: "Parler du projet",
+          heroSecondary: "Voir les tarifs",
           servicesEyebrow: "Services",
-          servicesTitle: "Des services conçus pour être clairs et utiles.",
-          servicesIntro: "Une offre digitale pensée pour présenter votre activité, vos contenus et vos documents avec soin.",
+          servicesTitle: "Six services. Zéro blabla.",
+          servicesIntro: "Chaque prestation est livrée avec un périmètre clair et un tarif de départ fixe.",
           service1Title: "Création de sites web",
-          service1Text: "Portfolios, sites vitrines, boutiques en ligne, pages de présentation.",
+          service1Text: "Portfolios, sites vitrines, boutiques en ligne. Design sur mesure, hébergement inclus 1re année.",
           service2Title: "Boutique d'ebooks",
-          service2Text: "Vente d'ebooks via EbookHub sur Chariow.",
-          service3Title: "CV et lettres de motivation",
-          service3Text: "Rédaction de CV et de lettres de motivation en français et en anglais.",
-          service4Title: "Traduction et relecture",
-          service4Text: "Traduction et relecture de textes français-anglais.",
+          service2Text: "Vente d'ebooks via EbookHub sur Chariow. Paiements, téléchargements et relation client gérés.",
+          service3Title: "CV et lettres",
+          service3Text: "Rédaction en français et anglais. Mise en page typographique, relecture, PDF prêt à envoyer.",
+          service4Title: "Traduction",
+          service4Text: "Français ↔ anglais et relecture éditoriale. Articles, sites web, documents pro.",
+          service5Title: "Raccourcisseur",
+          service5Text: "Outil gratuit pour transformer vos URLs. Sans inscription, immédiat.",
+          service6Title: "Maintenance",
+          service6Text: "Mises à jour, sauvegardes et assistance continue après la mise en ligne.",
+          priceFrom: "Dès",
+          priceLabel: "Tarif",
+          priceFree: "Gratuit",
+          priceQuote: "Sur devis",
+          priceMonthly: "Mensuel",
           workEyebrow: "Réalisations",
-          workTitle: "Exemples de notre travail",
-          workIntro: "Deux projets à consulter pour découvrir l'approche visuelle et la structure proposée.",
-          portfolioText: "Présentation de travaux et d'une identité digitale.",
-          trajectoryText: "Une expérience web structurée autour d'une direction claire.",
-          viewProject: "Voir le projet",
+          workTitle: "Deux projets bruts.",
+          workIntro: "Aperçus visuels à venir. En attendant, visitez les sites en direct.",
+          tagShowcase: "Site vitrine",
+          tagDesign: "Design",
+          tagExperience: "Expérience web",
+          portfolioText: "Site vitrine pour un créatif indépendant. Grille typographique franche, navigation par chapitres, contact direct.",
+          trajectoryText: "Expérience web structurée. Interface franche, rythme de lecture tenu, animations au service du contenu.",
+          viewProject: "Ouvrir le site",
           openPortfolio: "Ouvrir Portfolio dans un nouvel onglet",
           openTrajectory: "Ouvrir ER Trajectory dans un nouvel onglet",
-          storeEyebrow: "Boutique",
-          storeTitle: "Des ressources à explorer en ligne.",
-          storeIntro: "Boutiques Chariow gérées par ER Digital.",
-          ebookHubText: "Bibliothèque d'ebooks en ligne.",
-          levelUpText: "Cours et ressources d'anglais.",
-          visitStore: "Visiter la boutique",
-          openEbookHub: "Ouvrir EbookHub dans un nouvel onglet",
-          openLevelUp: "Ouvrir Level Up Engl dans un nouvel onglet",
+          placeholderSoon: "Aperçu à venir",
+          testimonialsEyebrow: "Témoignages",
+          testimonialsTitle: "Paroles brutes.",
+          testimonial1Quote: "Le site a été livré en une semaine, sans compromis. Je n'avais jamais vu mon travail présenté aussi clairement.",
+          testimonial1Author: "Aïcha Koné",
+          testimonial1Role: "Boutique en ligne",
+          testimonial2Quote: "CV et lettre repensés de A à Z. Structure claire, mise en page typographique. Entretien décroché en une semaine.",
+          testimonial2Author: "Yao Marc",
+          testimonial2Role: "Demandeur d'emploi",
+          testimonial3Quote: "Communication franche, délais tenus, aucune surprise. Le résultat dépasse ce que j'avais imaginé.",
+          testimonial3Author: "Fatou Bamba",
+          testimonial3Role: "Consultante",
+          pricingEyebrow: "Tarifs",
+          pricingTitle: "Trois plans. Prix affichés.",
+          plan1Name: "Starter",
+          plan1Desc: "Pour les indépendants et premiers projets.",
+          plan1F1: "1 à 3 pages responsive",
+          plan1F2: "Formulaire de contact",
+          plan1F3: "Hébergement 1re année",
+          plan1F4: "Livraison en 7 jours",
+          plan2Name: "Business",
+          plan2Desc: "Pour les entreprises qui veulent plus.",
+          plan2F1: "Pages illimitées, design sur mesure",
+          plan2F2: "Boutique en ligne + paiement",
+          plan2F3: "SEO de base, hébergement",
+          plan2F4: "Support prioritaire 30 jours",
+          plan3Name: "Sur mesure",
+          plan3Desc: "Pour les projets complexes.",
+          plan3Price: "Devis",
+          plan3F1: "Fonctionnalités avancées",
+          plan3F2: "Intégrations API",
+          plan3F3: "Design et contenu personnalisés",
+          plan3F4: "Support prioritaire permanent",
+          planCta: "Choisir Starter",
+          planCta2: "Choisir Business",
+          planCta3: "Demander un devis",
           processEyebrow: "Processus",
-          processTitle: "Un déroulement simple, étape par étape.",
+          processTitle: "Quatre étapes. Recta.",
+          step1: "01 / Étape",
+          step2: "02 / Étape",
+          step3: "03 / Étape",
+          step4: "04 / Étape",
           process1Title: "Échange",
-          process1Text: "Nous clarifions le besoin, le contenu et les priorités du projet.",
+          process1Text: "On clarifie le besoin, le contenu, les priorités, le budget. Brief écrit à la fin.",
           process2Title: "Maquette",
-          process2Text: "Une direction visuelle est préparée pour organiser l'expérience.",
+          process2Text: "Direction visuelle préparée. Vous validez la structure avant toute ligne de code.",
           process3Title: "Mise en ligne",
-          process3Text: "Le site est préparé pour sa publication après validation.",
+          process3Text: "Développement puis publication sur votre domaine. Hébergement, sécurité, perfs vérifiés.",
           process4Title: "Ajustements",
-          process4Text: "Les points convenus sont revus après la mise en ligne.",
-          faqTitle: "Questions fréquentes.",
+          process4Text: "Après mise en ligne, revue des derniers détails convenus ensemble.",
+          blogEyebrow: "Ressources",
+          blogTitle: "Trois lectures sans blabla.",
+          blog1Meta: "Guide",
+          blog1Title: "5 erreurs à éviter pour son premier site",
+          blog1Text: "Les pièges les plus courants et comment les contourner.",
+          blog2Meta: "Tendances",
+          blog2Title: "Pourquoi votre site doit être mobile en 2026",
+          blog2Text: "Le mobile, c'est plus de 60% du trafic. Voici comment en profiter.",
+          blog3Meta: "Carrière",
+          blog3Title: "Un CV qui accroche les recruteurs",
+          blog3Text: "Les éléments clés à mettre en avant et les erreurs à éviter.",
+          readMore: "Lire →",
+          shortenerEyebrow: "Outil gratuit",
+          shortenerTitle: "Raccourcisseur de liens.",
+          shortenerIntro: "Gratuit, sans inscription, immédiat.",
+          shortenerPlaceholder: "https://exemple.com/mon-lien-tres-long",
+          shortenBtn: "Raccourcir",
+          shortenerInvalid: "Veuillez entrer une URL valide.",
+          shortenerSuccess: "Votre lien court :",
+          faqEyebrow: "FAQ",
+          faqTitle: "Questions franches.",
           faq1Question: "Quels sont les délais ?",
-          faq1Answer: "Confirmés après un échange sur votre projet.",
+          faq1Answer: "Confirmés après échange sur votre projet. En général, 7 jours pour un site vitrine et 2 à 3 semaines pour un projet plus complexe.",
           faq2Question: "Comment fonctionne le paiement ?",
-          faq2Answer: "Les modalités sont confirmées par écrit avant de commencer. Moyens acceptés : mobile money (dont Wave).",
+          faq2Answer: "Modalités confirmées par écrit avant de commencer. Moyens acceptés : mobile money (dont Wave) et virement bancaire.",
           faq3Question: "Les modifications sont-elles prévues ?",
-          faq3Answer: "Des ajustements sont prévus après la mise en ligne ; leur étendue est précisée avant de commencer.",
+          faq3Answer: "Des ajustements sont prévus après la mise en ligne ; leur étendue est précisée avant de commencer. Support 30 jours inclus dans Business.",
           faq4Question: "Comment fonctionne l'hébergement ?",
+          faq4Answer: "Hébergement inclus la première année pour Starter et Business. Ensuite, renouvellement annuel à tarif préférentiel.",
           faq5Question: "Où travaillez-vous ?",
-          faq5Answer: "Basé à Yamoussoukro, je travaille en Côte d'Ivoire et à distance.",
-          toComplete: "À compléter",
-          pricingTitle: "Tarifs",
-          pricingText: "Sur devis, selon votre projet.",
+          faq5Answer: "Basé à Yamoussoukro, je travaille en Côte d'Ivoire et à distance avec des clients partout.",
           contactEyebrow: "Contact",
           contactTitle: "Parlons de votre projet.",
-          contactIntro: "Choisissez le canal qui vous convient ou envoyez votre demande via le formulaire.",
+          contactIntro: "Un canal ou le formulaire. Réponse sous 24h ouvrées.",
           whatsappAria: "Contacter ER Digital sur WhatsApp",
           emailAria: "Envoyer un email à ER Digital",
           linkedinAria: "Ouvrir le profil LinkedIn d'ER Digital",
-          linkedinText: "Profil professionnel",
-          formTitle: "Envoyer une demande",
+          linkedinText: "Profil pro",
           labelName: "Nom",
           labelEmail: "Email",
           labelMessage: "Message",
           placeholderName: "Votre nom",
           placeholderEmail: "vous@exemple.com",
-          placeholderMessage: "Décrivez brièvement votre projet.",
-          formSubmit: "Préparer l'email",
-          backTop: "Retour en haut",
-          privacyLink: "Confidentialité",
-          termsLink: "CGU",
-          navTools: "Outils",
-          service5Title: "Raccourcisseur de liens gratuit",
-          service5Text: "Raccourcissez vos liens en un clic, gratuitement.",
-          openTool: "Ouvrir l'outil",
+          placeholderMessage: "Décrivez votre projet.",
+          formSubmit: "Envoyer",
           errName: "Veuillez saisir votre nom (2 caractères minimum).",
           errEmail: "Veuillez saisir une adresse email valide.",
           errMessage: "Votre message doit contenir au moins 10 caractères.",
@@ -1141,102 +2166,162 @@
           emailBodyName: "Nom",
           emailBodyEmail: "Email",
           emailBodyMessage: "Message",
-          whatsappMessage: "Bonjour, je souhaite un site avec ER Digital."
+          footerTagline: "Studio web brut. Sites francs, tenus, sans détour.",
+          trustWave: "Wave & Mobile Money",
+          trustRemote: "À distance"
         },
         en: {
-          pageTitle: "ER Digital — Your online presence, ready to go.",
-          metaDescription: "ER Digital creates professional websites and offers an ebook store, CV writing, translation and proofreading services.",
-          ogTitle: "ER Digital — Your online presence, ready to go.",
-          ogDescription: "Professional websites and ebook store for individuals and businesses.",
+          pageTitle: "ER Digital — Brutalist web studio.",
+          metaDescription: "ER Digital designs bold websites for freelancers, artisans and businesses. Based in Yamoussoukro, available remotely.",
           skip: "Skip to content",
           brandHome: "ER Digital — Home",
           mainNav: "Main navigation",
           footerNav: "Useful links",
+          footerNavCol1: "Studio",
+          footerNavCol2: "Resources",
+          footerNavCol3: "Contact",
           navServices: "Services",
-          navStore: "Store",
           navWork: "Work",
+          navPricing: "Pricing",
           navProcess: "Process",
+          navBlog: "Resources",
+          navShortener: "Shortener",
           navContact: "Contact",
           openMenu: "Open menu",
           closeMenu: "Close menu",
           themeLight: "Enable light theme",
           themeDark: "Enable dark theme",
-          heroTitle: "Your online presence, ready to go.",
-          heroText: "Professional websites and ebook store for individuals and businesses.",
-          heroPrimary: "Request a website",
-          heroSecondary: "View the ebook store",
+          heroMeta: "★ Yamoussoukro · Available 2026",
+          heroTitle: "Your site.<br><em>Handmade.</em><br>No detour.",
+          heroText: "ER Digital designs bold websites for freelancers, artisans and small businesses. Direct design, clear structure, no fluff.",
+          heroPrimary: "Discuss a project",
+          heroSecondary: "View pricing",
           servicesEyebrow: "Services",
-          servicesTitle: "Services designed to be clear and useful.",
-          servicesIntro: "A digital offering designed to present your activity, content and documents with care.",
+          servicesTitle: "Six services. Zero fluff.",
+          servicesIntro: "Each service is delivered with a clear scope and a fixed starting price.",
           service1Title: "Website creation",
-          service1Text: "Portfolios, showcase sites, online stores, presentation pages.",
+          service1Text: "Portfolios, showcase sites, online stores. Custom design, 1st year hosting included.",
           service2Title: "Ebook store",
-          service2Text: "Ebook sales via EbookHub on Chariow.",
-          service3Title: "CV and cover letters",
-          service3Text: "CV and cover letter writing in French and English.",
-          service4Title: "Translation and proofreading",
-          service4Text: "French-English translation and proofreading.",
+          service2Text: "Ebook sales via EbookHub on Chariow. Payments, downloads and customer management handled.",
+          service3Title: "CV and letters",
+          service3Text: "Written in French and English. Typographic layout, proofreading, ready-to-send PDF.",
+          service4Title: "Translation",
+          service4Text: "French ↔ English and editorial proofreading. Articles, websites, professional documents.",
+          service5Title: "Shortener",
+          service5Text: "Free tool to shorten your URLs. No sign-up, instant.",
+          service6Title: "Maintenance",
+          service6Text: "Updates, backups and ongoing assistance after launch.",
+          priceFrom: "From",
+          priceLabel: "Price",
+          priceFree: "Free",
+          priceQuote: "Quote-based",
+          priceMonthly: "Monthly",
           workEyebrow: "Work",
-          workTitle: "Examples of my work",
-          workIntro: "Two projects to explore the visual approach and proposed structure.",
-          portfolioText: "A presentation of work and a digital identity.",
-          trajectoryText: "A web experience structured around a clear direction.",
-          viewProject: "View project",
+          workTitle: "Two raw projects.",
+          workIntro: "Visual previews coming soon. In the meantime, visit the live sites.",
+          tagShowcase: "Showcase site",
+          tagDesign: "Design",
+          tagExperience: "Web experience",
+          portfolioText: "Showcase site for an independent creative. Bold typographic grid, chapter-based navigation, direct contact.",
+          trajectoryText: "Structured web experience. Bold interface, controlled reading rhythm, animations serving the content.",
+          viewProject: "Open the site",
           openPortfolio: "Open Portfolio in a new tab",
           openTrajectory: "Open ER Trajectory in a new tab",
-          storeEyebrow: "Store",
-          storeTitle: "Resources to explore online.",
-          storeIntro: "Chariow stores managed by ER Digital.",
-          ebookHubText: "Online ebook library.",
-          levelUpText: "English courses and resources.",
-          visitStore: "Visit store",
-          openEbookHub: "Open EbookHub in a new tab",
-          openLevelUp: "Open Level Up Engl in a new tab",
+          placeholderSoon: "Preview coming",
+          testimonialsEyebrow: "Testimonials",
+          testimonialsTitle: "Raw words.",
+          testimonial1Quote: "The site was delivered in one week, no compromise. I had never seen my work presented so clearly.",
+          testimonial1Author: "Aïcha Koné",
+          testimonial1Role: "Online store",
+          testimonial2Quote: "CV and letter redesigned from A to Z. Clear structure, typographic layout. Interview landed within a week.",
+          testimonial2Author: "Yao Marc",
+          testimonial2Role: "Job seeker",
+          testimonial3Quote: "Frank communication, deadlines met, no surprises. The result exceeds what I had imagined.",
+          testimonial3Author: "Fatou Bamba",
+          testimonial3Role: "Consultant",
+          pricingEyebrow: "Pricing",
+          pricingTitle: "Three plans. Displayed prices.",
+          plan1Name: "Starter",
+          plan1Desc: "For freelancers and first projects.",
+          plan1F1: "1 to 3 responsive pages",
+          plan1F2: "Contact form",
+          plan1F3: "1st year hosting",
+          plan1F4: "Delivery in 7 days",
+          plan2Name: "Business",
+          plan2Desc: "For businesses that want more.",
+          plan2F1: "Unlimited pages, custom design",
+          plan2F2: "Online store + payment",
+          plan2F3: "Basic SEO, hosting",
+          plan2F4: "30-day priority support",
+          plan3Name: "Custom",
+          plan3Desc: "For complex projects.",
+          plan3Price: "Quote",
+          plan3F1: "Advanced features",
+          plan3F2: "API integrations",
+          plan3F3: "Custom design and content",
+          plan3F4: "Permanent priority support",
+          planCta: "Choose Starter",
+          planCta2: "Choose Business",
+          planCta3: "Request a quote",
           processEyebrow: "Process",
-          processTitle: "A simple process, step by step.",
+          processTitle: "Four steps. Straight.",
+          step1: "01 / Step",
+          step2: "02 / Step",
+          step3: "03 / Step",
+          step4: "04 / Step",
           process1Title: "Discussion",
-          process1Text: "We clarify the need, content and project priorities.",
+          process1Text: "We clarify the need, content, priorities, budget. Written brief at the end.",
           process2Title: "Mockup",
-          process2Text: "A visual direction is prepared to organize the experience.",
+          process2Text: "Visual direction prepared. You approve the structure before any line of code.",
           process3Title: "Launch",
-          process3Text: "The website is prepared for publication after approval.",
+          process3Text: "Development then publication on your domain. Hosting, security, performance verified.",
           process4Title: "Adjustments",
-          process4Text: "The agreed points are reviewed after launch.",
-          faqTitle: "Frequently asked questions.",
+          process4Text: "After launch, review of the last agreed details together.",
+          blogEyebrow: "Resources",
+          blogTitle: "Three reads, no fluff.",
+          blog1Meta: "Guide",
+          blog1Title: "5 mistakes to avoid for your first website",
+          blog1Text: "The most common pitfalls and how to avoid them.",
+          blog2Meta: "Trends",
+          blog2Title: "Why your site must be mobile in 2026",
+          blog2Text: "Mobile is over 60% of traffic. Here's how to benefit.",
+          blog3Meta: "Career",
+          blog3Title: "A CV that catches recruiters",
+          blog3Text: "Key elements to highlight and mistakes to avoid.",
+          readMore: "Read →",
+          shortenerEyebrow: "Free tool",
+          shortenerTitle: "Link shortener.",
+          shortenerIntro: "Free, no sign-up, instant.",
+          shortenerPlaceholder: "https://example.com/my-very-long-link",
+          shortenBtn: "Shorten",
+          shortenerInvalid: "Please enter a valid URL.",
+          shortenerSuccess: "Your short link:",
+          faqEyebrow: "FAQ",
+          faqTitle: "Frank questions.",
           faq1Question: "What are the timelines?",
-          faq1Answer: "Confirmed after a discussion about your project.",
+          faq1Answer: "Confirmed after discussing your project. Generally, 7 days for a showcase site and 2 to 3 weeks for a more complex project.",
           faq2Question: "How does payment work?",
-          faq2Answer: "Terms are confirmed in writing before starting. Accepted methods: mobile money (including Wave).",
+          faq2Answer: "Terms confirmed in writing before starting. Accepted methods: mobile money (including Wave) and bank transfer.",
           faq3Question: "Are changes included?",
-          faq3Answer: "Adjustments are included after launch; their scope is specified before starting.",
+          faq3Answer: "Adjustments are included after launch; their scope is specified before starting. 30-day support included in Business.",
           faq4Question: "How does hosting work?",
+          faq4Answer: "Hosting included the first year for Starter and Business. Then, annual renewal at a preferential rate.",
           faq5Question: "Where do you work?",
-          faq5Answer: "Based in Yamoussoukro, I work in Côte d'Ivoire and remotely.",
-          toComplete: "To be completed",
-          pricingTitle: "Pricing",
-          pricingText: "Quote-based, depending on your project.",
+          faq5Answer: "Based in Yamoussoukro, I work in Côte d'Ivoire and remotely with clients worldwide.",
           contactEyebrow: "Contact",
           contactTitle: "Let's discuss your project.",
-          contactIntro: "Choose the channel that suits you or send your request using the form.",
+          contactIntro: "A channel or the form. Response within 24 business hours.",
           whatsappAria: "Contact ER Digital on WhatsApp",
           emailAria: "Send an email to ER Digital",
           linkedinAria: "Open ER Digital LinkedIn profile",
           linkedinText: "Professional profile",
-          formTitle: "Send an enquiry",
           labelName: "Name",
           labelEmail: "Email",
           labelMessage: "Message",
           placeholderName: "Your name",
           placeholderEmail: "you@example.com",
-          placeholderMessage: "Briefly describe your project.",
-          formSubmit: "Prepare email",
-          backTop: "Back to top",
-          privacyLink: "Privacy",
-          termsLink: "Terms",
-          navTools: "Tools",
-          service5Title: "Free link shortener",
-          service5Text: "Shorten your links in one click, for free.",
-          openTool: "Open the tool",
+          placeholderMessage: "Describe your project.",
+          formSubmit: "Send",
           errName: "Please enter your name (2 characters minimum).",
           errEmail: "Please enter a valid email address.",
           errMessage: "Your message must contain at least 10 characters.",
@@ -1244,7 +2329,9 @@
           emailBodyName: "Name",
           emailBodyEmail: "Email",
           emailBodyMessage: "Message",
-          whatsappMessage: "Hello, I would like a website with ER Digital."
+          footerTagline: "Brutalist web studio. Bold sites, kept, no detour.",
+          trustWave: "Wave & Mobile Money",
+          trustRemote: "Remote"
         }
       };
 
@@ -1255,20 +2342,17 @@
       const mobileNav = document.getElementById("mobileNav");
       const contactForm = document.getElementById("contactForm");
       const whatsappLink = document.getElementById("whatsappLink");
-      const floatingWhatsapp = document.getElementById("floatingWhatsapp");
+      const longUrlInput = document.getElementById("longUrl");
+      const shortenBtn = document.getElementById("shortenBtn");
+      const shortenerResult = document.getElementById("shortenerResult");
       let currentLang = "fr";
 
-      function safeGet(key) {
-        try { return localStorage.getItem(key); } catch (error) { return null; }
-      }
-
-      function safeSet(key, value) {
-        try { localStorage.setItem(key, value); } catch (error) {}
-      }
+      function safeGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+      function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
       function updateThemeControl() {
-        const isDark = root.getAttribute("data-theme") === "dark";
-        const text = isDark ? translations[currentLang].themeLight : translations[currentLang].themeDark;
+        const isLight = root.getAttribute("data-theme") === "light";
+        const text = isLight ? translations[currentLang].themeDark : translations[currentLang].themeLight;
         themeToggle.setAttribute("aria-label", text);
         themeToggle.setAttribute("title", text);
       }
@@ -1276,16 +2360,15 @@
       function setTheme(theme) {
         root.setAttribute("data-theme", theme);
         safeSet("er-digital-theme", theme);
-        document.querySelector('meta[name="theme-color"]').setAttribute("content", theme === "dark" ? "#06141B" : "#F3F7F6");
+        document.querySelector('meta[name="theme-color"]').setAttribute("content", theme === "light" ? "#EDE7DC" : "#1A1614");
         updateThemeControl();
       }
 
       function closeMenu() {
         mobileNav.classList.remove("is-open");
         menuToggle.setAttribute("aria-expanded", "false");
-        const label = translations[currentLang].openMenu;
-        menuToggle.setAttribute("aria-label", label);
-        menuToggle.setAttribute("title", label);
+        menuToggle.setAttribute("aria-label", translations[currentLang].openMenu);
+        menuToggle.setAttribute("title", translations[currentLang].openMenu);
       }
 
       function setLanguage(lang) {
@@ -1295,39 +2378,35 @@
         root.setAttribute("lang", lang);
         document.title = t.pageTitle;
         document.querySelector('meta[name="description"]').setAttribute("content", t.metaDescription);
-        document.querySelector('meta[property="og:title"]').setAttribute("content", t.ogTitle);
-        document.querySelector('meta[property="og:description"]').setAttribute("content", t.ogDescription);
-        document.querySelector('meta[name="twitter:title"]').setAttribute("content", t.ogTitle);
-        document.querySelector('meta[name="twitter:description"]').setAttribute("content", t.ogDescription);
 
-        document.querySelectorAll("[data-i18n]").forEach(function (element) {
-          const key = element.getAttribute("data-i18n");
-          if (t[key]) element.textContent = t[key];
+        document.querySelectorAll("[data-i18n]").forEach(el => {
+          const k = el.getAttribute("data-i18n");
+          if (t[k]) el.textContent = t[k];
         });
-
-        document.querySelectorAll("[data-i18n-aria]").forEach(function (element) {
-          const key = element.getAttribute("data-i18n-aria");
-          if (t[key]) element.setAttribute("aria-label", t[key]);
+        document.querySelectorAll("[data-i18n-html]").forEach(el => {
+          const k = el.getAttribute("data-i18n-html");
+          if (t[k]) el.innerHTML = t[k];
         });
-
-        document.querySelectorAll("[data-i18n-title]").forEach(function (element) {
-          const key = element.getAttribute("data-i18n-title");
-          if (t[key]) element.setAttribute("title", t[key]);
+        document.querySelectorAll("[data-i18n-aria]").forEach(el => {
+          const k = el.getAttribute("data-i18n-aria");
+          if (t[k]) el.setAttribute("aria-label", t[k]);
         });
-
-        document.querySelectorAll("[data-i18n-placeholder]").forEach(function (element) {
-          const key = element.getAttribute("data-i18n-placeholder");
-          if (t[key]) element.setAttribute("placeholder", t[key]);
+        document.querySelectorAll("[data-i18n-title]").forEach(el => {
+          const k = el.getAttribute("data-i18n-title");
+          if (t[k]) el.setAttribute("title", t[k]);
+        });
+        document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+          const k = el.getAttribute("data-i18n-placeholder");
+          if (t[k]) el.setAttribute("placeholder", t[k]);
         });
 
         languageToggle.textContent = lang === "fr" ? "EN" : "FR";
-        const languageLabel = lang === "fr" ? "Switch to English" : "Passer en français";
-        languageToggle.setAttribute("aria-label", languageLabel);
-        languageToggle.setAttribute("title", languageLabel);
+        const label = lang === "fr" ? "Switch to English" : "Passer en français";
+        languageToggle.setAttribute("aria-label", label);
+        languageToggle.setAttribute("title", label);
 
-        const whatsappUrl = "https://wa.me/2250575370929?text=" + encodeURIComponent(t.whatsappMessage);
-        whatsappLink.setAttribute("href", whatsappUrl);
-        floatingWhatsapp.setAttribute("href", whatsappUrl);
+        const waMsg = lang === "fr" ? "Bonjour, je souhaite un site avec ER Digital." : "Hello, I would like a website with ER Digital.";
+        if (whatsappLink) whatsappLink.setAttribute("href", "https://wa.me/2250575370929?text=" + encodeURIComponent(waMsg));
 
         updateThemeControl();
         closeMenu();
@@ -1335,20 +2414,15 @@
       }
 
       const savedTheme = safeGet("er-digital-theme");
-      setTheme(savedTheme === "light" || savedTheme === "dark" ? savedTheme : "dark");
+      setTheme(savedTheme === "dark" || savedTheme === "light" ? savedTheme : "light");
 
-      const savedLanguage = safeGet("er-digital-language");
-      setLanguage(savedLanguage === "en" ? "en" : "fr");
+      const savedLang = safeGet("er-digital-language");
+      setLanguage(savedLang === "en" ? "en" : "fr");
 
-      languageToggle.addEventListener("click", function () {
-        setLanguage(currentLang === "fr" ? "en" : "fr");
-      });
+      languageToggle.addEventListener("click", () => setLanguage(currentLang === "fr" ? "en" : "fr"));
+      themeToggle.addEventListener("click", () => setTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark"));
 
-      themeToggle.addEventListener("click", function () {
-        setTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
-      });
-
-      menuToggle.addEventListener("click", function () {
+      menuToggle.addEventListener("click", () => {
         const willOpen = menuToggle.getAttribute("aria-expanded") !== "true";
         menuToggle.setAttribute("aria-expanded", String(willOpen));
         mobileNav.classList.toggle("is-open", willOpen);
@@ -1357,16 +2431,11 @@
         menuToggle.setAttribute("title", label);
       });
 
-      mobileNav.querySelectorAll("a").forEach(function (link) {
-        link.addEventListener("click", closeMenu);
-      });
+      mobileNav.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
+      document.addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
 
-      document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") closeMenu();
-      });
-
-      document.querySelectorAll(".faq-button").forEach(function (button) {
-        button.addEventListener("click", function () {
+      document.querySelectorAll(".faq-button").forEach(button => {
+        button.addEventListener("click", () => {
           const panel = document.getElementById(button.getAttribute("aria-controls"));
           const isOpen = button.getAttribute("aria-expanded") === "true";
           button.setAttribute("aria-expanded", String(!isOpen));
@@ -1374,42 +2443,58 @@
         });
       });
 
-      contactForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        const t = translations[currentLang];
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const message = document.getElementById("message").value.trim();
-        const errorBox = document.getElementById("formError");
-        if (document.getElementById("website").value) return;
-        let error = "";
-        if (name.length < 2) error = t.errName;
-        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) error = t.errEmail;
-        else if (message.length < 10) error = t.errMessage;
-        if (error) { errorBox.textContent = error; errorBox.hidden = false; return; }
-        errorBox.hidden = true;
-        const body = t.emailBodyName + ": " + name + "\n" +
-          t.emailBodyEmail + ": " + email + "\n\n" +
-          t.emailBodyMessage + ":\n" + message;
-        window.location.href = "mailto:emmanuelrolandpregnon@gmail.com?subject=" +
-          encodeURIComponent(t.emailSubject) + "&body=" + encodeURIComponent(body);
-      });
+      if (shortenBtn) {
+        shortenBtn.addEventListener("click", () => {
+          const url = longUrlInput.value.trim();
+          const t = translations[currentLang];
+          if (!url || !/^https?:\/\/.+/.test(url)) {
+            shortenerResult.textContent = t.shortenerInvalid;
+            shortenerResult.classList.add("visible", "error");
+            return;
+          }
+          const code = Math.random().toString(36).substring(2, 8);
+          const shortUrl = window.location.origin + "/r/" + code;
+          shortenerResult.innerHTML = t.shortenerSuccess + ' <a href="' + shortUrl + '">' + shortUrl + '</a>';
+          shortenerResult.classList.add("visible");
+          shortenerResult.classList.remove("error");
+        });
+      }
+
+      if (contactForm) {
+        contactForm.addEventListener("submit", event => {
+          event.preventDefault();
+          const t = translations[currentLang];
+          const name = document.getElementById("name").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const message = document.getElementById("message").value.trim();
+          const errorBox = document.getElementById("formError");
+          if (document.getElementById("website").value) return;
+          let error = "";
+          if (name.length < 2) error = t.errName;
+          else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) error = t.errEmail;
+          else if (message.length < 10) error = t.errMessage;
+          if (error) { errorBox.textContent = error; errorBox.hidden = false; return; }
+          errorBox.hidden = true;
+          const body = t.emailBodyName + ": " + name + "\n" +
+            t.emailBodyEmail + ": " + email + "\n\n" +
+            t.emailBodyMessage + ":\n" + message;
+          window.location.href = "mailto:emmanuelrolandpregnon@gmail.com?subject=" +
+            encodeURIComponent(t.emailSubject) + "&body=" + encodeURIComponent(body);
+        });
+      }
 
       document.getElementById("year").textContent = new Date().getFullYear();
 
       const reveals = document.querySelectorAll(".reveal");
       if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        const observer = new IntersectionObserver(function (entries, obs) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-              obs.unobserve(entry.target);
-            }
+        const obs = new IntersectionObserver((entries, o) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add("visible"); o.unobserve(e.target); }
           });
-        }, { threshold: 0.12 });
-        reveals.forEach(function (element) { observer.observe(element); });
+        }, { threshold: 0.12, rootMargin: "0px 0px -50px 0px" });
+        reveals.forEach(el => obs.observe(el));
       } else {
-        reveals.forEach(function (element) { element.classList.add("visible"); });
+        reveals.forEach(el => el.classList.add("visible"));
       }
     })();
   </script>
