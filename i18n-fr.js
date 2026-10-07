@@ -6,7 +6,7 @@ Object.assign(window.ER_TRANSLATIONS.fr, {
   "navTemplates": "Templates",
   "qrEyebrow": "Outil gratuit",
   "qrTitle": "Générateur de QR code.",
-  "qrIntro": "Créez un QR code pour votre site, votre contact ou votre WiFi. Gratuit, sans inscription.",
+  "qrIntro": "Créez un QR code pour votre site, votre contact, votre téléphone, WhatsApp ou WiFi. Gratuit, sans inscription.",
   "qrType": "Type",
   "qrTypeText": "Texte",
   "qrTypeUrl": "Lien",
@@ -121,6 +121,6 @@ Object.assign(window.ER_TRANSLATIONS.fr, {
   "service5Cta": "Raccourcir un lien",
   "service7Badge": "Nouveau · Outil gratuit",
   "service7Title": "Générateur de QR code",
-  "service7Text": "Texte, lien, email ou WiFi : créez votre QR code en quelques secondes, directement dans votre navigateur. Sans inscription.",
+  "service7Text": "Texte, lien, email, téléphone, WhatsApp ou WiFi : créez votre QR code en quelques secondes, directement dans votre navigateur. Sans inscription.",
   "service7Cta": "Créer mon QR code"
 });
