@@ -20,7 +20,6 @@
 .qr-preview{display:flex;flex-direction:column;min-width:0;}
 .qr-image-wrapper{display:grid;place-items:center;aspect-ratio:1;padding:2rem;background:var(--bg);border:2px solid var(--border);}
 #qrImage{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:1;background:#FFFFFF;border:2px solid var(--border);image-rendering:pixelated;transition:opacity .2s ease;}
-.qr-image-wrapper.is-loading #qrImage{opacity:.6;}
 .qr-image-wrapper.is-stale #qrImage{opacity:.2;}
 .qr-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem;}
 .qr-actions .btn{flex:1 1 11rem;justify-content:center;}
@@ -29,6 +28,9 @@
 .qr-hint.is-error{color:var(--danger);}
 [data-theme="dark"] .qr-hint.is-success{color:var(--text);}
 [data-theme="dark"] .qr-hint.is-error{color:var(--accent-2);}
+.qr-encoded{margin:.25rem 0 0;font-family:var(--font-mono);font-size:.75rem;line-height:1.5;color:var(--text-soft);text-align:center;overflow-wrap:anywhere;}
+.qr-encoded code{font-family:inherit;font-weight:700;color:var(--text);}
+.qr-local-note{margin:.5rem 0 0;font-size:.8rem;line-height:1.5;color:var(--muted);text-align:center;}
 /* --- Templates gratuits (#templates) --- */
 .templates-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;}
 .template-card{display:flex;flex-direction:column;background:var(--surface);border:2px solid var(--border);transition:transform .2s ease,box-shadow .2s ease;}
@@ -66,8 +68,36 @@ html.tpl-lock,html.tpl-lock body{overflow:hidden;}
 [data-theme="dark"] .tpl-error{color:var(--accent-2);border-color:var(--accent-2);}
 .tpl-confirm-note{margin:0;padding:1rem 1.1rem;background:var(--accent-2);color:#1A1614;font-weight:700;border:2px solid var(--border);}
 .tpl-confirm-note:focus{outline:3px solid var(--focus);outline-offset:2px;}
-@media (max-width:639px){.qr-types{display:grid;grid-template-columns:repeat(4,1fr);}.qr-type-btn{padding:.6rem .25rem;text-align:center;}}
+.tpl-confirm-file{margin:0;font-family:var(--font-mono);font-size:.8rem;color:var(--text-soft);overflow-wrap:anywhere;}
+.tpl-confirm-file code{font-family:inherit;font-weight:700;color:var(--text);}
+.tpl-modal-foot .btn{justify-content:center;}
+.tpl-confirm-extra{display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem .4rem;margin:0;font-size:.85rem;color:var(--text-soft);overflow-wrap:anywhere;}
+.tpl-confirm-extra a,.tpl-linkish{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px;}
+.tpl-linkish{padding:0;background:none;border:0;font:inherit;font-weight:700;cursor:pointer;}
+.tpl-confirm-extra a:focus-visible,.tpl-linkish:focus-visible{outline:3px solid var(--focus);outline-offset:2px;}
+@media (max-width:639px){.qr-types{display:grid;grid-template-columns:repeat(4,1fr);}.qr-type-btn{padding:.6rem .25rem;text-align:center;}.tpl-modal-foot .btn{flex:1 1 100%;}}
 @media (min-width:640px){.templates-grid{grid-template-columns:repeat(2,1fr);}.qr-options{grid-template-columns:repeat(2,1fr);}.qr-options .form-field:last-child{grid-column:1 / -1;}}
 @media (min-width:900px){.qr-generator{grid-template-columns:1.1fr 1fr;align-items:start;}.templates-grid{grid-template-columns:repeat(3,1fr);}}
 @media (prefers-reduced-motion:reduce){.template-card:hover,.template-card:focus-within,.qr-type-btn.active,.qr-type-btn.active:hover{transform:none;}}
+/* --- Cartes services cliquables + carte « outil gratuit » QR (07) --- */
+.service-link{color:inherit;text-decoration:none;}
+.service-link::after{content:"";position:absolute;inset:0;z-index:1;}
+.service-link:focus{outline:none;}
+.service-link:focus-visible::after{outline:3px solid var(--focus);outline-offset:3px;}
+.service-arrow{display:inline-block;margin-left:.4rem;transition:transform .2s ease;}
+.service-card:hover .service-arrow{transform:translateX(4px);}
+.service-card--tool{grid-column:1 / -1;display:grid;gap:1.25rem;background:var(--accent-1);color:#1A1614;--text:#1A1614;--text-soft:#1A1614;--muted:#1A1614;--border:#1A1614;}
+.service-card--tool:hover{background:var(--accent-2);color:#1A1614;}
+.service-card--tool .service-num{margin:0;}
+.service-card--tool p{margin:0;color:#1A1614;}
+.service-card--tool h3{font-size:clamp(1.35rem,2.4vw,1.9rem);}
+.service-tool-head{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;}
+.service-badge{padding:.35rem .7rem;background:#1A1614;color:#EDE7DC;font-family:var(--font-mono);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:2px solid #1A1614;}
+.service-tool-side{display:flex;flex-direction:column;gap:1rem;}
+.service-go{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.8rem 1.2rem;background:#1A1614;color:#EDE7DC;font-family:var(--font-mono);font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border:2px solid #1A1614;}
+.service-card--tool:hover .service-go{background:#EDE7DC;color:#1A1614;}
+[data-theme="dark"] .service-card--tool{--text:#1A1614;--text-soft:#1A1614;--muted:#1A1614;--border:#1A1614;color:#1A1614;border-color:#EDE7DC;}
+[data-theme="dark"] .service-card--tool:hover{color:#1A1614;box-shadow:6px 6px 0 #EDE7DC;}
+@media (min-width:900px){.service-card--tool{grid-template-columns:auto minmax(0,1fr) minmax(15rem,auto);align-items:center;gap:2rem;padding:2rem;}.service-tool-head{flex-direction:column;align-items:flex-start;}.service-tool-side .service-price{padding-top:0;border-top:0;}}
+@media (prefers-reduced-motion:reduce){.service-card:hover .service-arrow{transform:none;}}
 /* === FIN QR + TEMPLATES === */

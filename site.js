@@ -197,13 +197,15 @@ const translations = window.ER_TRANSLATIONS;
 /* === QR + TEMPLATES === */
 (function () {
   "use strict";
-  var ERQT_API = "https://api.qrserver.com/v1/create-qr-code/";
   var ERQT_MAIL = "emmanuelrolandpregnon@gmail.com";
   var ERQT_SIZES = ["200", "400", "600"];
   var ERQT_COLORS = ["1A1614", "E8522B", "1B5E3F"];
   var ERQT_ECC = ["L", "M", "Q", "H"];
   var ERQT_SEC = ["WPA", "WEP", "nopass"];
+  var ERQT_QUIET = 4;
   var ERQT_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var ERQT_EMAIL_KEY = "er-digital-template-email";
+  var ERQT_SLUGS = { "1": "portfolio", "2": "artisan", "3": "landing", "4": "cv", "5": "menu", "6": "boutique" };
 
   /* ---------- Fonctions pures (testées en Node) ---------- */
   function erqtEscapeWifi(value) {
@@ -224,12 +226,34 @@ const translations = window.ER_TRANSLATIONS;
     return v;
   }
 
-  function erqtBuildQrUrl(payload, size, color, ecc) {
-    var s = ERQT_SIZES.indexOf(String(size)) > -1 ? String(size) : "400";
-    var c = ERQT_COLORS.indexOf(String(color).toUpperCase()) > -1 ? String(color).toUpperCase() : "1A1614";
-    var e = ERQT_ECC.indexOf(String(ecc).toUpperCase()) > -1 ? String(ecc).toUpperCase() : "M";
-    return ERQT_API + "?size=" + s + "x" + s + "&color=" + c + "&bgcolor=FFFFFF&ecc=" + e + "&margin=10&format=png&data=" + encodeURIComponent(payload);
+  function erqtOptions(size, color, ecc) {
+    return {
+      size: ERQT_SIZES.indexOf(String(size)) > -1 ? Number(size) : 400,
+      color: ERQT_COLORS.indexOf(String(color).toUpperCase()) > -1 ? String(color).toUpperCase() : "1A1614",
+      ecc: ERQT_ECC.indexOf(String(ecc).toUpperCase()) > -1 ? String(ecc).toUpperCase() : "M"
+    };
   }
+
+  /* Encode localement avec la bibliothèque Nayuki (qrcodegen.js) : aucun appel réseau.
+     Le niveau de correction choisi est respecté tel quel (pas de « boost » automatique). */
+  function erqtEncode(payload, ecc) {
+    var lib = (typeof window !== "undefined" && window.qrcodegen) || (typeof qrcodegen !== "undefined" ? qrcodegen : null);
+    if (!lib) throw new Error("qrcodegen-missing");
+    var Q = lib.QrCode;
+    var level = { L: Q.Ecc.LOW, M: Q.Ecc.MEDIUM, Q: Q.Ecc.QUARTILE, H: Q.Ecc.HIGH }[ecc] || Q.Ecc.MEDIUM;
+    return Q.encodeSegments(lib.QrSegment.makeSegments(payload), level, 1, 40, -1, false);
+  }
+
+  /* Géométrie : modules entiers (net, scannable), marge blanche ≥ 4 modules, centré. */
+  function erqtLayout(modules, size) {
+    var n = modules + ERQT_QUIET * 2;
+    var scale = Math.max(1, Math.floor(size / n));
+    var dim = Math.max(size, n * scale);
+    return { scale: scale, dim: dim, offset: Math.floor((dim - modules * scale) / 2) };
+  }
+
+  function erqtSlug(id) { return ERQT_SLUGS[id] || "template"; }
+  function erqtFileName(id) { return "template-" + erqtSlug(id) + "-er-digital.html"; }
 
   function erqtFill(tpl, map) {
     return String(tpl).replace(/\{(\w+)\}/g, function (m, k) { return Object.prototype.hasOwnProperty.call(map, k) ? map[k] : m; });
@@ -244,7 +268,11 @@ const translations = window.ER_TRANSLATIONS;
   window.ER_QRTPL = {
     escapeWifi: erqtEscapeWifi,
     buildPayload: erqtBuildPayload,
-    buildQrUrl: erqtBuildQrUrl,
+    options: erqtOptions,
+    encode: erqtEncode,
+    layout: erqtLayout,
+    fileName: erqtFileName,
+    templateFile: function (id, lang) { return erqtMock(String(id), lang === "en" ? "en" : "fr", true); },
     buildMailto: erqtBuildMailto,
     isEmail: function (v) { return ERQT_EMAIL_RE.test(String(v)); }
   };
@@ -268,8 +296,31 @@ const translations = window.ER_TRANSLATIONS;
       erqtLangListeners.forEach(function (fn) { fn(); });
     }).observe(erqtRoot, { attributes: true, attributeFilter: ["lang"] });
   }
+  var erqtCanDownload = "download" in document.createElement("a");
+  var erqtTouch = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
+  var erqtOldIOS = /iP(hone|od|ad)/.test(navigator.userAgent) && !erqtCanDownload;
 
-  /* ---------- Générateur de QR code ---------- */
+  /* Déclenche un téléchargement à partir d'un Blob. Renvoie l'URL objet (gardée par l'appelant
+     pour un lien « Télécharger à nouveau »). Repli : ouverture dans un nouvel onglet (iOS ancien). */
+  function erqtSaveBlob(blob, name) {
+    var objectUrl = URL.createObjectURL(blob);
+    if (!erqtCanDownload || erqtOldIOS) {
+      var w = window.open(objectUrl, "_blank");
+      if (!w) window.location.href = objectUrl;
+      return { url: objectUrl, opened: true };
+    }
+    var a = document.createElement("a");
+    a.href = objectUrl;
+    a.download = name;
+    a.rel = "noopener";
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { a.remove(); }, 0);
+    return { url: objectUrl, opened: false };
+  }
+
+  /* ---------- Générateur de QR code (100 % local) ---------- */
   (function erqtInitQr() {
     var input = document.getElementById("qrInput");
     var img = document.getElementById("qrImage");
@@ -284,28 +335,31 @@ const translations = window.ER_TRANSLATIONS;
     var eccSelect = document.getElementById("qrEcc");
     var wrapper = img.parentElement;
     var hint = document.getElementById("qrHint");
+    var encoded = document.getElementById("qrEncodedValue");
     var typeBtns = Array.prototype.slice.call(document.querySelectorAll("#qr-code .qr-type-btn"));
+    var canvas = document.createElement("canvas");
     var TYPES = {
       text: { label: "qrInputLabel", ph: "qrInputPlaceholder", mode: "text", max: 900 },
       url: { label: "qrUrlLabel", ph: "qrUrlPlaceholder", mode: "url", max: 900 },
       email: { label: "qrEmailLabel", ph: "qrEmailPlaceholder", mode: "email", max: 120 },
       wifi: { label: "qrSsidLabel", ph: "qrSsidPlaceholder", mode: "text", max: 32 }
     };
-    var state = { type: "text", values: { text: input.value, url: "", email: "", wifi: "" }, url: img.getAttribute("src"), valid: true };
+    var state = { type: "text", values: { text: input.value, url: "", email: "", wifi: "" }, key: "", valid: false, payload: "" };
     var debounceTimer = null;
     var hintTimer = null;
-    var blobCache = { url: "", blob: null };
 
-    function showHint(key, kind, ms) {
+    function showHint(key, kind, ms, extraKey) {
       clearTimeout(hintTimer);
-      hint.textContent = erqtT(key);
+      hint.textContent = erqtT(key) + (extraKey ? " " + erqtT(extraKey) : "");
       hint.classList.toggle("is-error", kind === "error");
       hint.classList.toggle("is-success", kind === "success");
+      if (ms === 0) return;
       hintTimer = setTimeout(function () {
         hint.textContent = "";
         hint.classList.remove("is-error", "is-success");
-      }, ms || 2000);
+      }, ms || 2500);
     }
+    function clearHint() { clearTimeout(hintTimer); hint.textContent = ""; hint.classList.remove("is-error", "is-success"); }
 
     function currentError() {
       var raw = input.value.trim();
@@ -319,32 +373,64 @@ const translations = window.ER_TRANSLATIONS;
       img.setAttribute("alt", erqtT("qrImageAlt") + (state.valid ? " : " + input.value.trim() : ""));
     }
 
+    function draw(qr, opts) {
+      var g = erqtLayout(qr.size, opts.size);
+      canvas.width = g.dim;
+      canvas.height = g.dim;
+      var ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fillRect(0, 0, g.dim, g.dim);
+      ctx.fillStyle = "#" + opts.color;
+      for (var y = 0; y < qr.size; y++) {
+        for (var x = 0; x < qr.size; x++) {
+          if (qr.getModule(x, y)) ctx.fillRect(g.offset + x * g.scale, g.offset + y * g.scale, g.scale, g.scale);
+        }
+      }
+      img.width = g.dim;
+      img.height = g.dim;
+      img.src = canvas.toDataURL("image/png");
+    }
+
+    /* showErrors : true (message rouge), "soft" (message neutre), false (silencieux) */
     function render(showErrors) {
       clearTimeout(debounceTimer);
       var err = currentError();
       if (err) {
         state.valid = false;
         wrapper.classList.add("is-stale");
-        if (showErrors) showHint(err, showErrors === "soft" ? "" : "error");
+        if (showErrors) showHint(err, showErrors === "soft" || err === "qrEmptyError" ? "" : "error", 0);
         updateAlt();
         return false;
       }
       var payload = erqtBuildPayload(state.type, input.value, { security: secSelect.value, password: passInput.value });
-      var url = erqtBuildQrUrl(payload, sizeSelect.value, colorSelect.value, eccSelect.value);
+      var opts = erqtOptions(sizeSelect.value, colorSelect.value, eccSelect.value);
+      var key = [payload, opts.size, opts.color, opts.ecc].join("\u0000");
+      if (key !== state.key || !state.valid) {
+        try {
+          draw(erqtEncode(payload, opts.ecc), opts);
+        } catch (e) {
+          state.valid = false;
+          state.key = "";
+          wrapper.classList.add("is-stale");
+          showHint(String(e && e.message) === "qrcodegen-missing" ? "qrLibError" : "qrTooLong", "error", 0);
+          updateAlt();
+          return false;
+        }
+        state.key = key;
+        state.payload = payload;
+      }
       state.valid = true;
       wrapper.classList.remove("is-stale");
-      if (url !== state.url) {
-        state.url = url;
-        wrapper.classList.add("is-loading");
-        img.src = url;
-      }
+      if (hint.textContent && !hint.classList.contains("is-success")) clearHint();
+      if (encoded) encoded.textContent = payload;
       updateAlt();
       return true;
     }
 
     function schedule() {
+      state.values[state.type] = input.value;
       clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(function () { render(true); }, 300);
+      debounceTimer = setTimeout(function () { render(true); }, 150);
     }
 
     function applyTypeTexts() {
@@ -375,71 +461,66 @@ const translations = window.ER_TRANSLATIONS;
     }
 
     function getBlob() {
-      if (blobCache.url === state.url && blobCache.blob) return Promise.resolve(blobCache.blob);
-      var url = state.url;
-      return fetch(url, { mode: "cors", credentials: "omit" }).then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return res.blob();
-      }).then(function (b) {
-        var png = b.type === "image/png" ? b : new Blob([b], { type: "image/png" });
-        blobCache = { url: url, blob: png };
-        return png;
+      return new Promise(function (resolve, reject) {
+        if (!state.valid) { reject(new Error("invalid")); return; }
+        if (canvas.toBlob) {
+          canvas.toBlob(function (b) { b ? resolve(b) : reject(new Error("toBlob")); }, "image/png");
+        } else {
+          fetch(canvas.toDataURL("image/png")).then(function (r) { return r.blob(); }).then(resolve, reject);
+        }
       });
     }
 
     typeBtns.forEach(function (b) {
       b.addEventListener("click", function () { setType(b.getAttribute("data-type")); });
     });
-    input.addEventListener("input", function () { state.values[state.type] = input.value; schedule(); });
-    passInput.addEventListener("input", schedule);
+    /* input + change + keyup + compositionend : couvre les claviers mobiles (prédiction, IME). */
+    ["input", "keyup", "compositionend", "paste", "cut"].forEach(function (evt) {
+      input.addEventListener(evt, schedule);
+      passInput.addEventListener(evt, schedule);
+    });
+    input.addEventListener("change", function () { state.values[state.type] = input.value; render(true); });
+    passInput.addEventListener("change", function () { render(true); });
+    input.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); render(true); } });
     secSelect.addEventListener("change", function () {
       wifiPassField.hidden = secSelect.value === "nopass";
       render(true);
     });
     [sizeSelect, colorSelect, eccSelect].forEach(function (s) {
       s.addEventListener("change", function () { render(true); });
-    });
-    img.addEventListener("load", function () { wrapper.classList.remove("is-loading"); });
-    img.addEventListener("error", function () {
-      wrapper.classList.remove("is-loading");
-      showHint("qrLoadError", "error", 4000);
+      s.addEventListener("input", function () { render(true); });
     });
 
+    var lastObjectUrl = "";
     document.getElementById("qrDownload").addEventListener("click", function () {
       if (!render(true)) return;
-      var fallbackUrl = state.url;
       getBlob().then(function (blob) {
-        var objectUrl = URL.createObjectURL(blob);
-        var a = document.createElement("a");
-        a.href = objectUrl;
-        a.download = "qr-code-er-digital.png";
-        a.style.display = "none";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        setTimeout(function () { URL.revokeObjectURL(objectUrl); }, 2000);
-        showHint("qrDownloaded", "success");
+        if (lastObjectUrl) URL.revokeObjectURL(lastObjectUrl);
+        var r = erqtSaveBlob(blob, "qr-code-er-digital.png");
+        lastObjectUrl = r.url;
+        if (r.opened) showHint("qrDownloadFallback", "", 7000);
+        else showHint("qrDownloaded", "success", 6000, erqtTouch ? "qrLongPress" : "");
       }).catch(function () {
-        window.open(fallbackUrl, "_blank", "noopener");
-        showHint("qrDownloadFallback", "", 5000);
+        showHint("qrDownloadFallback", "", 7000);
       });
     });
 
     document.getElementById("qrCopy").addEventListener("click", function () {
       if (!render(true)) return;
       if (!navigator.clipboard || typeof navigator.clipboard.write !== "function" || typeof window.ClipboardItem !== "function") {
-        showHint("qrCopyUnsupported", "error", 5000);
+        showHint("qrCopyUnsupported", "error", 6000);
         return;
       }
       var blobPromise = getBlob();
       var ok = function () { showHint("qrCopied", "success"); };
-      var fail = function () { showHint("qrCopyUnsupported", "error", 5000); };
+      var fail = function () { showHint("qrCopyUnsupported", "error", 6000); };
       var retryWithBlob = function () {
         return blobPromise.then(function (blob) {
           return navigator.clipboard.write([new window.ClipboardItem({ "image/png": blob })]);
         }).then(ok, fail);
       };
       try {
+        /* Safari exige l'appel synchrone dans le geste utilisateur : on passe une Promise. */
         navigator.clipboard.write([new window.ClipboardItem({ "image/png": blobPromise })]).then(ok, retryWithBlob);
       } catch (e) {
         retryWithBlob();
@@ -449,13 +530,15 @@ const translations = window.ER_TRANSLATIONS;
     erqtLangListeners.push(function () {
       applyTypeTexts();
       updateAlt();
-      if (hint.textContent) { hint.textContent = ""; hint.classList.remove("is-error", "is-success"); }
+      if (hint.textContent) clearHint();
+      if (!state.valid) render("soft");
     });
     applyTypeTexts();
-    updateAlt();
+    render(false);
+    wrapper.classList.remove("is-loading");
   })();
 
-  /* ---------- Templates : modale aperçu + email ---------- */
+  /* ---------- Templates : aperçu + téléchargement direct ---------- */
   (function erqtInitTemplates() {
     var modal = document.getElementById("tplModal");
     if (!modal) return;
@@ -468,9 +551,28 @@ const translations = window.ER_TRANSLATIONS;
     var paneConfirm = document.getElementById("tplModalConfirm");
     var emailInput = document.getElementById("tplEmail");
     var emailError = document.getElementById("tplEmailError");
-    var current = { id: "", mode: "", trigger: null };
+    var againLink = document.getElementById("tplAgain");
+    var fileNameEl = document.getElementById("tplFileName");
+    var mailLink = document.getElementById("tplMailLink");
+    var savedEmailEl = document.getElementById("tplSavedEmail");
+    var current = { id: "", mode: "", trigger: null, url: "", email: "", opened: false };
 
     function tplName(id) { return erqtT("tpl" + id + "Title"); }
+    function getEmail() { try { return window.localStorage.getItem(ERQT_EMAIL_KEY) || ""; } catch (e) { return ""; } }
+    function setEmail(v) { try { window.localStorage.setItem(ERQT_EMAIL_KEY, v); } catch (e) { /* navigation privée : on continue sans mémoriser */ } }
+    function forgetEmail() { try { window.localStorage.removeItem(ERQT_EMAIL_KEY); } catch (e) {} }
+
+    function revoke() { if (current.url) { URL.revokeObjectURL(current.url); current.url = ""; } }
+
+    function fillConfirm() {
+      fileNameEl.textContent = erqtFileName(current.id);
+      againLink.setAttribute("href", current.url || "#");
+      againLink.setAttribute("download", erqtFileName(current.id));
+      if (!erqtCanDownload || current.opened) againLink.setAttribute("target", "_blank"); else againLink.removeAttribute("target");
+      mailLink.setAttribute("href", erqtBuildMailto(erqtDict(), tplName(current.id), current.email));
+      savedEmailEl.textContent = current.email;
+      document.getElementById("tplConfirmNote").textContent = erqtT(current.opened ? "tplOpened" : "tplStarted");
+    }
 
     function setMode(mode, moveFocus) {
       current.mode = mode;
@@ -490,11 +592,25 @@ const translations = window.ER_TRANSLATIONS;
       if (mode === "download") {
         emailError.hidden = true;
         emailInput.removeAttribute("aria-invalid");
+        if (!emailInput.value) emailInput.value = current.email || getEmail();
       }
+      if (mode === "confirm") fillConfirm();
       if (!moveFocus) return;
       if (mode === "download") emailInput.focus();
       else if (mode === "confirm") document.getElementById("tplConfirmNote").focus();
       else document.getElementById("tplModalClose").focus();
+    }
+
+    /* Génère le fichier HTML du template et lance le téléchargement immédiatement. */
+    function deliver(email) {
+      current.email = email;
+      revoke();
+      var html = erqtMock(current.id, erqtLang(), true);
+      var blob = new Blob([html], { type: "text/html;charset=utf-8" });
+      var r = erqtSaveBlob(blob, erqtFileName(current.id));
+      current.url = r.url;
+      current.opened = r.opened;
+      setMode("confirm", true);
     }
 
     function open(id, mode, trigger) {
@@ -502,6 +618,10 @@ const translations = window.ER_TRANSLATIONS;
       current.trigger = trigger || document.activeElement;
       modal.hidden = false;
       erqtRoot.classList.add("tpl-lock");
+      if (mode === "download") {
+        var saved = getEmail();
+        if (ERQT_EMAIL_RE.test(saved)) { deliver(saved); return; }
+      }
       setMode(mode, true);
     }
 
@@ -512,6 +632,9 @@ const translations = window.ER_TRANSLATIONS;
       erqtRoot.classList.remove("tpl-lock");
       if (current.trigger && typeof current.trigger.focus === "function") current.trigger.focus();
       current.mode = "";
+      /* l'URL objet est libérée un peu plus tard pour ne pas interrompre un téléchargement en cours */
+      var u = current.url; current.url = "";
+      if (u) setTimeout(function () { URL.revokeObjectURL(u); }, 60000);
     }
 
     function focusables() {
@@ -527,9 +650,22 @@ const translations = window.ER_TRANSLATIONS;
     document.querySelectorAll("[data-tpl-download]").forEach(function (b) {
       b.addEventListener("click", function () { open(b.getAttribute("data-tpl-download"), "download", b); });
     });
-    document.getElementById("tplFromPreview").addEventListener("click", function () { setMode("download", true); });
+    document.getElementById("tplFromPreview").addEventListener("click", function () {
+      var saved = getEmail();
+      if (ERQT_EMAIL_RE.test(saved)) deliver(saved); else setMode("download", true);
+    });
     document.getElementById("tplModalClose").addEventListener("click", close);
     document.getElementById("tplConfirmClose").addEventListener("click", close);
+    document.getElementById("tplChangeEmail").addEventListener("click", function () {
+      forgetEmail();
+      emailInput.value = current.email;
+      setMode("download", true);
+      emailInput.select();
+    });
+    againLink.addEventListener("click", function (e) {
+      /* Lien manuel : si l'URL objet a expiré, on régénère le fichier. */
+      if (!current.url) { e.preventDefault(); deliver(current.email || getEmail()); }
+    });
     modal.addEventListener("click", function (e) { if (e.target === modal) close(); });
 
     document.addEventListener("keydown", function (e) {
@@ -555,9 +691,8 @@ const translations = window.ER_TRANSLATIONS;
         emailInput.focus();
         return;
       }
-      var href = erqtBuildMailto(erqtDict(), tplName(current.id), email);
-      window.location.href = href;
-      setMode("confirm", true);
+      setEmail(email);
+      deliver(email);
     });
 
     erqtLangListeners.push(function () {
@@ -568,8 +703,8 @@ const translations = window.ER_TRANSLATIONS;
     });
   })();
 
-  /* ---------- Maquettes statiques des templates (iframe srcdoc, sans script) ---------- */
-  function erqtMock(id, lang) {
+  /* ---------- Templates : maquettes (aperçu iframe srcdoc sans script) et fichiers HTML téléchargés ---------- */
+  function erqtMock(id, lang, file) {
     var L = function (fr, en) { return lang === "en" ? en : fr; };
     var css = "*{box-sizing:border-box}body{margin:0;background:#EDE7DC;color:#1A1614;font:500 15px/1.5 'Space Grotesk',system-ui,sans-serif}" +
       "h1,h2,h3{font-family:'Archivo Black',Impact,sans-serif;font-weight:900;text-transform:uppercase;line-height:.95;letter-spacing:-.02em;margin:0 0 12px}" +
@@ -582,36 +717,70 @@ const translations = window.ER_TRANSLATIONS;
       ".c{border:2px solid #1A1614;background:#FFFFFF;padding:14px}.y{background:#F4C430;color:#1A1614}.r{background:#E8522B;color:#1A1614}.v{background:#1B5E3F;color:#EDE7DC}" +
       ".ph{min-height:90px;border:2px solid #1A1614;background-color:#F5F0E6;background-image:repeating-linear-gradient(45deg,transparent,transparent 14px,#1A161430 14px,#1A161430 15px)}" +
       ".row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:2px solid #1A1614}.t{display:inline-block;margin:0 6px 6px 0;padding:3px 8px;border:2px solid #1A1614;background:#F4C430}" +
-      "body.dk{background:#1A1614;color:#EDE7DC}.dk .bar,.dk .c,.dk .ph{border-color:#EDE7DC}.dk .c{background:#24201D}.dk .ph{background-color:#2E2926;background-image:repeating-linear-gradient(45deg,transparent,transparent 14px,#EDE7DC30 14px,#EDE7DC30 15px)}.dk .b{background:#EDE7DC;color:#1A1614;border-color:#EDE7DC}";
-    var head = "<!doctype html><html lang=\"" + lang + "\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">" +
+      "body.dk{background:#1A1614;color:#EDE7DC}.dk .bar,.dk .c,.dk .ph{border-color:#EDE7DC}.dk .c{background:#24201D}.dk .ph{background-color:#2E2926;background-image:repeating-linear-gradient(45deg,transparent,transparent 14px,#EDE7DC30 14px,#EDE7DC30 15px)}.dk .b{background:#EDE7DC;color:#1A1614;border-color:#EDE7DC}" +
+      "a{color:inherit;text-decoration:none}section{scroll-margin-top:8px}.ft{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;padding:16px 20px;border-top:2px solid #1A1614}.dk .ft,.dk section{border-color:#EDE7DC!important}input,textarea{width:100%;padding:10px;border:2px solid #1A1614;background:#FFFFFF;color:#1A1614;font:inherit}label{display:block;margin:10px 0 4px}";
+    var name = erqtTL("tpl" + id + "Title", lang) || "Template";
+    var head = "<!doctype html>" + (file ? erqtFileComment(id, lang, name) : "") + "<html lang=\"" + lang + "\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">" +
+      (file ? "<title>" + erqtEsc(name) + "</title><meta name=\"description\" content=\"" + erqtEsc(erqtTL("tpl" + id + "Text", lang)) + "\">" : "") +
       "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@700&display=swap\">" +
       "<style>" + css + "</style></head>";
     var bodies = {
-      "1": "<body class=\"dk\"><div class=\"bar\"><strong class=\"m\">A. Kouassi</strong><span class=\"nav m\"><span class=\"on\">" + L("Travaux", "Work") + "</span><span>" + L("À propos", "About") + "</span><span>Contact</span></span></div>" +
+      "1": "<body class=\"dk\"><div class=\"bar\" id=\"top\"><strong class=\"m\">A. Kouassi</strong><span class=\"nav m\"><a class=\"on\" href=\"#top\">" + L("Travaux", "Work") + "</a><a href=\"#apropos\">" + L("À propos", "About") + "</a><a href=\"#contact\">Contact</a></span></div>" +
         "<div class=\"w\"><p class=\"m\">" + L("Designer graphique · Abidjan", "Graphic designer · Abidjan") + "</p><h1>" + L("Des images qui parlent.", "Images that speak.") + "</h1>" +
         "<div class=\"g\"><div><div class=\"ph\"></div><p class=\"m\">01 / " + L("Identité", "Identity") + "</p></div><div><div class=\"ph\"></div><p class=\"m\">02 / " + L("Affiche", "Poster") + "</p></div><div><div class=\"ph\"></div><p class=\"m\">03 / Packaging</p></div></div>" +
         "<span class=\"b\">" + L("Me contacter", "Contact me") + " →</span></div></body>",
-      "2": "<body><div class=\"bar\"><strong class=\"m\">Atelier Bois Doré</strong><span class=\"nav m\"><span>" + L("Accueil", "Home") + "</span><span class=\"on\">" + L("Galerie", "Gallery") + "</span><span>Contact</span></span></div>" +
+      "2": "<body><div class=\"bar\" id=\"top\"><strong class=\"m\">Atelier Bois Doré</strong><span class=\"nav m\"><a href=\"#top\">" + L("Accueil", "Home") + "</a><a class=\"on\" href=\"#galerie\">" + L("Galerie", "Gallery") + "</a><a href=\"#contact\">Contact</a></span></div>" +
         "<div class=\"w\"><h1>" + L("Meubles en bois massif, faits main.", "Solid wood furniture, handmade.") + "</h1><p>" + L("Tables, portes et rangements sur mesure depuis 2009.", "Custom tables, doors and storage since 2009.") + "</p>" +
         "<div class=\"g\"><div class=\"ph\"></div><div class=\"ph\"></div><div class=\"ph\"></div><div class=\"ph\"></div></div>" +
         "<div class=\"c y\" style=\"margin-top:14px\"><h3>" + L("Demander un devis", "Request a quote") + "</h3><p class=\"m\" style=\"margin:0\">WhatsApp · " + L("Appel", "Call") + " · Email</p></div></div></body>",
-      "3": "<body><div class=\"bar\"><strong class=\"m\">Sakô</strong><span class=\"b\">" + L("Commander", "Order") + "</span></div>" +
+      "3": "<body><div class=\"bar\" id=\"top\"><strong class=\"m\">Sakô</strong><span class=\"b\">" + L("Commander", "Order") + "</span></div>" +
         "<div class=\"w\"><p class=\"m\">" + L("Nouveau · Édition 2026", "New · 2026 edition") + "</p><h1 style=\"font-size:clamp(36px,9vw,72px)\">" + L("Le sac qui tient 10 ans.", "The bag that lasts 10 years.") + "</h1>" +
         "<p><span class=\"b\" style=\"background:#E8522B;color:#1A1614\">" + L("Commander — 25 000 F", "Order — 25,000 F") + " →</span></p>" +
         "<div class=\"g\"><div class=\"c\"><h3>" + L("Cuir local", "Local leather") + "</h3><p style=\"margin:0\">" + L("Tanné à Ouagadougou.", "Tanned in Ouagadougou.") + "</p></div><div class=\"c y\"><h3>" + L("Garanti 10 ans", "10-year warranty") + "</h3><p style=\"margin:0\">" + L("Réparé gratuitement.", "Repaired for free.") + "</p></div><div class=\"c\"><h3>" + L("Livré en 48 h", "48 h delivery") + "</h3><p style=\"margin:0\">" + L("Partout en Côte d'Ivoire.", "Anywhere in Côte d'Ivoire.") + "</p></div></div></div></body>",
       "4": "<body><div class=\"w\" style=\"border-bottom:2px solid #1A1614\"><p class=\"m\">" + L("CV en ligne", "Online resume") + "</p><h1>Awa Traoré</h1><p class=\"m\" style=\"margin:0\">" + L("Développeuse web · Yamoussoukro", "Web developer · Yamoussoukro") + "</p></div>" +
         "<div class=\"w g\"><div><h2>" + L("Parcours", "Experience") + "</h2><div class=\"row\"><span>" + L("Développeuse front, Studio K", "Front-end developer, Studio K") + "</span><span class=\"m\">2024 —</span></div><div class=\"row\"><span>" + L("Licence informatique, INP-HB", "BSc Computer science, INP-HB") + "</span><span class=\"m\">2023</span></div></div>" +
         "<div><h2>" + L("Compétences", "Skills") + "</h2><span class=\"t m\">HTML / CSS</span><span class=\"t m\">JavaScript</span><span class=\"t m\">Figma</span><span class=\"t m\">" + L("Anglais B2", "English B2") + "</span><p style=\"margin-top:12px\"><span class=\"b\">" + L("Me contacter", "Contact me") + " →</span></p></div></div></body>",
-      "5": "<body><div class=\"bar\"><strong class=\"m\">Maquis Le Baobab</strong><span class=\"m\">" + L("Ouvert", "Open") + " ●</span></div>" +
+      "5": "<body><div class=\"bar\" id=\"top\"><strong class=\"m\">Maquis Le Baobab</strong><span class=\"m\">" + L("Ouvert", "Open") + " ●</span></div>" +
         "<div class=\"w\"><h1>" + L("La carte.", "The menu.") + "</h1><div class=\"row\"><span>" + L("Garba thon frit", "Garba with fried tuna") + "</span><strong class=\"m\">1 500 F</strong></div><div class=\"row\"><span>" + L("Poulet braisé, attiéké", "Braised chicken, attiéké") + "</span><strong class=\"m\">4 000 F</strong></div>" +
         "<div class=\"row\"><span>" + L("Kedjenou de pintade", "Guinea fowl kedjenou") + "</span><strong class=\"m\">5 500 F</strong></div><div class=\"row\"><span>" + L("Jus de bissap", "Bissap juice") + "</span><strong class=\"m\">500 F</strong></div>" +
         "<div class=\"c v\" style=\"margin-top:16px\"><h3>" + L("Horaires", "Opening hours") + "</h3><p class=\"m\" style=\"margin:0\">" + L("Lun — Sam · 11 h — 23 h", "Mon — Sat · 11 am — 11 pm") + "</p></div></div></body>",
-      "6": "<body><div class=\"bar\"><strong class=\"m\">Boutique Kente</strong><span class=\"nav m\"><span class=\"on\">" + L("Catalogue", "Catalog") + "</span><span>" + L("Produit", "Product") + "</span><span class=\"t\" style=\"margin:0\">" + L("Panier", "Cart") + " (2)</span></span></div>" +
-        "<div class=\"w\"><h2>" + L("Nouveautés", "New in") + "</h2><div class=\"g\"><div class=\"c\"><div class=\"ph\"></div><h3 style=\"margin-top:10px\">" + L("Pagne kente", "Kente cloth") + "</h3><p class=\"m\">12 000 F</p><span class=\"b\">" + L("Ajouter", "Add") + "</span></div>" +
+      "6": "<body><div class=\"bar\" id=\"top\"><strong class=\"m\">Boutique Kente</strong><span class=\"nav m\"><a class=\"on\" href=\"#top\">" + L("Catalogue", "Catalog") + "</a><a href=\"#produit\">" + L("Produit", "Product") + "</a><a class=\"t\" style=\"margin:0\" href=\"#panier\">" + L("Panier", "Cart") + " (2)</a></span></div>" +
+        "<div class=\"w\"><h1 style=\"font-size:clamp(26px,5vw,36px)\">" + L("Nouveautés", "New in") + "</h1><div class=\"g\"><div class=\"c\"><div class=\"ph\"></div><h3 style=\"margin-top:10px\">" + L("Pagne kente", "Kente cloth") + "</h3><p class=\"m\">12 000 F</p><span class=\"b\">" + L("Ajouter", "Add") + "</span></div>" +
         "<div class=\"c\"><div class=\"ph\"></div><h3 style=\"margin-top:10px\">" + L("Sac en wax", "Wax bag") + "</h3><p class=\"m\">8 500 F</p><span class=\"b\">" + L("Ajouter", "Add") + "</span></div><div class=\"c\"><div class=\"ph\"></div><h3 style=\"margin-top:10px\">" + L("Bracelet perles", "Bead bracelet") + "</h3><p class=\"m\">3 000 F</p><span class=\"b\">" + L("Ajouter", "Add") + "</span></div></div>" +
         "<div class=\"row\" style=\"margin-top:14px;border-top:2px solid #1A1614\"><strong>" + L("Total panier", "Cart total") + "</strong><strong class=\"m\">20 500 F</strong></div></div></body>"
     };
-    return head + (bodies[id] || bodies["1"]) + "</html>";
+    var body = bodies[id] || bodies["1"];
+    if (file) body = body.replace("</body>", erqtFileExtra(id, L) + "<footer class=\"ft m\"><span>© " + new Date().getFullYear() + " · " + erqtEsc(name) + "</span><span>" + L("Template gratuit", "Free template") + " · ER Digital</span></footer></body>");
+    return head + body + "</html>";
+  }
+
+  function erqtEsc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]; });
+  }
+
+  function erqtFileComment(id, lang, name) {
+    var fr = lang !== "en";
+    return "\n<!--\n  " + name + " — " + (fr ? "template gratuit ER Digital" : "free ER Digital template") + "\n" +
+      (fr ? "  1. Ouvrez ce fichier dans votre navigateur pour le voir.\n  2. Modifiez les textes avec un éditeur (Bloc-notes, VS Code…).\n  3. Publiez-le gratuitement (GitHub Pages, Netlify…).\n  Besoin d'aide ? " : "  1. Open this file in your browser to view it.\n  2. Edit the texts with any editor (Notepad, VS Code…).\n  3. Publish it for free (GitHub Pages, Netlify…).\n  Need help? ") +
+      ERQT_MAIL + " · https://emmanuelrolandpregnon-design.github.io/er-digital-/\n-->\n";
+  }
+
+  /* Sections complémentaires du fichier téléchargé (les « 3 pages » sont des sections reliées par ancres). */
+  function erqtFileExtra(id, L) {
+    var sec = "<section class=\"w\" style=\"border-top:2px solid #1A1614\" id=\"";
+    var contact = sec + "contact\"><h2>Contact</h2><form action=\"#\" onsubmit=\"return false\"><label class=\"m\" for=\"nom\">" + L("Nom", "Name") + "</label><input id=\"nom\" name=\"nom\"><label class=\"m\" for=\"msg\">Message</label><textarea id=\"msg\" name=\"message\" rows=\"4\"></textarea><p style=\"margin-top:12px\"><button class=\"b\" type=\"submit\">" + L("Envoyer", "Send") + " →</button></p></form><p class=\"m\">WhatsApp · +225 00 00 00 00 00 · contact@exemple.ci</p></section>";
+    var extra = {
+      "1": sec + "apropos\"><h2>" + L("À propos", "About") + "</h2><p>" + L("Remplacez ce texte par votre parcours en trois phrases : ce que vous faites, pour qui, et pourquoi on vous choisit.", "Replace this text with your story in three sentences: what you do, for whom, and why people pick you.") + "</p></section>",
+      "2": sec + "galerie\"><h2>" + L("Galerie", "Gallery") + "</h2><div class=\"g\"><div class=\"ph\"></div><div class=\"ph\"></div><div class=\"ph\"></div><div class=\"ph\"></div><div class=\"ph\"></div><div class=\"ph\"></div></div><p class=\"m\" style=\"margin-top:10px\">" + L("Remplacez chaque bloc par une photo de vos réalisations.", "Replace each block with a photo of your work.") + "</p></section>",
+      "6": sec + "produit\"><h2>" + L("Fiche produit", "Product page") + "</h2><div class=\"g\"><div class=\"ph\" style=\"min-height:200px\"></div><div><h3>" + L("Pagne kente", "Kente cloth") + "</h3><p class=\"m\">12 000 F</p><p>" + L("Tissé à la main à Bondoukou. 6 yards.", "Handwoven in Bondoukou. 6 yards.") + "</p><span class=\"b\">" + L("Ajouter au panier", "Add to cart") + "</span></div></div></section>" +
+        sec + "panier\"><h2>" + L("Panier", "Cart") + "</h2><div class=\"row\"><span>" + L("Pagne kente", "Kente cloth") + " × 1</span><strong class=\"m\">12 000 F</strong></div><div class=\"row\"><span>" + L("Sac en wax", "Wax bag") + " × 1</span><strong class=\"m\">8 500 F</strong></div><p style=\"margin-top:12px\"><span class=\"b\">" + L("Commander via WhatsApp", "Order via WhatsApp") + " →</span></p></section>"
+    };
+    return (extra[id] || "") + contact;
+  }
+
+  function erqtTL(key, lang) {
+    var all = (typeof window !== "undefined" && window.ER_TRANSLATIONS) || {};
+    return (all[lang] && all[lang][key]) || (all.fr && all.fr[key]) || "";
   }
 })();
 /* === FIN QR + TEMPLATES === */
