@@ -1,0 +1,27 @@
+name: Restore OG image
+on:
+  push:
+    paths:
+      - 'og-image.b64'
+      - '.github/workflows/restore-og.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode PNG
+        run: |
+          base64 -d og-image.b64 > og-image.png
+          file og-image.png
+          ls -la og-image.png
+      - name: Commit PNG if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add og-image.png
+          git diff --staged --quiet && echo "No change" && exit 0
+          git commit -m "Restore og-image.png from og-image.b64"
+          git push
