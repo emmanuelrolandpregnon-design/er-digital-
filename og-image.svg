@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#EDE7DC"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#1A1614" stroke-width="4"/>
+  <text x="60" y="80" font-family="'Archivo Black', 'Arial Black', sans-serif" font-weight="900"
+        font-size="96" fill="#1A1614" letter-spacing="-0.03em" dominant-baseline="hanging">ER DIGITAL</text>
+  <text x="60" y="150" font-family="'Space Grotesk', Arial, sans-serif" font-weight="600"
+        font-size="32" fill="#3A332E" dominant-baseline="hanging">Studio web brut</text>
+  <rect x="60" y="250" width="400" height="140" fill="#E8522B"/>
+  <text x="80" y="295" font-family="'Archivo Black', 'Arial Black', sans-serif" font-weight="900"
+        font-size="44" fill="#EDE7DC" dominant-baseline="hanging">SITES FRANCS.</text>
+  <text x="80" y="350" font-family="'Archivo Black', 'Arial Black', sans-serif" font-weight="900"
+        font-size="44" fill="#EDE7DC" dominant-baseline="hanging">SANS DÉTOUR.</text>
+  <text x="60" y="560" font-family="'Space Mono', monospace" font-weight="700"
+        font-size="20" fill="#6B5F55">YAMOUSSOUKRO · CÔTE D'IVOIRE</text>
+  <text x="1140" y="560" text-anchor="end" font-family="'Space Mono', monospace" font-weight="700"
+        font-size="20" fill="#1A1614">er-digital.studio</text>
+</svg>
