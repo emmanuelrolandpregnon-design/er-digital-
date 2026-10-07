@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Raccourcisseur de liens gratuit — ER Digital</title>
+  <meta name="description" content="Raccourcissez gratuitement vos liens en un clic avec l'outil ER Digital.">
+  <link rel="canonical" href="https://emmanuelrolandpregnon-design.github.io/er-digital-/outils/raccourcisseur.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://emmanuelrolandpregnon-design.github.io/er-digital-/outils/raccourcisseur.html">
+  <meta property="og:title" content="Raccourcisseur de liens gratuit — ER Digital">
+  <meta property="og:description" content="Raccourcissez gratuitement vos liens en un clic.">
+  <meta property="og:image" content="https://emmanuelrolandpregnon-design.github.io/er-digital-/og-image.png">
+  <meta property="og:site_name" content="ER Digital">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#06141B">
+  <link rel="icon" type="image/png" href="../apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <style>
+    :root {
+      --bg: #06141B;
+      --surface: #11212D;
+      --surface-soft: #0B1A23;
+      --border: #253745;
+      --text: #CCD0CF;
+      --muted: #9BA8AB;
+      --muted-deep: #8497A3;
+      --accent: #3DBDAA;
+      --accent-hover: #63D5C4;
+      --accent-text: #06141B;
+      --shadow: 0 18px 50px rgba(0, 0, 0, .20);
+      --header-bg: rgba(6, 20, 27, .88);
+      --focus: #8DE8DC;
+      --accent-ink: #3DBDAA;
+      --danger: #FF9A90;
+    }
+
+    [data-theme="light"] {
+      --bg: #F3F7F6;
+      --surface: #FFFFFF;
+      --surface-soft: #E8F0EE;
+      --border: #B8C9C5;
+      --text: #11212D;
+      --muted: #546A6B;
+      --muted-deep: #566868;
+      --accent: #3DBDAA;
+      --accent-hover: #2DAD9B;
+      --accent-text: #06141B;
+      --shadow: 0 18px 50px rgba(17, 33, 45, .10);
+      --header-bg: rgba(243, 247, 246, .90);
+      --focus: #167C6F;
+      --accent-ink: #0F6F63;
+      --danger: #B3261E;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 6.5rem;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+      transition: background-color .25s ease, color .25s ease;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button { cursor: pointer; }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 100;
+      top: 1rem;
+      left: 1rem;
+      padding: .75rem 1rem;
+      transform: translateY(-200%);
+      border-radius: .6rem;
+      background: var(--accent);
+      color: var(--accent-text);
+      font-weight: 800;
+    }
+
+    .skip-link:focus { transform: translateY(0); }
+
+    .container {
+      width: min(1120px, calc(100% - 2rem));
+      margin-inline: auto;
+    }
+
+    .section {
+      padding: 5.5rem 0;
+      scroll-margin-top: 5rem;
+    }
+
+    .section-alt {
+      background: var(--surface-soft);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      margin: 0 0 1rem;
+      color: var(--accent-ink);
+      font-size: .76rem;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: .55rem;
+      height: .55rem;
+      border-radius: 50%;
+      background: currentColor;
+      content: "";
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1, h2, h3 {
+      color: var(--text);
+      line-height: 1.06;
+      letter-spacing: -.04em;
+    }
+
+    h1 {
+      max-width: 11ch;
+      margin-bottom: 1.25rem;
+      font-size: clamp(2.7rem, 11vw, 5.7rem);
+    }
+
+    h2 {
+      max-width: 16ch;
+      margin-bottom: 1rem;
+      font-size: clamp(2rem, 6vw, 3.25rem);
+    }
+
+    h3 {
+      margin-bottom: .65rem;
+      font-size: 1.22rem;
+    }
+
+    .section-intro {
+      max-width: 41rem;
+      margin-bottom: 2.25rem;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .muted { color: var(--muted); }
+
+    .button-primary .muted {
+      color: inherit;
+      opacity: .85;
+    }
+
+    .to-complete {
+      color: var(--muted-deep);
+      font-size: .94rem;
+      font-style: italic;
+    }
+
+    .site-header {
+      position: sticky;
+      z-index: 50;
+      top: 0;
+      border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+      background: var(--header-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 4.8rem;
+      gap: .75rem;
+      padding-top: env(safe-area-inset-top);
+    }
+
+    .brand {
+      display: inline-flex;
+      flex-shrink: 0;
+      align-items: center;
+      gap: .7rem;
+      color: var(--text);
+      font-weight: 900;
+      letter-spacing: -.03em;
+    }
+
+    .brand-mark {
+      width: 2.2rem;
+      height: 2.2rem;
+      display: block;
+      border-radius: 22%;
+    }
+
+    .desktop-nav {
+      display: none;
+      align-items: center;
+      gap: 1.15rem;
+      color: var(--muted);
+      font-size: .88rem;
+      font-weight: 750;
+    }
+
+    .desktop-nav a:hover,
+    .desktop-nav a:focus-visible,
+    .footer-links a:hover,
+    .footer-links a:focus-visible {
+      color: var(--accent-ink);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+    }
+
+    .control {
+      min-width: 2.7rem;
+      min-height: 2.7rem;
+      display: inline-grid;
+      place-items: center;
+      padding: .45rem .6rem;
+      border: 1px solid var(--border);
+      border-radius: .65rem;
+      background: transparent;
+      color: var(--text);
+      font-size: .78rem;
+      font-weight: 900;
+    }
+
+    .control:hover {
+      border-color: var(--accent-ink);
+      color: var(--accent-ink);
+    }
+
+    .menu-toggle {
+      width: 2.7rem;
+      min-height: 2.7rem;
+      display: inline-grid;
+      place-items: center;
+      padding: 0;
+      border: 1px solid var(--border);
+      border-radius: .65rem;
+      background: transparent;
+      color: var(--text);
+    }
+
+    .menu-lines,
+    .menu-lines::before,
+    .menu-lines::after {
+      width: 1.15rem;
+      height: 2px;
+      display: block;
+      border-radius: 2px;
+      background: currentColor;
+      content: "";
+      transition: transform .2s ease, opacity .2s ease;
+    }
+
+    .menu-lines { position: relative; }
+
+    .menu-lines::before { position: absolute; top: -.38rem; left: 0; }
+    .menu-lines::after { position: absolute; bottom: -.38rem; left: 0; }
+
+    .menu-toggle[aria-expanded="true"] .menu-lines { background: transparent; }
+    .menu-toggle[aria-expanded="true"] .menu-lines::before { transform: translateY(.38rem) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] .menu-lines::after { transform: translateY(-.38rem) rotate(-45deg); }
+
+    .mobile-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .25rem;
+      max-height: 0;
+      overflow: hidden;
+      padding: 0;
+      opacity: 0;
+      transition: max-height .25s ease, opacity .2s ease, padding .25s ease;
+    }
+
+    .mobile-nav.is-open {
+      max-height: 22rem;
+      padding: 0 0 1rem;
+      opacity: 1;
+    }
+
+    .mobile-nav a {
+      min-height: 2.8rem;
+      display: flex;
+      align-items: center;
+      padding: .65rem .75rem;
+      border: 1px solid var(--border);
+      border-radius: .55rem;
+      color: var(--muted);
+      font-size: .9rem;
+      font-weight: 750;
+    }
+
+    .mobile-nav a:hover { color: var(--accent-ink); border-color: var(--accent-ink); }
+
+    .hero {
+      min-height: min(760px, calc(100svh - 4.8rem));
+      display: grid;
+      align-items: center;
+      padding: 5.5rem 0 4.5rem;
+      background:
+        radial-gradient(circle at 82% 24%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 28rem),
+        var(--bg);
+    }
+
+    .hero-content { max-width: 50rem; }
+
+    .hero-copy {
+      max-width: 38rem;
+      margin-bottom: 2rem;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 3.8vw, 1.32rem);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .8rem;
+    }
+
+    .button {
+      min-height: 3.15rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: .75rem 1rem;
+      border: 1px solid transparent;
+      border-radius: .7rem;
+      font-weight: 900;
+      text-align: center;
+      transition: transform .2s ease, background-color .2s ease, border-color .2s ease;
+    }
+
+    .button:hover { transform: translateY(-2px); }
+
+    .button-primary {
+      background: var(--accent);
+      color: var(--accent-text);
+    }
+
+    .button-primary:hover { background: var(--accent-hover); }
+
+    .button-secondary {
+      border-color: var(--border);
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    .button-secondary:hover {
+      border-color: var(--accent-ink);
+      color: var(--accent-ink);
+    }
+
+    .grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .services-grid { grid-template-columns: 1fr; }
+
+    .card {
+      min-height: 100%;
+      padding: 1.35rem;
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      background: var(--surface);
+      box-shadow: 0 1px 0 rgba(255,255,255,.03) inset;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: color-mix(in srgb, var(--accent) 70%, var(--border));
+    }
+
+    .card-number {
+      display: block;
+      margin-bottom: 1.45rem;
+      color: var(--accent-ink);
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .1em;
+    }
+
+    .card p:last-child { margin-bottom: 0; color: var(--muted); }
+
+    .work-grid,
+    .store-grid { grid-template-columns: 1fr; }
+
+    .project-card,
+    .store-card {
+      display: flex;
+      min-height: 13rem;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .link-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      color: var(--accent-ink);
+      font-weight: 900;
+    }
+
+    .link-arrow::after {
+      content: "→";
+      font-size: 1.15em;
+      transition: transform .2s ease;
+    }
+
+    .project-card:hover .link-arrow::after,
+    .store-card:hover .link-arrow::after { transform: translateX(.25rem); }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .process-step {
+      position: relative;
+      padding: 1.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .process-step:last-child { border-bottom: 0; }
+
+    .process-index {
+      display: block;
+      margin-bottom: 1.8rem;
+      color: var(--accent-ink);
+      font-size: .84rem;
+      font-weight: 900;
+    }
+
+    .process-step p { margin-bottom: 0; color: var(--muted); }
+
+    .faq-list {
+      display: grid;
+      gap: .7rem;
+    }
+
+    .faq-item {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: .8rem;
+      background: var(--surface);
+    }
+
+    .faq-button {
+      width: 100%;
+      min-height: 3.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.1rem;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      font-weight: 850;
+      text-align: left;
+    }
+
+    .faq-icon {
+      flex: 0 0 auto;
+      color: var(--accent-ink);
+      font-size: 1.4rem;
+      line-height: 1;
+      transition: transform .2s ease;
+    }
+
+    .faq-button[aria-expanded="true"] .faq-icon { transform: rotate(45deg); }
+
+    .faq-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .22s ease;
+    }
+
+    .faq-panel > div { overflow: hidden; }
+
+    .faq-panel.is-open { grid-template-rows: 1fr; }
+
+    .faq-panel p {
+      margin: 0;
+      padding: 0 1.1rem 1.1rem;
+      color: var(--muted);
+    }
+
+    .pricing-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      background: var(--surface);
+    }
+
+    .pricing-box h2 { margin: 0; font-size: clamp(1.7rem, 5vw, 2.4rem); }
+    .pricing-box p { margin: 0; color: var(--accent-ink); font-weight: 850; text-align: right; }
+
+    .contact-layout {
+      display: grid;
+      gap: 2.5rem;
+    }
+
+    .contact-actions {
+      display: grid;
+      gap: .75rem;
+      margin-top: 1.5rem;
+    }
+
+    .contact-button {
+      width: 100%;
+      justify-content: flex-start;
+      gap: .75rem;
+    }
+
+    .contact-button strong { font-size: .98rem; }
+
+    .contact-form {
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      background: var(--surface);
+    }
+
+    .contact-form h3 { margin-bottom: 1.1rem; }
+
+    .field {
+      display: grid;
+      gap: .45rem;
+      margin-bottom: 1rem;
+    }
+
+    .field span {
+      color: var(--muted);
+      font-size: .9rem;
+      font-weight: 800;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: .65rem;
+      background: var(--bg);
+      color: var(--text);
+      padding: .85rem .9rem;
+    }
+
+    textarea {
+      min-height: 8rem;
+      resize: vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder { color: var(--muted-deep); }
+
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    .form-error { margin: 0 0 1rem; color: var(--danger); font-weight: 800; }
+    .form-submit {
+      width: 100%;
+      border: 0;
+    }
+
+    .site-footer {
+      padding: 2.2rem 0 calc(5.75rem + env(safe-area-inset-bottom));
+      border-top: 1px solid var(--border);
+      background: var(--surface-soft);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .footer-brand {
+      color: var(--text);
+      font-weight: 900;
+    }
+
+    .footer-meta {
+      margin: .3rem 0 0;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .7rem 1rem;
+      color: var(--muted);
+      font-size: .9rem;
+      font-weight: 750;
+    }
+
+    .floating-contact {
+      position: fixed;
+      z-index: 40;
+      right: max(1rem, env(safe-area-inset-right));
+      bottom: max(1rem, env(safe-area-inset-bottom));
+      min-height: 3.35rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      padding: .8rem 1rem;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--accent-text);
+      box-shadow: var(--shadow);
+      font-weight: 900;
+    }
+
+    .floating-contact:hover { background: var(--accent-hover); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (min-width: 700px) {
+      .container { width: min(1120px, calc(100% - 3rem)); }
+      .section { padding: 7rem 0; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .work-grid,
+      .store-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-grid { grid-template-columns: repeat(4, 1fr); }
+      .process-step { border-bottom: 0; border-right: 1px solid var(--border); }
+      .process-step:last-child { border-right: 0; }
+      .contact-layout { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: start; }
+      .site-footer { padding-bottom: 2.2rem; }
+      .footer-inner { flex-direction: row; align-items: center; justify-content: space-between; }
+      .floating-contact { display: none; }
+    }
+
+    @media (min-width: 980px) {
+      .menu-toggle,
+      .mobile-nav { display: none; }
+      .desktop-nav { display: flex; }
+      .header-inner { min-height: 5.1rem; }
+      .services-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *,
+      *::before,
+      *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    .tool-title { max-width: none; font-size: clamp(2.2rem, 8vw, 3.8rem); }
+    .tool-wrap { max-width: 720px; }
+    .tool-card { padding: 1.35rem; border: 1px solid var(--border); border-radius: 1rem; background: var(--surface); }
+    .tool-label { display: block; margin-bottom: .55rem; font-weight: 800; text-align: center; }
+    .tool-input { min-height: 3.5rem; font-size: 1.05rem; text-align: center; }
+    .tool-card .button-primary { width: 100%; margin-top: 1rem; border: 0; }
+    .tool-card .button[disabled] { opacity: .65; cursor: progress; transform: none; }
+    .status { min-height: 1.4rem; margin: .65rem 0 0; font-size: .92rem; font-weight: 700; color: var(--muted); text-align: center; }
+    .status.ok { color: var(--accent-ink); }
+    .status.error { color: var(--danger); }
+    .result { margin-top: 1.25rem; padding: 1.1rem; border: 1px solid var(--accent); border-radius: 1rem; background: var(--surface-soft); animation: pop .35s ease; }
+    .result[hidden] { display: none; }
+    @keyframes pop { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .result-label { margin: 0 0 .4rem; color: var(--muted); font-size: .85rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+    .result-link { display: block; font-size: 1.25rem; font-weight: 900; color: var(--accent-ink); word-break: break-all; text-decoration: underline; }
+    .result-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1rem; }
+    .result-actions .button { flex: 1 1 9rem; }
+    .tool-note { margin: 1.25rem 0 0; color: var(--muted); font-size: .88rem; text-align: center; }
+    .tool-note a { color: var(--accent-ink); text-decoration: underline; }
+    .site-footer { padding-bottom: calc(2.2rem + env(safe-area-inset-bottom)); }
+    .desktop-nav a[aria-current="page"], .mobile-nav a[aria-current="page"] { color: var(--accent-ink); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Aller au contenu</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../" aria-label="ER Digital — Accueil" data-i18n-aria="brandHome">
+        <img class="brand-mark" src="../apple-touch-icon.png" width="36" height="36" alt="">
+        <span>ER Digital</span>
+      </a>
+
+      <nav class="desktop-nav" aria-label="Navigation principale" data-i18n-aria="mainNav">
+        <a href="../#services" data-i18n="navServices">Services</a>
+        <a href="../#boutique" data-i18n="navStore">Boutique</a>
+        <a href="../#realisations" data-i18n="navWork">Réalisations</a>
+        <a href="../#processus" data-i18n="navProcess">Processus</a>
+        <a href="../#faq">FAQ</a>
+        <a href="../#contact" data-i18n="navContact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="control" id="languageToggle" type="button" aria-label="Switch to English" title="Switch to English">EN</button>
+        <button class="control" id="themeToggle" type="button" aria-label="Activer le thème clair" title="Activer le thème clair">
+          <span aria-hidden="true">◐</span>
+        </button>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Ouvrir le menu" title="Ouvrir le menu" data-i18n-aria="openMenu" data-i18n-title="openMenu">
+          <span class="menu-lines" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="container mobile-nav" id="mobileNav" aria-label="Navigation principale" data-i18n-aria="mainNav">
+      <a href="../#services" data-i18n="navServices">Services</a>
+      <a href="../#boutique" data-i18n="navStore">Boutique</a>
+      <a href="../#realisations" data-i18n="navWork">Réalisations</a>
+      <a href="../#processus" data-i18n="navProcess">Processus</a>
+      <a href="../#faq">FAQ</a>
+      <a href="../#contact" data-i18n="navContact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="section" id="top">
+      <div class="container tool-wrap">
+        <p class="eyebrow" data-i18n="toolEyebrow">Outil gratuit</p>
+        <h1 class="tool-title" data-i18n="toolTitle">Raccourcisseur de liens</h1>
+        <p class="section-intro" data-i18n="toolIntro">Collez un lien long, obtenez un lien court à copier et à partager.</p>
+
+        <form class="tool-card" id="toolForm" novalidate>
+          <label class="tool-label" for="urlInput" data-i18n="urlLabel">Votre lien</label>
+          <input class="tool-input" id="urlInput" name="url" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="2000" placeholder="https://exemple.com/votre-lien-tres-long" data-i18n-placeholder="urlPlaceholder" aria-describedby="urlStatus">
+          <p class="status" id="urlStatus" role="status" aria-live="polite"></p>
+          <p class="status error" id="errorBox" role="alert" hidden></p>
+          <button class="button button-primary" id="shortenBtn" type="submit" data-i18n="shortenBtn">Raccourcir le lien</button>
+
+          <div class="result" id="result" hidden>
+            <p class="result-label" data-i18n="resultLabel">Votre lien court</p>
+            <a class="result-link" id="shortLink" href="#" target="_blank" rel="noopener noreferrer"></a>
+            <p class="tool-note" id="providerNote" style="text-align:left;margin-top:.5rem"></p>
+            <div class="result-actions">
+              <button class="button button-primary" id="copyBtn" type="button" data-i18n-aria="copyAria" aria-label="Copier le lien court" data-i18n="copyBtn">Copier</button>
+            </div>
+            <p class="status" id="copyStatus" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+
+        <p class="tool-note"><span data-i18n="toolNote">Votre lien est envoyé à un service tiers (is.gd, ou TinyURL en secours) pour créer le lien court. Ne raccourcissez pas de lien confidentiel.</span> <a href="../confidentialite.html" data-i18n="privacyLink">Confidentialité</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="footer-brand">ER Digital · Yamoussoukro</div>
+        <p class="footer-meta">© <span id="year"></span> ER Digital</p>
+      </div>
+      <nav class="footer-links" aria-label="Liens utiles" data-i18n-aria="footerNav">
+        <a href="../#services" data-i18n="navServices">Services</a>
+        <a href="../#boutique" data-i18n="navStore">Boutique</a>
+        <a href="../#contact" data-i18n="navContact">Contact</a>
+        <a href="../confidentialite.html" data-i18n="privacyLink">Confidentialité</a>
+        <a href="../cgu.html" data-i18n="termsLink">CGU</a>
+        <a href="#top" data-i18n="backTop">Retour en haut</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script type="module" src="raccourcisseur.js"></script>
+</body>
+</html>
