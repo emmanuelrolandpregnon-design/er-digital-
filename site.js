@@ -205,6 +205,8 @@ const translations = window.ER_TRANSLATIONS;
   var ERQT_QUIET = 4;
   var ERQT_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   var ERQT_EMAIL_KEY = "er-digital-template-email";
+  var ERQT_LEAD_URL = "https://formsubmit.co/ajax/" + ERQT_MAIL;
+  var ERQT_LEADS_KEY = "er-digital-template-leads";
   var ERQT_SLUGS = { "1": "portfolio", "2": "artisan", "3": "landing", "4": "cv", "5": "menu", "6": "boutique" };
 
   /* ---------- Fonctions pures (testées en Node) ---------- */
@@ -212,9 +214,30 @@ const translations = window.ER_TRANSLATIONS;
     return String(value).replace(/([\\;,:"])/g, "\\$1");
   }
 
+  /* Téléphone : espaces, points, tirets, parenthèses retirés ; « 00 » international -> « + ». */
+  function erqtNormPhone(value) {
+    var v = String(value == null ? "" : value).trim().replace(/[\s.\-()\/\u00a0]/g, "");
+    if (/^00\d/.test(v)) v = "+" + v.slice(2);
+    return v;
+  }
+  /* WhatsApp (wa.me) : chiffres uniquement, indicatif pays inclus, sans « + » ni « 00 ». */
+  function erqtWaDigits(value) {
+    return erqtNormPhone(value).replace(/\D/g, "");
+  }
+  function erqtIsPhone(value) { return /^\+?\d{3,15}$/.test(erqtNormPhone(value)); }
+  function erqtIsWa(value) {
+    var n = erqtNormPhone(value);
+    return /^\+?\d+$/.test(n) && /^[1-9]\d{7,14}$/.test(n.replace(/^\+/, ""));
+  }
+
   function erqtBuildPayload(type, value, opts) {
     var v = String(value == null ? "" : value).trim();
     if (!v) return "";
+    if (type === "tel") return "tel:" + erqtNormPhone(v);
+    if (type === "whatsapp") {
+      var msg = opts && opts.message != null ? String(opts.message).trim() : "";
+      return "https://wa.me/" + erqtWaDigits(v) + (msg ? "?text=" + encodeURIComponent(msg) : "");
+    }
     if (type === "url") return /^[a-z][a-z0-9+.-]*:\/\//i.test(v) ? v : "https://" + v.replace(/^\/+/, "");
     if (type === "email") return "mailto:" + v.replace(/^mailto:/i, "");
     if (type === "wifi") {
@@ -265,6 +288,32 @@ const translations = window.ER_TRANSLATIONS;
     return "mailto:" + ERQT_MAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
   }
 
+  /* ---------- Collecte des contacts templates (FormSubmit) ---------- */
+  function erqtLeadKey(email, id) { return String(email).trim().toLowerCase() + "|" + erqtSlug(id); }
+  function erqtLeadPayload(o) {
+    var name = erqtTL("tpl" + o.id + "Title", "fr") || erqtSlug(o.id);
+    return {
+      email: String(o.email).trim(),
+      template: name + " (" + erqtSlug(o.id) + ")",
+      langue: o.lang === "en" ? "en" : "fr",
+      page: String(o.page || ""),
+      date: o.date,
+      _subject: "Nouveau contact ER Digital — template " + name,
+      _template: "table",
+      _captcha: "false",
+      _honey: o.honey || ""
+    };
+  }
+  /* Liste des leads déjà envoyés (email|slug), bornée aux 100 derniers. */
+  function erqtLeadsParse(raw) {
+    try { var a = JSON.parse(raw || "[]"); return Array.isArray(a) ? a.filter(function (x) { return typeof x === "string"; }) : []; } catch (e) { return []; }
+  }
+  function erqtLeadsAdd(list, key) {
+    var out = list.filter(function (x) { return x !== key; });
+    out.push(key);
+    return out.slice(-100);
+  }
+
   window.ER_QRTPL = {
     escapeWifi: erqtEscapeWifi,
     buildPayload: erqtBuildPayload,
@@ -274,7 +323,15 @@ const translations = window.ER_TRANSLATIONS;
     fileName: erqtFileName,
     templateFile: function (id, lang) { return erqtMock(String(id), lang === "en" ? "en" : "fr", true); },
     buildMailto: erqtBuildMailto,
-    isEmail: function (v) { return ERQT_EMAIL_RE.test(String(v)); }
+    isEmail: function (v) { return ERQT_EMAIL_RE.test(String(v)); },
+    normPhone: erqtNormPhone,
+    isPhone: erqtIsPhone,
+    isWa: erqtIsWa,
+    leadUrl: ERQT_LEAD_URL,
+    leadKey: erqtLeadKey,
+    leadPayload: erqtLeadPayload,
+    leadsParse: erqtLeadsParse,
+    leadsAdd: erqtLeadsAdd
   };
 
   if (typeof document === "undefined") return;
@@ -330,6 +387,8 @@ const translations = window.ER_TRANSLATIONS;
     var wifiPassField = document.querySelector("#qr-code .qr-wifi-pass");
     var passInput = document.getElementById("qrWifiPassword");
     var secSelect = document.getElementById("qrWifiSecurity");
+    var waExtra = document.querySelector("#qr-code .qr-wa-extra");
+    var waMsg = document.getElementById("qrWaMessage");
     var sizeSelect = document.getElementById("qrSize");
     var colorSelect = document.getElementById("qrColor");
     var eccSelect = document.getElementById("qrEcc");
@@ -342,9 +401,11 @@ const translations = window.ER_TRANSLATIONS;
       text: { label: "qrInputLabel", ph: "qrInputPlaceholder", mode: "text", max: 900 },
       url: { label: "qrUrlLabel", ph: "qrUrlPlaceholder", mode: "url", max: 900 },
       email: { label: "qrEmailLabel", ph: "qrEmailPlaceholder", mode: "email", max: 120 },
+      tel: { label: "qrPhoneLabel", ph: "qrPhonePlaceholder", mode: "tel", max: 32, input: "tel" },
+      whatsapp: { label: "qrWaLabel", ph: "qrPhonePlaceholder", mode: "tel", max: 32, input: "tel" },
       wifi: { label: "qrSsidLabel", ph: "qrSsidPlaceholder", mode: "text", max: 32 }
     };
-    var state = { type: "text", values: { text: input.value, url: "", email: "", wifi: "" }, key: "", valid: false, payload: "" };
+    var state = { type: "text", values: { text: input.value, url: "", email: "", tel: "", whatsapp: "", wifi: "" }, key: "", valid: false, payload: "" };
     var debounceTimer = null;
     var hintTimer = null;
 
@@ -366,6 +427,8 @@ const translations = window.ER_TRANSLATIONS;
       if (!raw) return "qrEmptyError";
       if (state.type === "email" && !ERQT_EMAIL_RE.test(raw.replace(/^mailto:/i, ""))) return "qrEmailError";
       if (state.type === "wifi" && secSelect.value !== "nopass" && !passInput.value) return "qrWifiPassMissing";
+      if (state.type === "tel" && !erqtIsPhone(raw)) return "qrPhoneError";
+      if (state.type === "whatsapp" && !erqtIsWa(raw)) return "qrWaError";
       return "";
     }
 
@@ -402,7 +465,7 @@ const translations = window.ER_TRANSLATIONS;
         updateAlt();
         return false;
       }
-      var payload = erqtBuildPayload(state.type, input.value, { security: secSelect.value, password: passInput.value });
+      var payload = erqtBuildPayload(state.type, input.value, { security: secSelect.value, password: passInput.value, message: waMsg ? waMsg.value : "" });
       var opts = erqtOptions(sizeSelect.value, colorSelect.value, eccSelect.value);
       var key = [payload, opts.size, opts.color, opts.ecc].join("\u0000");
       if (key !== state.key || !state.valid) {
@@ -452,9 +515,12 @@ const translations = window.ER_TRANSLATIONS;
       });
       var cfg = TYPES[type];
       input.setAttribute("inputmode", cfg.mode);
+      input.setAttribute("type", cfg.input || "text");
+      input.setAttribute("autocomplete", cfg.input === "tel" ? "tel" : "off");
       input.setAttribute("maxlength", String(cfg.max));
       input.value = state.values[type];
       wifiExtra.hidden = type !== "wifi";
+      if (waExtra) waExtra.hidden = type !== "whatsapp";
       wifiPassField.hidden = secSelect.value === "nopass";
       applyTypeTexts();
       render("soft");
@@ -478,7 +544,9 @@ const translations = window.ER_TRANSLATIONS;
     ["input", "keyup", "compositionend", "paste", "cut"].forEach(function (evt) {
       input.addEventListener(evt, schedule);
       passInput.addEventListener(evt, schedule);
+      if (waMsg) waMsg.addEventListener(evt, schedule);
     });
+    if (waMsg) waMsg.addEventListener("change", function () { render(true); });
     input.addEventListener("change", function () { state.values[state.type] = input.value; render(true); });
     passInput.addEventListener("change", function () { render(true); });
     input.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); render(true); } });
@@ -555,12 +623,52 @@ const translations = window.ER_TRANSLATIONS;
     var fileNameEl = document.getElementById("tplFileName");
     var mailLink = document.getElementById("tplMailLink");
     var savedEmailEl = document.getElementById("tplSavedEmail");
+    var honeyInput = document.getElementById("tplHoney");
+    var leadsPending = {};
     var current = { id: "", mode: "", trigger: null, url: "", email: "", opened: false };
 
     function tplName(id) { return erqtT("tpl" + id + "Title"); }
     function getEmail() { try { return window.localStorage.getItem(ERQT_EMAIL_KEY) || ""; } catch (e) { return ""; } }
     function setEmail(v) { try { window.localStorage.setItem(ERQT_EMAIL_KEY, v); } catch (e) { /* navigation privée : on continue sans mémoriser */ } }
     function forgetEmail() { try { window.localStorage.removeItem(ERQT_EMAIL_KEY); } catch (e) {} }
+
+    function leadsSent() { try { return erqtLeadsParse(window.localStorage.getItem(ERQT_LEADS_KEY)); } catch (e) { return []; } }
+    function markLead(key) { try { window.localStorage.setItem(ERQT_LEADS_KEY, JSON.stringify(erqtLeadsAdd(leadsSent(), key))); } catch (e) {} }
+
+    /* Envoi du contact en arrière-plan, une seule fois par email + template et par navigateur.
+       N'attend rien et ne bloque jamais le téléchargement ; en cas d'échec : console.warn uniquement
+       (le lead sera retenté au prochain téléchargement de ce template). */
+    function sendLead(email, id) {
+      var key = erqtLeadKey(email, id);
+      var honey = honeyInput ? honeyInput.value : "";
+      if (honey || leadsPending[key] || leadsSent().indexOf(key) !== -1) return;
+      if (typeof window.fetch !== "function") return;
+      leadsPending[key] = true;
+      var body = JSON.stringify(erqtLeadPayload({
+        email: email, id: id, lang: erqtLang(), honey: honey,
+        page: window.location.href.split("#")[0], date: new Date().toISOString()
+      }));
+      var done = function () { delete leadsPending[key]; };
+      var p;
+      try {
+        p = window.fetch(ERQT_LEAD_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: body,
+          keepalive: true,
+          mode: "cors",
+          credentials: "omit"
+        });
+      } catch (err) { done(); console.warn("ER Digital : contact template non transmis", err); return; }
+      p.then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json().catch(function () { return {}; });
+      }).then(function (data) {
+        done();
+        if (data && (data.success === false || data.success === "false")) { console.warn("ER Digital : contact template non transmis", data.message || ""); return; }
+        markLead(key);
+      }).catch(function (err) { done(); console.warn("ER Digital : contact template non transmis", err && err.message ? err.message : err); });
+    }
 
     function revoke() { if (current.url) { URL.revokeObjectURL(current.url); current.url = ""; } }
 
@@ -611,6 +719,7 @@ const translations = window.ER_TRANSLATIONS;
       current.url = r.url;
       current.opened = r.opened;
       setMode("confirm", true);
+      sendLead(email, current.id);
     }
 
     function open(id, mode, trigger) {
