@@ -1,53 +1,141 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Politique de confidentialité — ER Digital</title>
-<meta name="description" content="Données personnelles, cookies et droits des visiteurs du site ER Digital.">
+<meta name="description" content="Politique de confidentialité du site ER Digital.">
 <link rel="canonical" href="https://emmanuelrolandpregnon-design.github.io/er-digital-/confidentialite.html">
-<meta name="theme-color" content="#06141B">
-<link rel="icon" type="image/png" href="/er-digital-/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://emmanuelrolandpregnon-design.github.io/er-digital-/confidentialite.html">
+<meta property="og:title" content="Politique de confidentialité — ER Digital">
+<meta property="og:description" content="Politique de confidentialité du site ER Digital.">
+<meta property="og:image" content="https://emmanuelrolandpregnon-design.github.io/er-digital-/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://emmanuelrolandpregnon-design.github.io/er-digital-/og-image.png">
+<meta name="theme-color" content="#EDE7DC">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<style>
-:root{--bg:#06141B;--s:#11212D;--b:#253745;--t:#CCD0CF;--m:#9BA8AB;--a:#3DBDAA}
-@media (prefers-color-scheme:light){:root{--bg:#F3F7F6;--s:#fff;--b:#B8C9C5;--t:#11212D;--m:#546A6B;--a:#0F6F63}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
-.wrap{width:min(760px,calc(100% - 2rem));margin:0 auto;padding:2rem 0 4rem}
-a{color:var(--a);font-weight:700}a:focus-visible{outline:3px solid var(--a);outline-offset:3px}
-h1{font-size:clamp(2rem,8vw,3rem);line-height:1.1;letter-spacing:-.03em;margin:1.5rem 0 .5rem}
-h2{font-size:1.2rem;margin:2rem 0 .4rem}p,li{color:var(--m)}.updated{font-size:.9rem}
-ul{padding-left:1.2rem}.todo{font-style:italic}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>:root{--bg:#EDE7DC;--text:#1A1614;--text-soft:#3A332E;--muted:#6B5F55;--a1:#E8522B;--a2:#F4C430;--border:#1A1614;--fd:'Archivo Black',sans-serif;--fb:'Space Grotesk',sans-serif;--fm:'Space Mono',monospace;--gutter:clamp(1rem,3vw,2rem);--container:1280px}
+[data-theme=dark]{--bg:#1A1614;--text:#EDE7DC;--text-soft:#C9C0B3;--muted:#9A8E82;--border:#EDE7DC}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--fb);font-size:1rem;line-height:1.55;font-weight:500}
+a{color:inherit;text-decoration:none}button{cursor:pointer;font:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid var(--a1);outline-offset:2px}
+.container{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:var(--gutter)}
+.site-header{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:2px solid var(--border)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;min-height:4.5rem;gap:1rem}
+.brand{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--fd);font-weight:900;font-size:1.1rem;text-transform:uppercase}
+.brand-mark{width:2.2rem;height:2.2rem;display:grid;place-items:center;background:var(--a1);color:var(--bg);font-family:var(--fd);font-size:.9rem;border:2px solid var(--border)}
+[data-theme=dark] .brand-mark{color:var(--text)}
+.desktop-nav{display:none;gap:1.5rem;font-family:var(--fm);font-size:.8rem;font-weight:700;text-transform:uppercase}
+.desktop-nav a{padding:.25rem 0;border-bottom:2px solid transparent}.desktop-nav a:hover{border-bottom-color:var(--a1)}
+.header-actions{display:flex;gap:.5rem}
+.control{min-width:2.6rem;min-height:2.6rem;display:grid;place-items:center;background:var(--bg);color:var(--text);font-family:var(--fm);font-size:.72rem;font-weight:700;border:2px solid var(--border);text-transform:uppercase}
+.control:hover{background:var(--a1);color:var(--bg)}[data-theme=dark] .control:hover{color:var(--text)}
+.menu-toggle{width:2.6rem;height:2.6rem;background:var(--bg);color:var(--text);border:2px solid var(--border);display:grid;place-items:center;padding:0}
+.menu-lines{width:1.1rem;height:2px;background:currentColor;position:relative;display:block}
+.menu-lines:before,.menu-lines:after{content:"";position:absolute;left:0;width:1.1rem;height:2px;background:currentColor}
+.menu-lines:before{top:-.35rem}.menu-lines:after{bottom:-.35rem}
+.mobile-nav{display:grid;max-height:0;overflow:hidden;opacity:0}.mobile-nav.is-open{max-height:30rem;opacity:1;padding-bottom:1rem}
+.mobile-nav a{padding:1rem .25rem;font-family:var(--fm);font-size:.85rem;font-weight:700;text-transform:uppercase;border-top:2px solid var(--border)}
+.legal-main{padding:6rem 0 4rem}.legal-content{max-width:70ch}
+.eyebrow{display:inline-flex;margin:0 0 1.5rem;padding:.35rem .75rem;background:var(--text);color:var(--bg);font-family:var(--fm);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:2px solid var(--border)}
+h1{font-family:var(--fd);font-size:clamp(2rem,6vw,3.5rem);font-weight:900;text-transform:uppercase;letter-spacing:-.03em;line-height:.95;margin:0 0 1rem}
+.legal-content h2{font-family:var(--fd);font-size:1.5rem;text-transform:uppercase;margin:2rem 0 .75rem}
+.legal-content h2:first-of-type{margin-top:1.5rem}
+.legal-content p,.legal-content li{color:var(--text-soft);margin:0 0 .75rem;line-height:1.65}
+.legal-content ul{padding-left:1.25rem;margin:0 0 .75rem}
+.legal-content a{color:var(--a1);font-weight:600}.legal-content a:hover{color:var(--a2)}
+.site-footer{padding:clamp(2.5rem,5vw,4rem) 0 2rem;background:var(--text);color:var(--bg);border-top:2px solid var(--border)}
+[data-theme=dark] .site-footer{background:#100D0C;color:#EDE7DC;border-top:2px solid #EDE7DC}
+.footer-top{display:grid;gap:2rem;padding-bottom:2rem;border-bottom:2px solid currentColor}
+.footer-brand{font-family:var(--fd);font-size:clamp(2rem,6vw,3.5rem);font-weight:900;text-transform:uppercase;margin:0 0 .75rem}
+.footer-brand em{font-style:normal;color:var(--a2)}
+.footer-tagline{opacity:.8;max-width:40ch;margin:0}
+.footer-bottom{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;padding-top:1.5rem;font-family:var(--fm);font-size:.72rem;font-weight:700;text-transform:uppercase;opacity:.85}
+.footer-trust{display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+.footer-trust a{text-decoration:underline;text-underline-offset:3px}
+@media(min-width:1024px){.menu-toggle,.mobile-nav{display:none}.desktop-nav{display:flex}.header-inner{min-height:5rem}}</style>
 </head>
 <body>
-<main class="wrap">
-<a href="./">← ER Digital</a>
-<h1>Politique de confidentialité</h1>
-<p class="updated">Dernière mise à jour : 5 octobre 2026</p>
-
-<h2>1. Responsable du traitement</h2><p>Site édité par ER Digital — Emmanuel-Roland Pregnon, Yamoussoukro (Côte d’Ivoire).<br>Contact : <a href="mailto:emmanuelrolandpregnon@gmail.com">emmanuelrolandpregnon@gmail.com</a><br><span class="todo">Statut juridique : À compléter</span></p>
-<h2>2. Données collectées</h2>
-<p>Le formulaire de contact demande votre nom, votre email et votre message. Le bouton « Préparer l’email » ouvre votre application de messagerie avec ces informations : le message part depuis votre propre messagerie vers l’adresse ci-dessus. Le site ne les enregistre sur aucun serveur.</p>
-<p>Si vous choisissez WhatsApp, email ou LinkedIn, les données échangées sont aussi soumises aux politiques de ces services.</p>
-<h2>3. Finalités et base légale</h2>
-<p>Vos données servent uniquement à répondre à votre demande et, le cas échéant, à établir un devis. Elles sont traitées à votre initiative, lorsque vous nous contactez.</p>
-<h2>4. Conservation</h2>
-<p>Les échanges sont conservés le temps nécessaire au traitement de votre demande et au suivi de la relation. <span class="todo">Durée précise : À compléter</span></p>
-<h2>5. Destinataires</h2>
-<p>Seul l’éditeur accède à vos messages. Selon le canal choisi, des prestataires tiers (Google pour Gmail, Meta pour WhatsApp, LinkedIn) les traitent pour acheminer vos messages.</p>
-<h2>6. Cookies et stockage local</h2>
-<p>Le site ne dépose aucun cookie et n’utilise ni publicité ni outil d’analyse. Il enregistre uniquement, dans le stockage local de votre appareil, votre choix de thème (clair ou sombre) et de langue. Ces informations ne nous sont jamais transmises.</p>
-<h2>7. Hébergement</h2>
-<p>Le site est hébergé par GitHub Pages (GitHub, Inc.), qui peut enregistrer des données techniques de connexion, comme l’adresse IP, selon sa propre politique.</p>
-<h2>8. Liens externes</h2>
-<p>Les boutiques Chariow (EbookHub, Level Up Engl), LinkedIn et les autres sites liés ont leurs propres politiques de confidentialité.</p>
-<h2>9. Outil de raccourcissement de liens</h2>
-<p>Lorsque vous utilisez le raccourcisseur de liens, l’adresse que vous saisissez est envoyée à un service tiers (is.gd ou, en cas d’échec, TinyURL) qui crée le lien court. Toute personne possédant ce lien court accède à l’adresse d’origine : ne raccourcissez pas de lien contenant des informations personnelles ou confidentielles. ER Digital ne conserve pas vos liens sur un serveur. Chaque service applique sa propre politique de confidentialité.</p>
-<h2>10. Vos droits</h2>
-<p>Vous pouvez demander l’accès, la rectification, la suppression de vos données et vous opposer à leur traitement. Si le RGPD s’applique à votre situation, vous disposez aussi des droits de limitation et de portabilité. Écrivez à <a href="mailto:emmanuelrolandpregnon@gmail.com">emmanuelrolandpregnon@gmail.com</a>.</p>
-<p>Cadre applicable : loi ivoirienne n° 2013-450 du 19 juin 2013 sur la protection des données à caractère personnel (autorité : ARTCI) et, pour les visiteurs de l’Union européenne, le RGPD. Vous pouvez saisir l’autorité de protection des données de votre pays en cas de désaccord.</p>
-<p><a href="cgu.html">Conditions générales d’utilisation</a></p>
-</main>
-</body>
-</html>
+<a class="skip-link" href="#main" data-i18n="skip" style="position:absolute;left:-9999px">Aller au contenu</a>
+<header class="site-header"><div class="container header-inner">
+<a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">ER</span><span>ER Digital</span></a>
+<nav class="desktop-nav" aria-label="Navigation">
+<a href="index.html#services" data-i18n="navServices">Services</a>
+<a href="index.html#realisations" data-i18n="navWork">Réalisations</a>
+<a href="index.html#tarifs" data-i18n="navPricing">Tarifs</a>
+<a href="index.html#processus" data-i18n="navProcess">Processus</a>
+<a href="index.html#contact" data-i18n="navContact">Contact</a>
+</nav>
+<div class="header-actions">
+<button class="control" id="languageToggle" type="button">EN</button>
+<button class="control" id="themeToggle" type="button">◐</button>
+<button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileNav"><span class="menu-lines"></span></button>
+</div></div>
+<nav class="container mobile-nav" id="mobileNav">
+<a href="index.html#services" data-i18n="navServices">Services</a>
+<a href="index.html#realisations" data-i18n="navWork">Réalisations</a>
+<a href="index.html#tarifs" data-i18n="navPricing">Tarifs</a>
+<a href="index.html#processus" data-i18n="navProcess">Processus</a>
+<a href="index.html#contact" data-i18n="navContact">Contact</a>
+</nav></header>
+<main id="main" class="legal-main"><section class="section"><div class="container legal-content">
+<div class="eyebrow" data-i18n="eyebrow">Légal</div>
+<h1 data-i18n="h1">POLITIQUE DE CONFIDENTIALITÉ</h1>
+<h2 data-i18n="t0">1. QUI SOMMES-NOUS</h2>
+<p data-i18n-html="p0">ER Digital, studio web basé à Yamoussoukro en Côte d'Ivoire. Responsable du traitement : Emmanuel Roland Pregnon. Contact : emmanuelrolandpregnon@gmail.com.</p>
+<h2 data-i18n="t1">2. DONNÉES COLLECTÉES</h2>
+<p data-i18n-html="p1">Le site collecte uniquement les données que vous transmettez via le formulaire de contact : nom, adresse email, message. Aucun cookie de tracking, aucun outil d'analytics tiers, aucune publicité. Le raccourcisseur de liens transmet l'URL à l'API TinyURL (avec repli sur is.gd si nécessaire) pour générer un lien court, sans stockage de notre côté.</p>
+<h2 data-i18n="t2">3. UTILISATION DES DONNÉES</h2>
+<p data-i18n-html="p2">Vos données servent uniquement à répondre à votre demande. Elles ne sont jamais vendues, louées ou transmises à des tiers. Elles ne servent pas à du marketing.</p>
+<h2 data-i18n="t3">4. CONSERVATION</h2>
+<p data-i18n-html="p3">Vos données sont conservées 12 mois maximum après le dernier échange, puis supprimées. Vous pouvez demander leur suppression à tout moment.</p>
+<h2 data-i18n="t4">5. VOS DROITS</h2>
+<p data-i18n-html="p4">Conformément à la loi ivoirienne n°2013-450 relative à la protection des données à caractère personnel, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour exercer ces droits, écrivez à emmanuelrolandpregnon@gmail.com.</p>
+<h2 data-i18n="t5">6. HÉBERGEMENT</h2>
+<p data-i18n-html="p5">Le site est hébergé sur GitHub Pages (serveurs situés aux États-Unis). Aucune donnée client n'est stockée sur le serveur.</p>
+<h2 data-i18n="t6">7. MODIFICATIONS</h2>
+<p data-i18n-html="p6">Dernière mise à jour : Octobre 2026. Toute modification sera publiée sur cette page.</p>
+</div></section></main>
+<footer class="site-footer"><div class="container">
+<div class="footer-top"><div>
+<p class="footer-brand">ER Digital<em>.</em></p>
+<p class="footer-tagline" data-i18n="footerTagline">Studio web brut. Sites francs, tenus, sans détour.</p>
+</div></div>
+<div class="footer-bottom">
+<span>© <span id="year"></span> ER Digital · Yamoussoukro</span>
+<div class="footer-trust">
+<a href="confidentialite.html" data-i18n="footerPrivacy">Confidentialité</a>
+<a href="cgu.html" data-i18n="footerTerms">CGU</a>
+</div></div></div></footer>
+<script>
+(function(){
+const root=document.documentElement;
+const languageToggle=document.getElementById("languageToggle");
+const themeToggle=document.getElementById("themeToggle");
+const menuToggle=document.getElementById("menuToggle");
+const mobileNav=document.getElementById("mobileNav");
+let currentLang="fr";
+function safeGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function safeSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+const translations={fr:{"pageTitle": "Politique de confidentialité — ER Digital", "metaDescription": "Politique de confidentialité du site ER Digital.", "eyebrow": "Légal", "h1": "POLITIQUE DE CONFIDENTIALITÉ", "skip": "Aller au contenu", "footerPrivacy": "Confidentialité", "footerTerms": "CGU", "footerTagline": "Studio web brut. Sites francs, tenus, sans détour.", "openMenu": "Ouvrir le menu", "closeMenu": "Fermer le menu", "themeDark": "Activer le thème sombre", "themeLight": "Activer le thème clair", "navServices": "Services", "navWork": "Réalisations", "navPricing": "Tarifs", "navProcess": "Processus", "navContact": "Contact", "t0": "1. QUI SOMMES-NOUS", "p0": "ER Digital, studio web basé à Yamoussoukro en Côte d'Ivoire. Responsable du traitement : Emmanuel Roland Pregnon. Contact : emmanuelrolandpregnon@gmail.com.", "t1": "2. DONNÉES COLLECTÉES", "p1": "Le site collecte uniquement les données que vous transmettez via le formulaire de contact : nom, adresse email, message. Aucun cookie de tracking, aucun outil d'analytics tiers, aucune publicité. Le raccourcisseur de liens transmet l'URL à l'API TinyURL (avec repli sur is.gd si nécessaire) pour générer un lien court, sans stockage de notre côté.", "t2": "3. UTILISATION DES DONNÉES", "p2": "Vos données servent uniquement à répondre à votre demande. Elles ne sont jamais vendues, louées ou transmises à des tiers. Elles ne servent pas à du marketing.", "t3": "4. CONSERVATION", "p3": "Vos données sont conservées 12 mois maximum après le dernier échange, puis supprimées. Vous pouvez demander leur suppression à tout moment.", "t4": "5. VOS DROITS", "p4": "Conformément à la loi ivoirienne n°2013-450 relative à la protection des données à caractère personnel, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour exercer ces droits, écrivez à emmanuelrolandpregnon@gmail.com.", "t5": "6. HÉBERGEMENT", "p5": "Le site est hébergé sur GitHub Pages (serveurs situés aux États-Unis). Aucune donnée client n'est stockée sur le serveur.", "t6": "7. MODIFICATIONS", "p6": "Dernière mise à jour : Octobre 2026. Toute modification sera publiée sur cette page."},en:{"pageTitle": "Privacy policy — ER Digital", "metaDescription": "Privacy policy of the ER Digital website.", "eyebrow": "Legal", "h1": "PRIVACY POLICY", "skip": "Skip to content", "footerPrivacy": "Privacy", "footerTerms": "Terms", "footerTagline": "Raw web studio. Frank sites, on time, straight talk.", "openMenu": "Open menu", "closeMenu": "Close menu", "themeDark": "Switch to dark theme", "themeLight": "Switch to light theme", "navServices": "Services", "navWork": "Work", "navPricing": "Pricing", "navProcess": "Process", "navContact": "Contact", "t0": "1. WHO WE ARE", "p0": "ER Digital, a web studio based in Yamoussoukro, Côte d'Ivoire. Data controller: Emmanuel Roland Pregnon. Contact: emmanuelrolandpregnon@gmail.com.", "t1": "2. DATA COLLECTED", "p1": "The site only collects data you submit via the contact form: name, email address, message. No tracking cookies, no third-party analytics, no advertising. The link shortener sends the URL to the TinyURL API (with an is.gd fallback if needed) to generate a short link, with no storage on our side.", "t2": "3. USE OF DATA", "p2": "Your data is used solely to respond to your request. It is never sold, rented, or shared with third parties. It is not used for marketing.", "t3": "4. RETENTION", "p3": "Your data is kept for a maximum of 12 months after the last exchange, then deleted. You may request deletion at any time.", "t4": "5. YOUR RIGHTS", "p4": "Under Ivorian law n°2013-450 on the protection of personal data, you have the right to access, rectify, and delete your data. To exercise these rights, write to emmanuelrolandpregnon@gmail.com.", "t5": "6. HOSTING", "p5": "The site is hosted on GitHub Pages (servers located in the United States). No client data is stored on the server.", "t6": "7. CHANGES", "p6": "Last updated: October 2026. Any changes will be published on this page."}};
+function setTheme(theme){root.setAttribute("data-theme",theme);safeSet("er-digital-theme",theme);const m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",theme==="light"?"#EDE7DC":"#1A1614");}
+function setLanguage(lang){
+currentLang=lang;const t=translations[lang];root.setAttribute("lang",lang);document.title=t.pageTitle;
+const d=document.querySelector('meta[name="description"]');if(d&&t.metaDescription)d.setAttribute("content",t.metaDescription);
+document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.getAttribute("data-i18n");if(t[k])el.textContent=t[k];});
+document.querySelectorAll("[data-i18n-html]").forEach(el=>{const k=el.getAttribute("data-i18n-html");if(t[k])el.innerHTML=t[k];});
+languageToggle.textContent=lang==="fr"?"EN":"FR";safeSet("er-digital-language",lang);
+}
+const savedTheme=safeGet("er-digital-theme");setTheme(savedTheme==="dark"||savedTheme==="light"?savedTheme:"light");
+const savedLang=safeGet("er-digital-language");setLanguage(savedLang==="en"?"en":"fr");
+languageToggle.addEventListener("click",()=>setLanguage(currentLang==="fr"?"en":"fr"));
+themeToggle.addEventListener("click",()=>setTheme(root.getAttribute("data-theme")==="dark"?"light":"dark"));
+menuToggle.addEventListener("click",()=>{const open=mobileNav.classList.toggle("is-open");menuToggle.setAttribute("aria-expanded",open?"true":"false");});
+mobileNav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>mobileNav.classList.remove("is-open")));
+document.getElementById("year").textContent=new Date().getFullYear();
+})();
+</script>
+</body></html>
