@@ -106,3 +106,17 @@ html.tpl-lock,html.tpl-lock body{overflow:hidden;}
 @media (min-width:900px){.service-card--tool{grid-template-columns:auto minmax(0,1fr) minmax(15rem,auto);align-items:center;gap:2rem;padding:2rem;}.service-tool-head{flex-direction:column;align-items:flex-start;}.service-tool-side .service-price{padding-top:0;border-top:0;}}
 @media (prefers-reduced-motion:reduce){.service-card:hover .service-arrow{transform:none;}}
 /* === FIN QR + TEMPLATES === */
+
+/* Réalisations : captures d'écran à la place des placeholders */
+.frame-body--shot{position:relative;padding:0;background-image:none;overflow:hidden;display:block}
+.frame-body--shot>picture:first-child{display:block;width:100%;height:100%}
+.frame-shot{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
+/* Correctif d'un débordement déjà présent sur mobile (la colonne .project mesurait 452 px dans un écran de 390 px à cause de l'URL en nowrap) */
+.project>*,.frame-url{min-width:0}
+/* Templates : miniatures réelles à la place du motif rayé */
+.template-preview--shot{display:block;min-height:0;padding:0;background-image:none;overflow:visible}
+.template-preview--shot picture{display:block;width:100%;height:100%;overflow:hidden}
+.template-shot{display:block;width:100%;height:100%;object-fit:cover;object-position:top left}
+/* badge à cheval sur la bordure basse, à droite : ne masque plus le contenu du modèle
+   et tombe dans la zone vide à droite du titre (aligné à gauche) */
+.template-preview--shot .template-num{z-index:2;top:auto;left:auto;bottom:-0.95rem;right:1rem;box-shadow:3px 3px 0 var(--border)}

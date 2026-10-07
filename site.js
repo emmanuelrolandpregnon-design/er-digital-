@@ -209,6 +209,65 @@ const translations = window.ER_TRANSLATIONS;
   var ERQT_LEADS_KEY = "er-digital-template-leads";
   var ERQT_SLUGS = { "1": "portfolio", "2": "artisan", "3": "landing", "4": "cv", "5": "menu", "6": "boutique" };
 
+  /* Photos des templates (fichiers WebP dans assets/templates/ du site).
+     Aperçu : URL absolue des fichiers. Téléchargement : photos intégrées en data URI (fichier HTML autonome, lisible hors ligne) ;
+     si elles n'ont pas pu être chargées à temps, le fichier garde les URL absolues (photos visibles dès qu'on est en ligne). */
+  var ERQT_SITE = "https://emmanuelrolandpregnon-design.github.io/er-digital-/";
+  var ERQT_IMG_DIR = "assets/templates/";
+  var ERQT_PHOTOS = {
+    "identite-duotone": { f: "identite-duotone.webp", w: 640, h: 480, fr: "Papeterie d'identité visuelle : carte, enveloppe et carnet en kraft", en: "Brand identity stationery: card, envelope and kraft notebook" },
+    "affiche-duotone": { f: "affiche-duotone.webp", w: 640, h: 480, fr: "Affiche aux motifs graphiques africains sur un mur de béton", en: "Poster with African graphic patterns on a concrete wall" },
+    "packaging-duotone": { f: "packaging-duotone.webp", w: 640, h: 480, fr: "Sacs et boîtes en kraft fermés par un ruban", en: "Kraft bags and boxes tied with ribbon" },
+    "tabouret": { f: "tabouret.webp", w: 600, h: 662, fr: "Tabouret traditionnel en bois sculpté", en: "Traditional carved wooden stool", s: "object-fit:contain;background-color:#E1E1E0;" },
+    "tabouret-figure": { f: "tabouret-figure.webp", w: 440, h: 668, fr: "Tabouret en bois porté par une figure sculptée", en: "Wooden stool held up by a carved figure", s: "object-fit:contain;background-color:#FFFFFF;" },
+    "corne-sculptee": { f: "corne-sculptee.webp", w: 360, h: 665, fr: "Corne sculptée aux motifs gravés", en: "Carved horn with engraved patterns", s: "object-fit:contain;background-color:#F6F8F7;" },
+    "figure-boule-fibre": { f: "figure-boule-fibre.webp", w: 440, h: 611, fr: "Figure sculptée posée sur une boule tressée en fibres", en: "Carved figure on a woven fibre ball", s: "object-fit:contain;background-color:#FFFFFF;" },
+    "sac-wax": { f: "sac-wax.webp", w: 600, h: 600, fr: "Sac bandoulière en tissu wax rouge, jaune et noir", en: "Red, yellow and black wax-print shoulder bag", s: "object-fit:contain;background-color:#DFDAD8;" },
+    "garba": { f: "garba.webp", w: 320, h: 240, fr: "Assiette de garba : attiéké et thon frit", en: "Plate of garba: attiéké with fried tuna" },
+    "poulet-braise": { f: "poulet-braise.webp", w: 320, h: 240, fr: "Poulet braisé avec attiéké, tomates et oignons", en: "Braised chicken with attiéké, tomatoes and onions" },
+    "kedjenou": { f: "kedjenou.webp", w: 320, h: 240, fr: "Kedjenou de pintade dans un canari en terre cuite", en: "Guinea fowl kedjenou in a clay pot" },
+    "bissap": { f: "bissap.webp", w: 320, h: 240, fr: "Verre de jus de bissap glacé à la menthe", en: "Glass of iced bissap juice with mint" },
+    "pagne": { f: "pagne.webp", w: 600, h: 450, fr: "Pagne tissé à motifs géométriques beige et noir", en: "Woven cloth with beige and black geometric patterns" },
+    "bracelet-perles": { f: "bracelet-perles.webp", w: 300, h: 266, fr: "Bracelets de perles et de cauris", en: "Bead and cowrie bracelets", s: "object-fit:contain;background-color:#FFFFFF;" }
+  };
+  var ERQT_TPL_PHOTOS = { "1": ["identite-duotone", "affiche-duotone", "packaging-duotone"], "2": ["tabouret", "tabouret-figure", "corne-sculptee", "figure-boule-fibre"], "3": ["sac-wax"], "4": [], "5": ["garba", "poulet-braise", "kedjenou", "bissap"], "6": ["pagne", "sac-wax", "bracelet-perles"] };
+  var erqtImgData = {};
+  var erqtImgPending = {};
+  function erqtImgBase() {
+    if (typeof document !== "undefined" && typeof location !== "undefined" && /^https?:$/.test(location.protocol)) {
+      try { return new URL(ERQT_IMG_DIR, document.baseURI).href; } catch (e) { /* repli ci-dessous */ }
+    }
+    return ERQT_SITE + ERQT_IMG_DIR;
+  }
+  function erqtImg(key, L, cls, style) {
+    var p = ERQT_PHOTOS[key];
+    var st = (p.s || "") + (style || "");
+    return "<img class=\"" + (cls || "ph") + "\" src=\"" + (erqtImgData[key] || erqtImgBase() + p.f) + "\" alt=\"" + erqtEsc(L(p.fr, p.en)) +
+      "\" width=\"" + p.w + "\" height=\"" + p.h + "\" decoding=\"async\"" + (st ? " style=\"" + st + "\"" : "") + ">";
+  }
+  /* Charge les photos d'un template et les garde en data URI. Résout true si toutes sont prêtes. */
+  function erqtPreloadImgs(id) {
+    var keys = ERQT_TPL_PHOTOS[id] || [];
+    if (typeof fetch !== "function" || typeof FileReader === "undefined" || typeof Promise === "undefined") return { then: function (f) { f(false); } };
+    return Promise.all(keys.map(function (k) {
+      if (erqtImgData[k]) return true;
+      if (!erqtImgPending[k]) {
+        erqtImgPending[k] = fetch(erqtImgBase() + ERQT_PHOTOS[k].f, { credentials: "omit" }).then(function (r) {
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          return r.blob();
+        }).then(function (b) {
+          return new Promise(function (res, rej) {
+            var fr = new FileReader();
+            fr.onload = function () { erqtImgData[k] = fr.result; res(true); };
+            fr.onerror = function () { rej(fr.error); };
+            fr.readAsDataURL(b);
+          });
+        }).catch(function () { delete erqtImgPending[k]; return false; });
+      }
+      return erqtImgPending[k];
+    })).then(function (a) { return a.every(Boolean); });
+  }
+
   /* ---------- Fonctions pures (testées en Node) ---------- */
   function erqtEscapeWifi(value) {
     return String(value).replace(/([\\;,:"])/g, "\\$1");
@@ -712,17 +771,31 @@ const translations = window.ER_TRANSLATIONS;
     /* Génère le fichier HTML du template et lance le téléchargement immédiatement. */
     function deliver(email) {
       current.email = email;
-      revoke();
-      var html = erqtMock(current.id, erqtLang(), true);
-      var blob = new Blob([html], { type: "text/html;charset=utf-8" });
-      var r = erqtSaveBlob(blob, erqtFileName(current.id));
-      current.url = r.url;
-      current.opened = r.opened;
-      setMode("confirm", true);
-      sendLead(email, current.id);
+      var id = current.id;
+      var done = false;
+      function build() {
+        if (done) return;
+        done = true;
+        if (modal.hidden || current.id !== id) return; /* fenêtre fermée ou autre template entre-temps */
+        revoke();
+        var html = erqtMock(id, erqtLang(), true);
+        var blob = new Blob([html], { type: "text/html;charset=utf-8" });
+        var r = erqtSaveBlob(blob, erqtFileName(id));
+        current.url = r.url;
+        current.opened = r.opened;
+        setMode("confirm", true);
+        sendLead(email, id);
+      }
+      /* Ancien iOS : window.open doit rester dans le geste utilisateur, on n'attend pas les photos. */
+      if (erqtOldIOS) { build(); return; }
+      /* Sinon : on attend les photos (data URI) au plus 3 s, puis on génère le fichier quoi qu'il arrive
+         (3 s reste dans la fenêtre d'activation utilisateur de 5 s des navigateurs : le téléchargement n'est pas bloqué). */
+      setTimeout(build, 3000);
+      erqtPreloadImgs(id).then(build, build);
     }
 
     function open(id, mode, trigger) {
+      erqtPreloadImgs(id);
       current.id = id;
       current.trigger = trigger || document.activeElement;
       modal.hidden = false;
@@ -758,6 +831,10 @@ const translations = window.ER_TRANSLATIONS;
     });
     document.querySelectorAll("[data-tpl-download]").forEach(function (b) {
       b.addEventListener("click", function () { open(b.getAttribute("data-tpl-download"), "download", b); });
+      /* Précharge les photos dès que l'intention de télécharger se manifeste. */
+      ["pointerenter", "focus", "touchstart"].forEach(function (ev) {
+        b.addEventListener(ev, function () { erqtPreloadImgs(b.getAttribute("data-tpl-download")); }, { passive: true });
+      });
     });
     document.getElementById("tplFromPreview").addEventListener("click", function () {
       var saved = getEmail();
@@ -828,7 +905,13 @@ const translations = window.ER_TRANSLATIONS;
       ".row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:2px solid #1A1614}.t{display:inline-block;margin:0 6px 6px 0;padding:3px 8px;border:2px solid #1A1614;background:#F4C430}" +
       "body.dk{background:#1A1614;color:#EDE7DC}.dk .bar,.dk .c,.dk .ph{border-color:#EDE7DC}.dk .c{background:#24201D}.dk .ph{background-color:#2E2926;background-image:repeating-linear-gradient(45deg,transparent,transparent 14px,#EDE7DC30 14px,#EDE7DC30 15px)}.dk .b{background:#EDE7DC;color:#1A1614;border-color:#EDE7DC}" +
       "a{color:inherit;text-decoration:none}section{scroll-margin-top:8px}.ft{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;padding:16px 20px;border-top:2px solid #1A1614}.dk .ft,.dk section{border-color:#EDE7DC!important}input,textarea{width:100%;padding:10px;border:2px solid #1A1614;background:#FFFFFF;color:#1A1614;font:inherit}label{display:block;margin:10px 0 4px}";
+    css += "img.ph{display:block;width:100%;height:auto;aspect-ratio:4/3;min-height:90px;max-height:260px;object-fit:cover;background-image:none}" +
+      ".hero{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:20px;align-items:center;margin-bottom:12px}.hero img.ph{aspect-ratio:1/1;max-height:320px}" +
+      "@media (max-width:560px){.hero{grid-template-columns:1fr}}" +
+      ".row{align-items:center}.dish{display:flex;align-items:center;gap:12px}img.th{flex:none;width:64px;height:48px;object-fit:cover;border:2px solid #1A1614}.dk img.th{border-color:#EDE7DC}";
+    var P = function (key, cls, style) { return erqtImg(key, L, cls, style); };
     var name = erqtTL("tpl" + id + "Title", lang) || "Template";
+    if (id === "4") return erqtCv(lang, L, file, name); /* le CV a sa propre mise en page (voir erqtCv) */
     var head = "<!doctype html>" + (file ? erqtFileComment(id, lang, name) : "") + "<html lang=\"" + lang + "\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">" +
       (file ? "<title>" + erqtEsc(name) + "</title><meta name=\"description\" content=\"" + erqtEsc(erqtTL("tpl" + id + "Text", lang)) + "\">" : "") +
       "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@700&display=swap\">" +
@@ -836,26 +919,23 @@ const translations = window.ER_TRANSLATIONS;
     var bodies = {
       "1": "<body class=\"dk\"><div class=\"bar\" id=\"top\"><strong class=\"m\">A. Kouassi</strong><span class=\"nav m\"><a class=\"on\" href=\"#top\">" + L("Travaux", "Work") + "</a><a href=\"#apropos\">" + L("À propos", "About") + "</a><a href=\"#contact\">Contact</a></span></div>" +
         "<div class=\"w\"><p class=\"m\">" + L("Designer graphique · Abidjan", "Graphic designer · Abidjan") + "</p><h1>" + L("Des images qui parlent.", "Images that speak.") + "</h1>" +
-        "<div class=\"g\"><div><div class=\"ph\"></div><p class=\"m\">01 / " + L("Identité", "Identity") + "</p></div><div><div class=\"ph\"></div><p class=\"m\">02 / " + L("Affiche", "Poster") + "</p></div><div><div class=\"ph\"></div><p class=\"m\">03 / Packaging</p></div></div>" +
+        "<div class=\"g\"><div>" + P("identite-duotone") + "<p class=\"m\">01 / " + L("Identité", "Identity") + "</p></div><div>" + P("affiche-duotone") + "<p class=\"m\">02 / " + L("Affiche", "Poster") + "</p></div><div>" + P("packaging-duotone") + "<p class=\"m\">03 / Packaging</p></div></div>" +
         "<span class=\"b\">" + L("Me contacter", "Contact me") + " →</span></div></body>",
       "2": "<body><div class=\"bar\" id=\"top\"><strong class=\"m\">Atelier Bois Doré</strong><span class=\"nav m\"><a href=\"#top\">" + L("Accueil", "Home") + "</a><a class=\"on\" href=\"#galerie\">" + L("Galerie", "Gallery") + "</a><a href=\"#contact\">Contact</a></span></div>" +
         "<div class=\"w\"><h1>" + L("Meubles en bois massif, faits main.", "Solid wood furniture, handmade.") + "</h1><p>" + L("Tables, portes et rangements sur mesure depuis 2009.", "Custom tables, doors and storage since 2009.") + "</p>" +
-        "<div class=\"g\"><div class=\"ph\"></div><div class=\"ph\"></div><div class=\"ph\"></div><div class=\"ph\"></div></div>" +
+        "<div class=\"g\">" + P("tabouret") + P("tabouret-figure") + P("corne-sculptee") + P("figure-boule-fibre") + "</div>" +
         "<div class=\"c y\" style=\"margin-top:14px\"><h3>" + L("Demander un devis", "Request a quote") + "</h3><p class=\"m\" style=\"margin:0\">WhatsApp · " + L("Appel", "Call") + " · Email</p></div></div></body>",
       "3": "<body><div class=\"bar\" id=\"top\"><strong class=\"m\">Sakô</strong><span class=\"b\">" + L("Commander", "Order") + "</span></div>" +
-        "<div class=\"w\"><p class=\"m\">" + L("Nouveau · Édition 2026", "New · 2026 edition") + "</p><h1 style=\"font-size:clamp(36px,9vw,72px)\">" + L("Le sac qui tient 10 ans.", "The bag that lasts 10 years.") + "</h1>" +
-        "<p><span class=\"b\" style=\"background:#E8522B;color:#1A1614\">" + L("Commander — 25 000 F", "Order — 25,000 F") + " →</span></p>" +
+        "<div class=\"w\"><div class=\"hero\"><div><p class=\"m\">" + L("Nouveau · Édition 2026", "New · 2026 edition") + "</p><h1 style=\"font-size:clamp(36px,9vw,72px)\">" + L("Le sac qui tient 10 ans.", "The bag that lasts 10 years.") + "</h1>" +
+        "<p><span class=\"b\" style=\"background:#E8522B;color:#1A1614\">" + L("Commander — 25 000 F", "Order — 25,000 F") + " →</span></p></div>" + P("sac-wax") + "</div>" +
         "<div class=\"g\"><div class=\"c\"><h3>" + L("Cuir local", "Local leather") + "</h3><p style=\"margin:0\">" + L("Tanné à Ouagadougou.", "Tanned in Ouagadougou.") + "</p></div><div class=\"c y\"><h3>" + L("Garanti 10 ans", "10-year warranty") + "</h3><p style=\"margin:0\">" + L("Réparé gratuitement.", "Repaired for free.") + "</p></div><div class=\"c\"><h3>" + L("Livré en 48 h", "48 h delivery") + "</h3><p style=\"margin:0\">" + L("Partout en Côte d'Ivoire.", "Anywhere in Côte d'Ivoire.") + "</p></div></div></div></body>",
-      "4": "<body><div class=\"w\" style=\"border-bottom:2px solid #1A1614\"><p class=\"m\">" + L("CV en ligne", "Online resume") + "</p><h1>Awa Traoré</h1><p class=\"m\" style=\"margin:0\">" + L("Développeuse web · Yamoussoukro", "Web developer · Yamoussoukro") + "</p></div>" +
-        "<div class=\"w g\"><div><h2>" + L("Parcours", "Experience") + "</h2><div class=\"row\"><span>" + L("Développeuse front, Studio K", "Front-end developer, Studio K") + "</span><span class=\"m\">2024 —</span></div><div class=\"row\"><span>" + L("Licence informatique, INP-HB", "BSc Computer science, INP-HB") + "</span><span class=\"m\">2023</span></div></div>" +
-        "<div><h2>" + L("Compétences", "Skills") + "</h2><span class=\"t m\">HTML / CSS</span><span class=\"t m\">JavaScript</span><span class=\"t m\">Figma</span><span class=\"t m\">" + L("Anglais B2", "English B2") + "</span><p style=\"margin-top:12px\"><span class=\"b\">" + L("Me contacter", "Contact me") + " →</span></p></div></div></body>",
       "5": "<body><div class=\"bar\" id=\"top\"><strong class=\"m\">Maquis Le Baobab</strong><span class=\"m\">" + L("Ouvert", "Open") + " ●</span></div>" +
-        "<div class=\"w\"><h1>" + L("La carte.", "The menu.") + "</h1><div class=\"row\"><span>" + L("Garba thon frit", "Garba with fried tuna") + "</span><strong class=\"m\">1 500 F</strong></div><div class=\"row\"><span>" + L("Poulet braisé, attiéké", "Braised chicken, attiéké") + "</span><strong class=\"m\">4 000 F</strong></div>" +
-        "<div class=\"row\"><span>" + L("Kedjenou de pintade", "Guinea fowl kedjenou") + "</span><strong class=\"m\">5 500 F</strong></div><div class=\"row\"><span>" + L("Jus de bissap", "Bissap juice") + "</span><strong class=\"m\">500 F</strong></div>" +
+        "<div class=\"w\"><h1>" + L("La carte.", "The menu.") + "</h1><div class=\"row\"><span class=\"dish\">" + P("garba", "th") + L("Garba thon frit", "Garba with fried tuna") + "</span><strong class=\"m\">1 500 F</strong></div><div class=\"row\"><span class=\"dish\">" + P("poulet-braise", "th") + L("Poulet braisé, attiéké", "Braised chicken, attiéké") + "</span><strong class=\"m\">4 000 F</strong></div>" +
+        "<div class=\"row\"><span class=\"dish\">" + P("kedjenou", "th") + L("Kedjenou de pintade", "Guinea fowl kedjenou") + "</span><strong class=\"m\">5 500 F</strong></div><div class=\"row\"><span class=\"dish\">" + P("bissap", "th") + L("Jus de bissap", "Bissap juice") + "</span><strong class=\"m\">500 F</strong></div>" +
         "<div class=\"c v\" style=\"margin-top:16px\"><h3>" + L("Horaires", "Opening hours") + "</h3><p class=\"m\" style=\"margin:0\">" + L("Lun — Sam · 11 h — 23 h", "Mon — Sat · 11 am — 11 pm") + "</p></div></div></body>",
       "6": "<body><div class=\"bar\" id=\"top\"><strong class=\"m\">Boutique Kente</strong><span class=\"nav m\"><a class=\"on\" href=\"#top\">" + L("Catalogue", "Catalog") + "</a><a href=\"#produit\">" + L("Produit", "Product") + "</a><a class=\"t\" style=\"margin:0\" href=\"#panier\">" + L("Panier", "Cart") + " (2)</a></span></div>" +
-        "<div class=\"w\"><h1 style=\"font-size:clamp(26px,5vw,36px)\">" + L("Nouveautés", "New in") + "</h1><div class=\"g\"><div class=\"c\"><div class=\"ph\"></div><h3 style=\"margin-top:10px\">" + L("Pagne kente", "Kente cloth") + "</h3><p class=\"m\">12 000 F</p><span class=\"b\">" + L("Ajouter", "Add") + "</span></div>" +
-        "<div class=\"c\"><div class=\"ph\"></div><h3 style=\"margin-top:10px\">" + L("Sac en wax", "Wax bag") + "</h3><p class=\"m\">8 500 F</p><span class=\"b\">" + L("Ajouter", "Add") + "</span></div><div class=\"c\"><div class=\"ph\"></div><h3 style=\"margin-top:10px\">" + L("Bracelet perles", "Bead bracelet") + "</h3><p class=\"m\">3 000 F</p><span class=\"b\">" + L("Ajouter", "Add") + "</span></div></div>" +
+        "<div class=\"w\"><h1 style=\"font-size:clamp(26px,5vw,36px)\">" + L("Nouveautés", "New in") + "</h1><div class=\"g\"><div class=\"c\">" + P("pagne") + "<h3 style=\"margin-top:10px\">" + L("Pagne kente", "Kente cloth") + "</h3><p class=\"m\">12 000 F</p><span class=\"b\">" + L("Ajouter", "Add") + "</span></div>" +
+        "<div class=\"c\">" + P("sac-wax") + "<h3 style=\"margin-top:10px\">" + L("Sac en wax", "Wax bag") + "</h3><p class=\"m\">8 500 F</p><span class=\"b\">" + L("Ajouter", "Add") + "</span></div><div class=\"c\">" + P("bracelet-perles") + "<h3 style=\"margin-top:10px\">" + L("Bracelet perles", "Bead bracelet") + "</h3><p class=\"m\">3 000 F</p><span class=\"b\">" + L("Ajouter", "Add") + "</span></div></div>" +
         "<div class=\"row\" style=\"margin-top:14px;border-top:2px solid #1A1614\"><strong>" + L("Total panier", "Cart total") + "</strong><strong class=\"m\">20 500 F</strong></div></div></body>"
     };
     var body = bodies[id] || bodies["1"];
@@ -880,11 +960,86 @@ const translations = window.ER_TRANSLATIONS;
     var contact = sec + "contact\"><h2>Contact</h2><form action=\"#\" onsubmit=\"return false\"><label class=\"m\" for=\"nom\">" + L("Nom", "Name") + "</label><input id=\"nom\" name=\"nom\"><label class=\"m\" for=\"msg\">Message</label><textarea id=\"msg\" name=\"message\" rows=\"4\"></textarea><p style=\"margin-top:12px\"><button class=\"b\" type=\"submit\">" + L("Envoyer", "Send") + " →</button></p></form><p class=\"m\">WhatsApp · +225 00 00 00 00 00 · contact@exemple.ci</p></section>";
     var extra = {
       "1": sec + "apropos\"><h2>" + L("À propos", "About") + "</h2><p>" + L("Remplacez ce texte par votre parcours en trois phrases : ce que vous faites, pour qui, et pourquoi on vous choisit.", "Replace this text with your story in three sentences: what you do, for whom, and why people pick you.") + "</p></section>",
-      "2": sec + "galerie\"><h2>" + L("Galerie", "Gallery") + "</h2><div class=\"g\"><div class=\"ph\"></div><div class=\"ph\"></div><div class=\"ph\"></div><div class=\"ph\"></div><div class=\"ph\"></div><div class=\"ph\"></div></div><p class=\"m\" style=\"margin-top:10px\">" + L("Remplacez chaque bloc par une photo de vos réalisations.", "Replace each block with a photo of your work.") + "</p></section>",
-      "6": sec + "produit\"><h2>" + L("Fiche produit", "Product page") + "</h2><div class=\"g\"><div class=\"ph\" style=\"min-height:200px\"></div><div><h3>" + L("Pagne kente", "Kente cloth") + "</h3><p class=\"m\">12 000 F</p><p>" + L("Tissé à la main à Bondoukou. 6 yards.", "Handwoven in Bondoukou. 6 yards.") + "</p><span class=\"b\">" + L("Ajouter au panier", "Add to cart") + "</span></div></div></section>" +
+      "2": sec + "galerie\"><h2>" + L("Galerie", "Gallery") + "</h2><div class=\"g\">" + erqtImg("tabouret", L) + erqtImg("tabouret-figure", L) + erqtImg("corne-sculptee", L) + erqtImg("figure-boule-fibre", L) + "<div class=\"ph\"></div><div class=\"ph\"></div></div><p class=\"m\" style=\"margin-top:10px\">" + L("Remplacez chaque bloc par une photo de vos réalisations.", "Replace each block with a photo of your work.") + "</p></section>",
+      "6": sec + "produit\"><h2>" + L("Fiche produit", "Product page") + "</h2><div class=\"g\">" + erqtImg("pagne", L, "ph", "min-height:200px") + "<div><h3>" + L("Pagne kente", "Kente cloth") + "</h3><p class=\"m\">12 000 F</p><p>" + L("Tissé à la main à Bondoukou. 6 yards.", "Handwoven in Bondoukou. 6 yards.") + "</p><span class=\"b\">" + L("Ajouter au panier", "Add to cart") + "</span></div></div></section>" +
         sec + "panier\"><h2>" + L("Panier", "Cart") + "</h2><div class=\"row\"><span>" + L("Pagne kente", "Kente cloth") + " × 1</span><strong class=\"m\">12 000 F</strong></div><div class=\"row\"><span>" + L("Sac en wax", "Wax bag") + " × 1</span><strong class=\"m\">8 500 F</strong></div><p style=\"margin-top:12px\"><span class=\"b\">" + L("Commander via WhatsApp", "Order via WhatsApp") + " →</span></p></section>"
     };
     return (extra[id] || "") + contact;
+  }
+
+  /* Modèle 04 « CV en ligne » : document autonome, sans photo (version gratuite).
+     Police Raleway (Google Fonts) avec polices système de secours : le fichier reste propre hors ligne.
+     Une colonne sur mobile, impression A4 (@media print). */
+  function erqtCv(lang, L, file, name) {
+    var css = "*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}" +
+      "body{margin:0;background:#DADAD8;color:#1D1D1B;font:400 14px/1.6 Raleway,Montserrat,'Segoe UI','Helvetica Neue',Arial,sans-serif}" +
+      "h1,h2,h3,p,ul{margin:0}a{color:inherit;text-decoration:none}" +
+      ".page{max-width:860px;margin:32px auto;padding:0 0 40px;background:#F4F4F2;box-shadow:0 10px 30px rgba(0,0,0,.16)}" +
+      ".hd{position:relative;padding:60px 0 0}" +
+      ".rail{position:absolute;left:56px;top:44px;bottom:-14px;border-left:2px solid #1D1D1B;z-index:1}" +
+      ".rail span{position:absolute;left:10px;bottom:4px;writing-mode:vertical-rl;transform:rotate(180deg);font-size:22px;font-weight:800;letter-spacing:.08em;line-height:1}" +
+      ".id,.ct{padding-left:128px;padding-right:56px}" +
+      "h1{font-size:clamp(34px,6.4vw,56px);font-weight:300;line-height:1.05;letter-spacing:-.01em}h1 b{font-weight:700}" +
+      ".band{margin-top:14px;padding:12px 56px 12px 128px;background:#C8E10F;font-size:14px;font-weight:600;letter-spacing:.42em;text-transform:uppercase}" +
+      ".ct{display:flex;flex-wrap:wrap;gap:4px 14px;padding-top:14px;font-size:12.5px}.ct b{font-weight:700}.ct i{font-style:normal;color:#9A9A95}" +
+      ".pf{margin:44px 56px 0;padding:2px 0 2px 16px;border-left:6px solid #C8E10F;font-size:13.5px}" +
+      ".cols{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px 52px;padding:44px 56px 0}" +
+      "h2{margin-bottom:16px;font-size:17px;font-weight:600;letter-spacing:.2em;text-transform:uppercase}" +
+      "h3{margin-bottom:10px;font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase}" +
+      ".sk{margin:0 0 26px;padding:0;list-style:none}.sk li{position:relative;margin-bottom:5px;padding-left:18px;font-size:13px}" +
+      ".sk li:before{content:'';position:absolute;left:2px;top:.62em;width:5px;height:5px;border-radius:50%;background:#1D1D1B}" +
+      ".tl{position:relative;margin:0;padding:0 0 0 18px;list-style:none}.tl:before{content:'';position:absolute;left:3px;top:6px;bottom:8px;border-left:2px solid #1D1D1B}" +
+      ".tl li{position:relative;margin-bottom:18px;font-size:13px;line-height:1.45}.tl li:before{content:'';position:absolute;left:-19px;top:5px;width:10px;height:10px;border-radius:50%;background:#1D1D1B}" +
+      ".pd{font-size:12px;letter-spacing:.12em}.tt{display:block;margin:2px 0;font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}" +
+      ".job{margin-bottom:26px}.job:last-child,.tl li:last-child,.sk:last-child{margin-bottom:0}.job p{margin:8px 0 6px;font-size:13px;color:#3A3A37}.job ul{margin:0;padding-left:34px;font-size:13px;color:#3A3A37}.job li{margin-bottom:2px}" +
+      ".ft{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;max-width:860px;margin:0 auto 32px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#55554F}" +
+      "@media (max-width:924px){.page{margin:0;box-shadow:none}}@media (max-width:760px){.ct{gap:2px 18px}.ct i{display:none}}" +
+      "@media (max-width:620px){.hd{padding-top:40px}.rail{left:20px;top:30px}.rail span{left:8px;font-size:18px}" +
+      ".id,.ct{padding-left:64px;padding-right:20px}.band{padding:10px 20px 10px 64px;font-size:12.5px;letter-spacing:.3em}.pf{margin:32px 20px 0}" +
+      ".cols{grid-template-columns:1fr;padding:32px 20px 0}.ft{padding:16px 20px 0}}" +
+      "@media print{@page{size:A4;margin:0}body{background:#FFFFFF;-webkit-print-color-adjust:exact;print-color-adjust:exact}" +
+      ".page{max-width:none;width:210mm;min-height:297mm;margin:0;box-shadow:none;background:#FFFFFF}.ft{display:none}.job,.tl li{break-inside:avoid}" +
+      ".hd{padding-top:72px}.rail{top:54px}h1{font-size:60px}.band{margin-top:18px;padding-top:16px;padding-bottom:16px;font-size:16px}.ct{padding-top:18px;font-size:13.5px}.pf{margin-top:46px;font-size:14.5px}" +
+      ".cols{grid-template-columns:230px minmax(0,1fr);gap:24px 56px;padding-top:46px}h2{margin-bottom:20px;font-size:20px}h3{font-size:12px}.tt{font-size:12.5px}.pd{font-size:13px}" +
+      ".sk li,.tl li,.job p,.job ul{font-size:14px}.sk li{margin-bottom:5px}.sk{margin-bottom:26px}.tl li{margin-bottom:20px}.job{margin-bottom:32px}.page{padding-bottom:0}}";
+    var li = function (a) { return "<li>" + a.join("</li><li>") + "</li>"; };
+    var job = function (period, title, text, items) {
+      return "<article class=\"job\"><span class=\"pd\">" + period + "</span><h3 class=\"tt\">" + title + "</h3><p>" + text + "</p><ul>" + li(items) + "</ul></article>";
+    };
+    var edu = function (year, title, place) { return "<li><span class=\"pd\">" + year + "</span><span class=\"tt\">" + title + "</span>" + place + "</li>"; };
+    var head = "<!doctype html>" + (file ? erqtFileComment("4", lang, name) : "") + "<html lang=\"" + lang + "\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">" +
+      (file ? "<title>" + erqtEsc(name) + "</title><meta name=\"description\" content=\"" + erqtEsc(erqtTL("tpl4Text", lang)) + "\">" : "") +
+      "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800&display=swap\">" +
+      "<style>" + css + "</style></head>";
+    var body = "<body><main class=\"page\">" +
+      "<header class=\"hd\"><div class=\"rail\" aria-hidden=\"true\"><span>CURRICULUM</span></div>" +
+      "<div class=\"id\"><h1>Awa <b>Traoré</b></h1></div>" +
+      "<p class=\"band\">" + L("Développeuse web", "Web developer") + "</p>" +
+      "<p class=\"ct\"><span><b>e :</b> <a href=\"mailto:awa.traore@exemple.com\">awa.traore@exemple.com</a></span><i aria-hidden=\"true\">|</i>" +
+      "<span><b>" + L("t :", "p:") + "</b> +225 00 00 00 00 00</span><i aria-hidden=\"true\">|</i><span>Yamoussoukro, Côte d'Ivoire</span></p></header>" +
+      "<p class=\"pf\">" + L("Développeuse web junior, j'intègre des maquettes en sites rapides, accessibles et agréables à lire sur mobile. Je souhaite rejoindre une équipe où progresser sur des projets concrets.",
+        "Junior web developer, I turn mockups into fast, accessible websites that read well on mobile. I want to join a team where I can grow on real projects.") + "</p>" +
+      "<div class=\"cols\"><aside><section><h2>" + L("Compétences", "Skills") + "</h2><h3>" + L("Professionnelles", "Professional") + "</h3>" +
+      "<ul class=\"sk\">" + li(["HTML / CSS", "JavaScript", "Figma", L("Intégration responsive", "Responsive layout"), L("Accessibilité web", "Web accessibility"), "Git / GitHub"]) + "</ul>" +
+      "<h3>" + L("Langues", "Languages") + "</h3><ul class=\"sk\">" + li([L("Français — courant", "French — fluent"), L("Anglais B2", "English B2")]) + "</ul></section>" +
+      "<section><h2>" + L("Formation", "Education") + "</h2><ul class=\"tl\">" +
+      edu("2023", L("Licence informatique", "BSc Computer science"), "INP-HB, Yamoussoukro") +
+      edu("2022", L("Certificat en ligne", "Online certificate"), L("Intitulé de la formation", "Course title")) +
+      edu("2020", L("Baccalauréat", "Baccalaureate"), L("Lycée, ville", "High school, city")) + "</ul></section></aside>" +
+      "<section><h2>" + L("Expérience", "Experience") + "</h2>" +
+      job("2024 — " + L("Aujourd'hui", "Present"), L("Développeuse front — Studio K", "Front-end developer — Studio K"),
+        L("Intégration des maquettes et développement des pages des sites clients, de la première version à la mise en ligne.", "Building client websites from mockups, from the first version to launch."),
+        [L("Intégration responsive de maquettes Figma en HTML / CSS", "Responsive HTML / CSS build of Figma mockups"), L("Composants interactifs en JavaScript", "Interactive components in JavaScript"), L("Corrections et mises à jour après retours clients", "Fixes and updates after client feedback")]) +
+      job("2023", L("Stage — Agence web", "Internship — Web agency"),
+        L("Stage de fin de licence dans une petite équipe : sites vitrines et pages de vente.", "Final-year internship in a small team: showcase sites and sales pages."),
+        [L("Intégration de pages à partir de maquettes", "Building pages from mockups"), L("Tests d'affichage sur mobile et navigateurs", "Mobile and cross-browser testing"), L("Rédaction d'une documentation de mise à jour", "Writing update documentation")]) +
+      job("2022", L("Projets personnels — Portfolio", "Personal projects — Portfolio"),
+        L("Petits sites réalisés pendant la formation pour pratiquer et montrer son travail.", "Small websites built during my studies to practise and show my work."),
+        [L("Portfolio personnel en ligne", "Personal online portfolio"), L("Page de menu pour un restaurant (exercice)", "Restaurant menu page (exercise)"), L("Formulaire de contact accessible", "Accessible contact form")]) +
+      "</section></div></main>" +
+      (file ? "<footer class=\"ft\"><span>© " + new Date().getFullYear() + " · " + erqtEsc(name) + "</span><span>" + L("Template gratuit", "Free template") + " · ER Digital</span></footer>" : "") +
+      "</body>";
+    return head + body + "</html>";
   }
 
   function erqtTL(key, lang) {
