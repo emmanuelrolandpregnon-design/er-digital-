@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://emmanuelrolandpregnon-design.github.io/er-digital-/sitemap.xml
+Sitemap: https://er-digital.studio/sitemap.xml
